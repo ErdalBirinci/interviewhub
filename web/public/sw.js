@@ -6,7 +6,19 @@
  * - activate: eski cache'leri temizle
  */
 const VERSION = "ih-v1";
-const CORE = ["/", "/index.html", "/offline.html", "/manifest.webmanifest", "/ih-icon.svg"];
+/**
+ * Kendi bazini registration.scope uzerinden bul:
+ * - lokal:        scope = http://localhost:4000/        -> BASE = .../4000/
+ * - GitHub Pages: scope = https://.../interviewhub/     -> BASE = .../interviewhub/
+ */
+const BASE = new URL("./", self.registration.scope).href;
+const CORE = [
+  BASE,
+  `${BASE}index.html`,
+  `${BASE}offline.html`,
+  `${BASE}manifest.webmanifest`,
+  `${BASE}ih-icon.svg`,
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -33,10 +45,14 @@ self.addEventListener("fetch", (event) => {
       fetch(request)
         .then((res) => {
           const copy = res.clone();
-          caches.open(VERSION).then((cache) => cache.put("/index.html", copy));
+          caches.open(VERSION).then((cache) => cache.put(`${BASE}index.html`, copy));
           return res;
         })
-        .catch(async () => (await caches.match("/index.html")) || (await caches.match("/offline.html"))),
+        .catch(
+          async () =>
+            (await caches.match(`${BASE}index.html`)) ||
+            (await caches.match(`${BASE}offline.html`)),
+        ),
     );
     return;
   }

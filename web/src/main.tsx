@@ -44,10 +44,14 @@ window.matchMedia?.("(prefers-color-scheme: light)").addEventListener("change", 
 
 /* --------------------------- service worker -------------------------------- */
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  // BASE_URL: Vite build'inde VITE_BASE ile kontrol edilir (Pages'te /interviewhub/).
+  // sw.js ve precache listesi de registration.scope uzerinden kendi bazini bulur.
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch(() => {
-      /* PWA desteklenmiyorsa sessizce gec */
-    });
+    navigator.serviceWorker
+      .register(`${import.meta.env.BASE_URL}sw.js`)
+      .catch(() => {
+        /* PWA desteklenmiyorsa sessizce gec */
+      });
   });
 }
 
