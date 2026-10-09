@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "InterviewHub for LinkedIn",
+  "version": "0.1.0",
+  "description": "LinkedIn kabul edilmis basvurular icin video gorusme odasi acin; adayin LinkedIn profili gorusme sirasinda yan panelde acik kalsin.",
+  "permissions": ["sidePanel", "storage", "identity"],
+  "host_permissions": ["https://*/*", "http://localhost/*", "http://127.0.0.1/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "InterviewHub - Gorusme odasi"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.linkedin.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

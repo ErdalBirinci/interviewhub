@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="sidepanel.css" />
+    <title>InterviewHub</title>
+  </head>
+  <body>
+    <header class="hd">
+      <div class="brand">
+        <span class="logo">IH</span>
+        <strong>InterviewHub</strong>
+      </div>
+      <button id="refresh" class="icon-btn" title="Yenile" type="button">⟳</button>
+    </header>
+
+    <main class="bd">
+      <!-- ------------------------------ giris ------------------------------ -->
+      <section id="view-auth" class="view">
+        <p class="lead">
+          Görüşme odaları LinkedIn kimliğinizle açılır. Görüşme sırasında profiliniz karşı tarafa
+          yalnızca paylaşıma açıkken gösterilir.
+        </p>
+        <button id="btn-auth" class="btn primary block" type="button">LinkedIn ile giriş</button>
+
+        <div class="or"><span>veya</span></div>
+
+        <label class="lbl" for="demo-name">Demo girişi</label>
+        <div class="row">
+          <input id="demo-name" type="text" placeholder="Adınız" maxlength="40" />
+          <button id="btn-demo" class="btn" type="button">Devam</button>
+        </div>
+        <p id="auth-error" class="err hidden"></p>
+      </section>
+
+      <!-- ------------------------------ uygulama -------------------------- -->
+      <section id="view-main" class="view hidden">
+        <div class="user">
+          <span id="user-name">—</span>
+          <button id="btn-logout" class="link" type="button">Çıkış</button>
+        </div>
+
+        <div id="embed-wrap" class="card hidden">
+          <div class="embed-head">
+            <strong id="embed-title">Görüşme</strong>
+            <button id="btn-close-embed" class="link" type="button">Kapat</button>
+          </div>
+          <iframe
+            id="embed"
+            title="Görüşme odası"
+            allow="camera; microphone; display-capture; autoplay; fullscreen"
+          ></iframe>
+          <div class="row">
+            <button id="btn-open-tab" class="btn ghost" type="button">Yeni sekmede aç</button>
+            <button id="btn-copy-invite" class="btn" type="button">Davet bağlantısı</button>
+          </div>
+        </div>
+
+        <div id="create-wrap">
+          <label class="lbl" for="room-title">Yeni görüşme odası</label>
+          <input
+            id="room-title"
+            type="text"
+            placeholder="Örn. Kıdemli Frontend Developer · Aday görüşmesi"
+            maxlength="120"
+          />
+          <button id="btn-create" class="btn primary block" type="button">Oda oluştur</button>
+        </div>
+
+        <div class="lbl section-lbl">Odalarım</div>
+        <ul id="room-list" class="rooms"></ul>
+        <p id="empty" class="muted hidden">Henüz oda yok. Yukarıdan ilk görüşmenizi oluşturun.</p>
+        <p id="main-error" class="err hidden"></p>
+      </section>
+    </main>
+
+    <footer class="ft">
+      <p id="profile-hint" class="hint hidden">
+        Profilinizi web arayüzünde <strong>Profilim</strong> sayfasından düzenleyin.
+      </p>
+      <details>
+        <summary>Sunucu adresi</summary>
+        <div class="row">
+          <input id="api-base" type="text" placeholder="http://localhost:4000" />
+          <button id="btn-api" class="btn" type="button">Kaydet</button>
+        </div>
+        <p id="api-hint" class="muted"></p>
+      </details>
+    </footer>
+
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>

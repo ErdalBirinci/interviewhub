@@ -1,0 +1,29 @@
+# bağımlılıklar
+node_modules/
+**/node_modules/
+
+# build çıktıları
+dist/
+**/dist/
+server/dist/
+web/dist/
+extension/dist/
+
+# veri
+server/.data/
+*.log
+
+# ortam
+.env
+.env.local
+
+# editör / sistem
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# test çıktıları
+%TEMP%/ih-shots/
+*.png.tmp

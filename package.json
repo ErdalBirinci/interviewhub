@@ -1,0 +1,31 @@
+{
+  "name": "interviewhub",
+  "private": true,
+  "version": "0.1.0",
+  "description": "LinkedIn ile kabul edilen başvurular için video konferans odaları (web + Chrome eklentisi)",
+  "workspaces": [
+    "server",
+    "web",
+    "extension"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n srv,web -c cyan,magenta \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:server": "npm run dev -w @ih/server",
+    "dev:web": "npm run dev -w @ih/web",
+    "build": "npm run build -w @ih/server && npm run build -w @ih/web && npm run build -w @ih/extension",
+    "start": "npm run start -w @ih/server",
+    "start:watch": "node scripts/start-watch.mjs",
+    "status": "node scripts/health.mjs",
+    "cdp": "node scripts/cdp-start.mjs",
+    "typecheck": "npm run typecheck -w @ih/server && npm run typecheck -w @ih/web && npm run typecheck -w @ih/extension",
+    "test": "npm run typecheck && npm run test:signal",
+    "test:signal": "node scripts/signal-test.mjs",
+    "test:e2e": "node scripts/e2e-browser.mjs",
+    "test:ext": "node scripts/ext-e2e.mjs",
+    "test:all": "npm run typecheck && npm run test:signal && npm run test:e2e && npm run test:ext"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "typescript": "^5.7.2"
+  }
+}
