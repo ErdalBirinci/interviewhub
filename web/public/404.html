@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InterviewHub</title>
+    <meta http-equiv="refresh" content="0; url=/" />
+  </head>
+  <body>
+    <p>Yükleniyor…</p>
+    <script>
+      // GitHub Pages SPA fallback: 404.html'e düşen istekleri index.html'e yönlendir.
+      // React Router istemci tarafında yolu işler.
+      (function () {
+        var p = window.location.pathname;
+        if (p !== "/" && !p.startsWith("/interviewhub/")) {
+          window.location.replace("/" + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
+  </body>
+</html>

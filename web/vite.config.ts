@@ -5,7 +5,11 @@ import { defineConfig } from "vite";
 const shared = fileURLToPath(new URL("../shared/index.ts", import.meta.url));
 const apiTarget = process.env.API_URL ?? "http://localhost:4000";
 
+// GitHub Pages'te /<repo>/ altinda yayinlanir; yerel gelistirmede "/".
+const base = process.env.VITE_BASE ?? "/";
+
 export default defineConfig({
+  base,
   plugins: [react()],
   resolve: {
     alias: {
