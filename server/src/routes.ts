@@ -13,6 +13,13 @@ import { buildAuthUrl, exchangeCode, fetchUserInfo, type LinkedInUserInfo } from
 import { activeCount, activeCounts } from "./rtc";
 import { store } from "./store";
 import { authRateLimit, roomsRateLimit } from "./security";
+import { log, metrics } from "./metrics";
+import {
+  aiEnabled,
+  AiNotConfiguredError,
+  evaluateInterview,
+  normalizeCandidateProfile,
+} from "./ai";
 
 /* --------------------------------- yardimcilar ------------------------------- */
 
@@ -267,6 +274,7 @@ export function mountRoutes(app: Express) {
       hostId: session.sub,
       hostName: session.name,
     });
+    metrics.inc("rooms_created_total");
     const view: RoomView = { ...room, active: activeCounts([room.id])[room.id] };
     res.status(201).json({ room: view, url: `${await resolveWebBase()}/room/${room.id}` });
   });
@@ -304,5 +312,67 @@ export function mountRoutes(app: Express) {
     }
     store.deleteRoom(room.id);
     res.json({ ok: true });
+  });
+
+  /* --------------------------- metrikler ------------------------------ */
+
+  /** Operasyon metrikleri (tum oturumlu kullanicilar). */
+  app.get("/api/metrics", requireAuth, (_req, res) => {
+    metrics.setGauge("uptime_sec", Math.round(process.uptime()));
+    res.json(metrics.snapshot());
+  });
+
+  /* --------------------- AI degerlendirme --------------------------- */
+
+  /**
+   * Mülakât notlarina ve (paylasilmis) aday profilina dayali
+   * AI degerlendirmesi. Sadece oda sahibi (mülakâtçi) kullanabilir;
+   * medya asla iletilmez. AI_API_KEY yoksa 501 doner.
+   */
+  app.post("/api/rooms/:id/evaluate", requireAuth, async (req, res) => {
+    const room = store.getRoom(req.params.id);
+    if (!room) {
+      res.status(404).json({ error: "Oda bulunamadi." });
+      return;
+    }
+    if (room.hostId !== req.session!.sub) {
+      res.status(403).json({
+        error: "Sadece oda sahibi (mulakatci) degerlendirme yapabilir.",
+      });
+      return;
+    }
+    const notes = rawStr(req.body?.notes, 4000);
+    if (!notes.trim()) {
+      res.status(400).json({ error: "Degerlendirme icin gorusme notlari gerekli." });
+      return;
+    }
+    const candidate = normalizeCandidateProfile(req.body?.candidateProfile);
+    const position = str(req.body?.position, 120);
+    try {
+      const evaluation = await evaluateInterview({
+        notes,
+        candidate,
+        position,
+      });
+      metrics.inc("ai_evaluations_total", { status: "ok" });
+      res.json({ evaluation });
+    } catch (err) {
+      if (err instanceof AiNotConfiguredError) {
+        res.status(501).json({
+          error: "AI_DEGERLENDIRME_YAPILANDIRILMADI",
+          message: err.message,
+        });
+        return;
+      }
+      metrics.inc("ai_evaluations_total", { status: "error" });
+      log("error", "ai_evaluation_failed", {
+        room: room.id,
+        message: (err as Error).message,
+      });
+      res.status(502).json({
+        error: "AI_DEGERLENDIRME_BASARISIZ",
+        message: (err as Error).message,
+      });
+    }
   });
 }

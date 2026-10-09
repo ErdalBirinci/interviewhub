@@ -8,6 +8,9 @@ import {
   PanelIcon,
   ScreenIcon,
   UsersIcon,
+  RecordIcon,
+  RecordOffIcon,
+  TranscriptIcon,
 } from "../components/icons";
 
 interface ControlsProps {
@@ -24,11 +27,29 @@ interface ControlsProps {
   sideLabel?: string;
   disabled?: boolean;
   participants: number;
+  /** Kayıt kontrolleri */
+  recordingState?: "idle" | "recording" | "paused";
+  onRecordStart?: () => void;
+  onRecordPause?: () => void;
+  onRecordResume?: () => void;
+  onRecordStop?: () => void;
+  onRecordDownload?: () => void;
+  recordingDurationMs?: number;
+  /** Transkripsiyon kontrolleri */
+  transcriptActive?: boolean;
+  onTranscriptToggle?: () => void;
 }
 
 /** Klavye kısayolu rozetini gosteren kucuk etiket */
 function Kbd({ children }: { children: string }) {
   return <kbd className="ctrl__kbd" aria-hidden="true">{children}</kbd>;
+}
+
+function formatMs(ms: number): string {
+  const totalSec = Math.floor(ms / 1000);
+  const m = Math.floor(totalSec / 60);
+  const s = totalSec % 60;
+  return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
 export default function Controls({
@@ -44,6 +65,15 @@ export default function Controls({
   sideLabel,
   disabled = false,
   participants,
+  recordingState = "idle",
+  onRecordStart,
+  onRecordPause,
+  onRecordResume,
+  onRecordStop,
+  onRecordDownload,
+  recordingDurationMs = 0,
+  transcriptActive = false,
+  onTranscriptToggle,
 }: ControlsProps) {
   return (
     <div className="controls">
@@ -85,6 +115,68 @@ export default function Controls({
         <span className="ctrl__label">{screenActive ? "Paylaşılıyor" : "Ekran"}</span>
         <Kbd>S</Kbd>
       </button>
+
+      {/* KAYIT */}
+      {onRecordStart && (
+        <>
+          {recordingState === "idle" && (
+            <button
+              className="ctrl ctrl--record"
+              onClick={onRecordStart}
+              disabled={disabled}
+              title="Kaydı başlat (R)"
+              aria-label="Kaydı başlat"
+              aria-keyshortcuts="r"
+            >
+              <span className="ctrl__icon"><RecordIcon /></span>
+              <span className="ctrl__label">Kayıt</span>
+              <Kbd>R</Kbd>
+            </button>
+          )}
+          {recordingState === "recording" && (
+            <button
+              className="ctrl ctrl--record ctrl--recording"
+              onClick={onRecordPause}
+              disabled={disabled}
+              title="Kaydı duraklat"
+              aria-label="Kaydı duraklat"
+            >
+              <span className="ctrl__icon"><RecordIcon /></span>
+              <span className="ctrl__label">
+                <span className="rec-dot" aria-hidden="true" /> Kayıt {formatMs(recordingDurationMs ?? 0)}
+              </span>
+            </button>
+          )}
+          {recordingState === "paused" && (
+            <button
+              className="ctrl ctrl--record ctrl--paused"
+              onClick={onRecordResume}
+              disabled={disabled}
+              title="Kaydı devam ettir"
+              aria-label="Kaydı devam ettir"
+            >
+              <span className="ctrl__icon"><RecordOffIcon /></span>
+              <span className="ctrl__label">Duraklatıldı</span>
+            </button>
+          )}
+        </>
+      )}
+
+      {/* TRANSKRİPSİYON */}
+      {onTranscriptToggle && (
+        <button
+          className={`ctrl ${transcriptActive ? "ctrl--active" : ""}`}
+          onClick={onTranscriptToggle}
+          disabled={disabled}
+          title={transcriptActive ? "Transkripsiyonu durdur (T)" : "Transkripsiyonu başlat (T)"}
+          aria-label={transcriptActive ? "Transkripsiyonu durdur" : "Transkripsiyonu başlat"}
+          aria-keyshortcuts="t"
+        >
+          <span className="ctrl__icon"><TranscriptIcon /></span>
+          <span className="ctrl__label">{transcriptActive ? "Yazılıyor" : "Transkript"}</span>
+          <Kbd>T</Kbd>
+        </button>
+      )}
 
       <span className="controls__count" title="Odaktaki kişi sayısı">
         <UsersIcon size={16} />

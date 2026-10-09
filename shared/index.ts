@@ -120,6 +120,32 @@ export interface RoomView extends RoomMeta {
   active: number;
 }
 
+/* --------------------------- AI değerlendirme --------------------------- */
+
+/** AI değerlendirmesinin tek rubrik kalemi. */
+export interface EvaluationRubricItem {
+  area: string;
+  /** 0-100 */
+  score: number;
+  comment: string;
+}
+
+/**
+ * Mülakat değerlendirmesi (AI asistanı tarafindan uretilir).
+ * Notlar ve aday profili sunucu uzerinden AI'a gonderilir;
+ * ses/video medyasi asla iletilmez.
+ */
+export interface EvaluationResult {
+  /** 0-100 genel puan */
+  score: number;
+  rubric: EvaluationRubricItem[];
+  strengths: string[];
+  concerns: string[];
+  recommendation: "hire" | "no_hire" | "uncertain";
+  summary: string;
+  model?: string;
+}
+
 /* --------------------------------- REST tipleri ------------------------------ */
 
 export interface IceServerLike {

@@ -48,6 +48,11 @@ export const CFG = {
   LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET ?? "",
   ALLOW_DEMO: process.env.ALLOW_DEMO !== "false",
   ICE_SERVERS: iceServers(),
+  /** AI değerlendirme asistanı (OpenAI-uyumlu API) */
+  AI_API_URL:
+    (process.env.AI_API_URL ?? "").trim() || "https://api.openai.com/v1",
+  AI_API_KEY: (process.env.AI_API_KEY ?? "").trim(),
+  AI_MODEL: (process.env.AI_MODEL ?? "").trim() || "gpt-4o-mini",
   /** Kalici veri (kullanici + profil + oda listesi) */
   DATA_FILE:
     process.env.DATA_FILE ?? path.resolve(here, "..", ".data", "db.json"),

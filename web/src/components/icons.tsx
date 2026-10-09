@@ -500,3 +500,55 @@ export function ChevronUpIcon(p: IconProps) {
 export function ChevronRightIcon(p: IconProps) {
   return base(p, <path d="m9 18 6-6-6-6" />);
 }
+
+export function RecordIcon(p: IconProps) {
+  return base(p, <circle cx="12" cy="12" r="8" />);
+}
+
+export function RecordOffIcon(p: IconProps) {
+  return base(p, <>
+    <circle cx="12" cy="12" r="8" />
+    <line x1="2" x2="22" y1="2" y2="22" />
+  </>);
+}
+
+export function TranscriptIcon(p: IconProps) {
+  return base(p, <>
+    <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+    <path d="M8 10h8" />
+    <path d="M8 14h5" />
+    <path d="M8 18h3" />
+  </>);
+}
+
+export function BotIcon(p: IconProps) {
+  return base(p, <>
+    <rect width="14" height="18" x="5" y="3" rx="2" />
+    <path d="M9 10h2M15 10h2" />
+    <path d="M7 15h12" />
+    <path d="M9 4v-1M15 4v-1" />
+    <circle cx="12" cy="18" r="2" />
+  </>);
+}
+
+export function StopCircleIcon(p: IconProps) {
+  return base(p, <>
+    <circle cx="12" cy="12" r="10" />
+    <rect x="9" y="9" width="6" height="6" />
+  </>);
+}
+
+export function PauseIcon(p: IconProps) {
+  return base(p, <>
+    <rect x="6" y="4" width="4" height="16" />
+    <rect x="14" y="4" width="4" height="16" />
+  </>);
+}
+
+export function DownloadCloudIcon(p: IconProps) {
+  return base(p, <>
+    <path d="M12 15v6M9 18l3 3 3-3" />
+    <path d="M19.35 12.35A8 8 0 0 0 12 5c-3.87 0-7 3.13-7 7 0 1.82.76 3.48 2 4.65" />
+    <path d="M5 12a7 7 0 0 1 7-7h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2.5" />
+  </>);
+}

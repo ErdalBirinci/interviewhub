@@ -12,6 +12,7 @@ import {
   type RTCSignal,
 } from "@ih/shared";
 import { tokenFromHeaders, verify, type Session } from "./auth";
+import { metrics } from "./metrics";
 import { store } from "./store";
 
 interface LiveRoom {
@@ -65,6 +66,8 @@ export function createIo(http: HttpServer) {
 
   io.on("connection", (socket) => {
     const session = socket.data.session as Session;
+    metrics.inc("rtc_connections_total");
+    metrics.setGauge("connected_clients", io.sockets.sockets.size);
 
     socket.on(EV.JOIN, (payload: JoinPayload, ack: (a: JoinAck) => void) => {
       const roomId = typeof payload?.roomId === "string" ? payload.roomId : "";
@@ -107,6 +110,8 @@ export function createIo(http: HttpServer) {
       live.peers.set(socket.id, peer);
       socket.data.roomId = roomId;
       socket.join(channel);
+      metrics.inc("room_joins_total", { room: roomId });
+      metrics.setGauge("live_rooms", liveRooms.size);
 
       ack({
         ok: true,
@@ -170,10 +175,13 @@ export function createIo(http: HttpServer) {
     const live = liveRooms.get(roomId);
     if (!live) return;
     live.peers.delete(socket.id);
+    metrics.inc("rtc_disconnections_total");
+    metrics.setGauge("connected_clients", io.sockets.sockets.size);
     socket.to(roomChannel(roomId)).emit(EV.PEER_LEFT, { peerId: socket.id });
     if (live.peers.size === 0) {
       // Oda bosaldi - canli kayittan sil (metadata disk'te durur)
       liveRooms.delete(roomId);
+      metrics.setGauge("live_rooms", liveRooms.size);
     }
   }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import type { IceServerLike } from "@ih/shared";
 import LoginCard from "../components/LoginCard";
@@ -9,17 +9,29 @@ import Controls from "../room/Controls";
 import ChatPanel from "../room/ChatPanel";
 import ProfilePanel from "../room/ProfilePanel";
 import VideoTile from "../room/VideoTile";
+import AIEvaluationPanel from "../room/AIEvaluationPanel";
 import { useMedia } from "../room/useMedia";
 import { useRoom } from "../room/useRoom";
-import { CameraIcon, CameraOffIcon, MicIcon, MicOffIcon, RefreshIcon } from "../components/icons";
+import { useRecording } from "../room/useRecording";
+import { useTranscription } from "../room/useRecording";
+import {
+  CameraIcon,
+  CameraOffIcon,
+  MicIcon,
+  MicOffIcon,
+  RefreshIcon,
+  BotIcon,
+} from "../components/icons";
 
 const DEFAULT_ICE: IceServerLike[] = [
   { urls: ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302"] },
 ];
 
 interface RoomMetaResponse {
-  room: { id: string; title: string; hostName: string; active: number; createdAt: number };
+  room: { id: string; title: string; hostId: string; hostName: string; active: number; createdAt: number };
 }
+
+type SideTab = "profil" | "sohbet" | "transkript" | "ai";
 
 export default function Room() {
   const { id: routeId = "" } = useParams();
@@ -33,23 +45,39 @@ export default function Room() {
   const [metaError, setMetaError] = useState<string | null>(null);
   const [metaLoading, setMetaLoading] = useState(true);
   const [name, setName] = useState("");
-  const [tab, setTab] = useState<"profil" | "sohbet">("profil");
+  const [tab, setTab] = useState<SideTab>("profil");
   const [sideOpen, setSideOpen] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // Kayıt + transkripsiyon + AI
+  const [recordingState, setRecordingState] = useState<"idle" | "recording" | "paused">("idle");
+  const [recordingDurationMs, setRecordingDurationMs] = useState(0);
+  const [transcriptActive, setTranscriptActive] = useState(false);
+  const [showAIPanel, setShowAIPanel] = useState(false);
+  const [aiPosition, setAiPosition] = useState("");
+  const [aiNotes, setAiNotes] = useState("");
 
   const room = useRoom({ roomId, name, localStream: stream, iceServers });
-  const [copied, setCopied] = useState(false);
 
   const micReady = Boolean(stream?.getAudioTracks().length);
   const camReady = Boolean(stream?.getVideoTracks().length);
 
+  /* ---------- Kayıt: yerel akış (kamera+mikrofon+ekran) ---------- */
+  const recordingStream = room.screenActive ? room.screenStream : stream;
+  const recording = useRecording(recordingStream);
+
+  /* ---------- Transkripsiyon ---------- */
+  const transcription = useTranscription();
+
+  /* Kopyalama */
   const copyInvite = async () => {
     const ok = await copyText(`${window.location.origin}/room/${roomId}`);
     setCopied(ok);
     setTimeout(() => setCopied(false), 1800);
   };
 
-  /* Oda meta bilgisi + ICE sunuculari */
+  /* Oda meta + ICE */
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -72,12 +100,12 @@ export default function Room() {
     };
   }, [roomId]);
 
-  /* Isim varsayilani */
+  /* İsim varsayılanı */
   useEffect(() => {
     if (!name && me?.name) setName(me.name);
   }, [me, name]);
 
-  /* Varsayilan olarak profil panelinde ilk profil sahibi katilimciyi sec */
+  /* Profil panelinde varsayılan seçim */
   useEffect(() => {
     if (!room.peers.length) return;
     if (selectedId && room.peers.some((p) => p.info.id === selectedId)) return;
@@ -92,14 +120,14 @@ export default function Room() {
   const ready = mediaState !== "requesting" && mediaState !== "idle";
   const canJoin = Boolean(meta) && ready && name.trim().length > 0 && !authLoading && Boolean(me);
 
-  /* Otomasyon/test: ?autojoin=1 ile katilim ekrani beklemeden odaya gir */
+  /* Otomasyon/test: ?autojoin=1 */
   useEffect(() => {
     if (!new URLSearchParams(window.location.search).has("autojoin")) return;
     if (canJoin && room.status === "idle") room.join();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canJoin, room.status]);
 
-  /* Klavye kısayollari: M=mikrofon, C=kamera, S=ekran, P=panel */
+  /* Klavye kısayolları: M/C/S/P + R/T */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat) return;
@@ -118,11 +146,32 @@ export default function Room() {
       } else if (key === "p" && !e.ctrlKey && !e.metaKey && !e.altKey) {
         e.preventDefault();
         if (joined) setSideOpen((v) => !v);
+      } else if (key === "r" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        e.preventDefault();
+        if (joined && recording.state === "idle") recording.start();
+        else if (joined && recording.state === "recording") recording.pause();
+        else if (joined && recording.state === "paused") recording.resume();
+      } else if (key === "t" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        e.preventDefault();
+        if (joined) transcription.start();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [joined, room]);
+  }, [joined, room, recording, transcription]);
+
+  /* Kayıt durumunu Controls'a aktar */
+  useEffect(() => {
+    setRecordingState(recording.state);
+  }, [recording.state]);
+
+  useEffect(() => {
+    setRecordingDurationMs(recording.durationMs);
+  }, [recording.durationMs]);
+
+  useEffect(() => {
+    setTranscriptActive(transcription.isListening);
+  }, [transcription.isListening]);
 
   /* ----------------------------- ekranlar ---------------------------------- */
 
@@ -236,8 +285,8 @@ export default function Room() {
             {room.status === "connecting"
               ? "Bağlanılıyor…"
               : left || failed
-                ? "Yeniden katıl"
-                : "Görüşmeye katıl"}
+              ? "Yeniden katıl"
+              : "Görüşmeye katıl"}
           </button>
 
           {!canJoin && room.status !== "connecting" && (
@@ -256,6 +305,9 @@ export default function Room() {
   const panelPeers = room.selfInfo ? [room.selfInfo, ...otherInfos] : otherInfos;
   const selectedPeer =
     panelPeers.find((p) => p.id === selectedId) ?? panelPeers[0] ?? null;
+
+  // AI paneli için seçili aday profili
+  const aiCandidate = selectedPeer?.profile ?? null;
 
   return (
     <div className="room">
@@ -318,8 +370,30 @@ export default function Room() {
             onToggleSide={() => setSideOpen((v) => !v)}
             sideLabel={sideOpen ? "Paneli gizle" : "Paneli göster"}
             participants={participants}
+            recordingState={recording.state}
+            onRecordStart={recording.start}
+            onRecordPause={recording.pause}
+            onRecordResume={recording.resume}
+            onRecordStop={recording.stop}
+            onRecordDownload={recording.download}
+            recordingDurationMs={recording.durationMs}
+            transcriptActive={transcription.isListening}
+            onTranscriptToggle={() => (transcription.isListening ? transcription.stop() : transcription.start())}
           />
         </section>
+
+        {/* AI Değerlendirme Paneli (modal) */}
+        {showAIPanel && (
+          <AIEvaluationPanel
+            roomId={roomId}
+            hostName={meta.hostName}
+            candidateProfile={aiCandidate}
+            position={aiPosition}
+            notes={aiNotes}
+            onNotesChange={setAiNotes}
+            onClose={() => setShowAIPanel(false)}
+          />
+        )}
 
         <aside className={`side ${sideOpen ? "" : "side--hidden"}`}>
           <div className="side__tabs">
@@ -336,6 +410,25 @@ export default function Room() {
               Sohbet
               {room.chat.length > 0 && <span className="tab__badge">{room.chat.length}</span>}
             </button>
+            <button
+              className={tab === "transkript" ? "tab tab--active" : "tab"}
+              onClick={() => setTab("transkript")}
+            >
+              Transkript
+              {transcription.segments.length > 0 && <span className="tab__badge">{transcription.segments.length}</span>}
+            </button>
+            {meta.hostId === me?.id && (
+              <button
+                className={tab === "ai" ? "tab tab--active" : "tab"}
+                onClick={() => {
+                  setTab("ai");
+                  setShowAIPanel(true);
+                }}
+              >
+                <BotIcon size={16} style={{ marginRight: 4, verticalAlign: "middle" }} />
+                AI Değerlendir
+              </button>
+            )}
           </div>
 
           <div className="side__content">
@@ -346,16 +439,115 @@ export default function Room() {
                 selectedId={selectedPeer?.id ?? null}
                 onSelect={setSelectedId}
               />
-            ) : (
+            ) : tab === "sohbet" ? (
               <ChatPanel
                 messages={room.chat}
                 selfId={room.selfId}
                 onSend={room.sendChat}
                 disabled={room.status !== "joined"}
               />
-            )}
+            ) : tab === "transkript" ? (
+              <TranscriptPanel
+                segments={transcription.segments}
+                isListening={transcription.isListening}
+                error={transcription.error}
+                lang={transcription.lang}
+                fullText={transcription.fullText}
+                onToggle={() => (transcription.isListening ? transcription.stop() : transcription.start())}
+                onClear={transcription.clear}
+                onCopy={async () => {
+                  await navigator.clipboard.writeText(transcription.fullText);
+                }}
+                onLanguageChange={transcription.setLanguage}
+              />
+            ) : null}
           </div>
         </aside>
+      </div>
+    </div>
+  );
+}
+
+/* ----------------------- Transkript Yan Paneli ----------------------- */
+
+function TranscriptPanel({
+  segments,
+  isListening,
+  error,
+  lang,
+  fullText,
+  onToggle,
+  onClear,
+  onCopy,
+  onLanguageChange,
+}: {
+  segments: { id: string; text: string; timestamp: number; isFinal: boolean }[];
+  isListening: boolean;
+  error: string | null;
+  lang: string;
+  fullText: string;
+  onToggle: () => void;
+  onClear: () => void;
+  onCopy: () => void;
+  onLanguageChange: (lang: string) => void;
+}) {
+  return (
+    <div className="transcript-panel">
+      <div className="transcript-panel__header">
+        <div className="transcript-panel__status">
+          <span className={`status-dot ${isListening ? "status-dot--live" : ""}`} />
+          <span>{isListening ? "Dinleniyor…" : "Beklemede"}</span>
+        </div>
+        <select
+          value={lang}
+          onChange={(e) => onLanguageChange(e.target.value)}
+          className="transcript-panel__lang"
+          disabled={isListening}
+        >
+          <option value="tr-TR">Türkçe</option>
+          <option value="en-US">English (US)</option>
+          <option value="de-DE">Deutsch</option>
+          <option value="fr-FR">Français</option>
+        </select>
+      </div>
+
+      {error && <div className="error transcript-panel__error">{error}</div>}
+
+      <div className="transcript-panel__actions">
+        <button className="btn btn--primary btn--sm" onClick={onToggle}>
+          {isListening ? "Durdur" : "Başlat"}
+        </button>
+        <button className="btn btn--ghost btn--sm" onClick={onCopy} disabled={!fullText}>
+          Kopyala
+        </button>
+        <button className="btn btn--ghost btn--sm" onClick={onClear} disabled={segments.length === 0}>
+          Temizle
+        </button>
+      </div>
+
+      <div className="transcript-panel__list" role="log" aria-live="polite" aria-label="Canlı transkript">
+        {segments.length === 0 && (
+          <p className="hint transcript-panel__empty">
+            {isListening
+              ? "Konuşma algılanıyor…"
+              : "Transkripsiyon başlatıldığında buraya yazılacak."}
+          </p>
+        )}
+        {segments.map((seg) => (
+          <div
+            key={seg.id}
+            className={`transcript-seg ${seg.isFinal ? "transcript-seg--final" : "transcript-seg--interim"}`}
+          >
+            <span className="transcript-seg__time">
+              {new Date(seg.timestamp).toLocaleTimeString("tr-TR", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })}
+            </span>
+            <span className="transcript-seg__text">{seg.text}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

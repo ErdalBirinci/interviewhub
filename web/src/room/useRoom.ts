@@ -664,6 +664,7 @@ export function useRoom(options: UseRoomOptions) {
     selfInfo,
     localPreview,
     screenActive: Boolean(screenStream),
+    screenStream,
     join,
     leave,
     toggleMic,

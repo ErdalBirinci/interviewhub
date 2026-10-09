@@ -6,20 +6,41 @@ import { CFG, linkedinEnabled } from "./config";
 import { mountRoutes } from "./routes";
 import { createIo } from "./rtc";
 import { securityMiddleware } from "./security";
+import { log, metrics } from "./metrics";
 
 const app = express();
 app.disable("x-powered-by");
 app.use(express.json({ limit: "1mb" }));
 app.use(securityMiddleware);
 
-// Basit istek logu
+/* --------------------- istek metrikleri + yapili log --------------------- */
 app.use((req, res, next) => {
   const start = Date.now();
   res.on("finish", () => {
     if (req.path.startsWith("/socket.io")) return;
     const ms = Date.now() - start;
-    if (res.statusCode >= 400 || ms > 1500) {
-      console.log(`${req.method} ${req.path} -> ${res.statusCode} (${ms}ms)`);
+    const route = (req as { route?: { path?: string } }).route?.path ?? req.path;
+    const statusClass = `${Math.floor(res.statusCode / 100)}xx`;
+    metrics.inc("http_requests_total", {
+      method: req.method,
+      route,
+      status: statusClass,
+    });
+    metrics.observe("http_request_duration_ms", ms);
+    if (res.statusCode >= 500) {
+      log("error", "http_5xx", {
+        method: req.method,
+        path: req.path,
+        status: res.statusCode,
+        ms,
+      });
+    } else if (res.statusCode >= 400 || ms > 1500) {
+      log("warn", "http_4xx_or_slow", {
+        method: req.method,
+        path: req.path,
+        status: res.statusCode,
+        ms,
+      });
     }
   });
   next();
@@ -34,12 +55,17 @@ const io = createIo(server);
 
 // Canli saglik raporu (nydmonitor / `npm run status` icin).
 app.get("/api/health", (_req, res) => {
+  const rooms = io.sockets.adapter.rooms.size;
+  const clients = io.sockets.sockets.size;
+  metrics.setGauge("live_rooms", rooms);
+  metrics.setGauge("connected_clients", clients);
+  metrics.setGauge("uptime_sec", Math.round(process.uptime()));
   res.json({
     ok: true,
     uptimeSec: Math.round(process.uptime()),
     pid: process.pid,
-    rooms: io.sockets.adapter.rooms.size,
-    clients: io.sockets.sockets.size,
+    rooms,
+    clients,
     linkedin: linkedinEnabled(),
     demo: CFG.ALLOW_DEMO,
     time: new Date().toISOString(),
@@ -80,10 +106,10 @@ server.on("error", (err: NodeJS.ErrnoException) => {
 
 // Sunucu, tek bir beklenmeyen hata yuzunden kapanmasin.
 process.on("uncaughtException", (err) => {
-  console.error("[fatal] yakalanmamistis:", err);
+  log("error", "uncaught_exception", { message: (err as Error).message });
 });
 process.on("unhandledRejection", (reason) => {
-  console.error("[fatal] islenmemis promise:", reason);
+  log("error", "unhandled_rejection", { reason: String(reason) });
 });
 
 // Duzgun kapanis: port hemen serbest kalsin (yeniden baslatma hizli olsun).
@@ -100,11 +126,20 @@ process.on("SIGINT", () => shutdown("SIGINT"));
 process.on("SIGTERM", () => shutdown("SIGTERM"));
 
 server.listen(CFG.PORT, () => {
+  log("info", "server_started", {
+    port: CFG.PORT,
+    publicUrl: CFG.PUBLIC_URL,
+    linkedin: linkedinEnabled(),
+    demo: CFG.ALLOW_DEMO,
+    ai: Boolean(CFG.AI_API_KEY),
+  });
   console.log("\n  InterviewHub sunucusu hazir");
   console.log(`  API      : ${CFG.PUBLIC_URL}`);
   console.log(`  Web (ugrama): ${CFG.WEB_URL}`);
   console.log(`  LinkedIn OAuth: ${linkedinEnabled() ? "ACIK" : "KAPALI (demo girisi acik: " + CFG.ALLOW_DEMO + ")"}`);
+  console.log(`  AI degerlendirme: ${CFG.AI_API_KEY ? "ACIK (" + CFG.AI_MODEL + ")" : "KAPALI (AI_API_KEY gerekli)"}`);
   console.log(`  Statik web: ${hasWeb ? CFG.WEB_DIST : "bulunamadi (npm run build -w @ih/web)"}`);
   console.log(`  Saglik   : ${CFG.PUBLIC_URL}/api/health`);
+  console.log(`  Metrikler: ${CFG.PUBLIC_URL}/api/metrics`);
   console.log("");
 });
