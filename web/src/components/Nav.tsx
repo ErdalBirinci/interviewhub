@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../lib/auth";
+import { useTranslation } from "../i18n/useTranslation";
+import LanguageSelector from "./LanguageSelector";
 
 const THEME_KEY = "ih_theme";
 
@@ -23,6 +25,7 @@ function MoonIcon() {
 
 export default function Nav() {
   const { me, loading, logout, demoEnabled } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const onLanding = pathname === "/" && !me;
@@ -52,23 +55,23 @@ export default function Nav() {
       <Link to="/" className="nav__brand">
         <span className="nav__logo">IH</span>
         <span>
-          InterviewHub
-          <small>LinkedIn Görüşme Odaları</small>
+          {t("app.name")}
+          <small>{t("app.tagline")}</small>
         </span>
       </Link>
 
       <nav className="nav__links">
         {onLanding ? (
           <>
-            <a href="#ozellikler">Özellikler</a>
-            <a href="#nasil">Nasıl çalışır</a>
-            <a href="#guvenlik">Güvenlik</a>
-            <a href="#sss">SSS</a>
+            <a href="#ozellikler">{t("landing.features.title")}</a>
+            <a href="#nasil">{t("landing.steps.title")}</a>
+            <a href="#guvenlik">{t("landing.faq.title")}</a>
+            <a href="#sss">{t("landing.faq.title")}</a>
           </>
         ) : (
           <>
-            <Link to="/dashboard">Görüşmeler</Link>
-            <Link to="/profile">Profilim</Link>
+            <Link to="/dashboard">{t("nav.dashboard")}</Link>
+            <Link to="/profile">{t("nav.profile")}</Link>
           </>
         )}
       </nav>
@@ -87,11 +90,12 @@ export default function Nav() {
               {me.name}
               {demoEnabled && me.provider === "demo" && <em className="chip__tag">demo</em>}
             </span>
+            <LanguageSelector />
             <button
               className="btn btn--ghost nav__theme"
               onClick={toggleTheme}
-              title={theme === "dark" ? "Açık temaya geç" : "Koyu temaya geç"}
-              aria-label={theme === "dark" ? "Açık tema" : "Koyu tema"}
+              title={theme === "dark" ? t("accessibility.toggleTheme") + " (Açık)" : t("accessibility.toggleTheme") + " (Koyu)"}
+              aria-label={theme === "dark" ? t("accessibility.toggleTheme") : t("accessibility.toggleTheme")}
             >
               {theme === "dark" ? <SunIcon /> : <MoonIcon />}
             </button>
@@ -101,16 +105,16 @@ export default function Nav() {
                 void logout().then(() => navigate("/"));
               }}
             >
-              Çıkış
+              {t("nav.logout")}
             </button>
           </>
         ) : onLanding ? (
           <a href="#giris" className="btn btn--primary">
-            Giriş yap
+            {t("nav.login")}
           </a>
         ) : (
           <Link to="/dashboard" className="btn btn--primary">
-            Giriş yap
+            {t("nav.login")}
           </Link>
         )}
       </div>

@@ -1,0 +1,332 @@
+{
+  "app": {
+    "name": "InterviewHub",
+    "tagline": "带 LinkedIn 资料的视频面试房间",
+    "description": "InterviewHub - 面向通过 LinkedIn 申请的候选人的视频面试房间。面试期间可查看候选人的 LinkedIn 资料。"
+  },
+  "nav": {
+    "home": "首页",
+    "dashboard": "面试管理",
+    "profile": "我的资料",
+    "login": "登录",
+    "logout": "登出",
+    "theme": "主题",
+    "language": "语言"
+  },
+  "landing": {
+    "hero": {
+      "title": "InterviewHub",
+      "subtitle": "带 LinkedIn 资料的视频面试房间",
+      "description": "面试期间，候选人的 LinkedIn 资料始终显示在屏幕上。所需一切，尽在一屏。",
+      "ctaPrimary": "使用 LinkedIn 连接",
+      "ctaSecondary": "立即体验 →",
+      "demoNotice": "LinkedIn OAuth 未配置 — 演示模式激活"
+    },
+    "features": {
+      "title": "一切尽在一屏",
+      "items": [
+        {
+          "title": "侧边栏显示 LinkedIn 资料",
+          "desc": "候选人资料全程可见"
+        },
+        {
+          "title": "端到端 WebRTC 视频",
+          "desc": "直接点对点连接，媒体流不经过服务器"
+        },
+        {
+          "title": "屏幕共享",
+          "desc": "一键共享屏幕"
+        },
+        {
+          "title": "会中聊天",
+          "desc": "面试中记笔记或分享链接"
+        },
+        {
+          "title": "Chrome 扩展",
+          "desc": "直接从 LinkedIn 资料页发起面试"
+        },
+        {
+          "title": "数据所有权与隐私",
+          "desc": "数据归您所有，无第三方追踪"
+        }
+      ]
+    },
+    "steps": {
+      "title": "三步开启实时面试",
+      "steps": [
+        "使用 LinkedIn 连接",
+        "打开房间，分享链接",
+        "开始面试，查看资料"
+      ]
+    },
+    "footer": {
+      "candidateProfile": "候选人面试时，资料始终在您身旁",
+      "webrtc": "音视频从不经过我们的服务器",
+      "extension": "在 LinkedIn 上用 Chrome 扩展发起会议"
+    },
+    "faq": {
+      "title": "常见问题",
+      "items": [
+        {
+          "q": "LinkedIn 数据是通过 API 获取的吗？",
+          "a": "不是。LinkedIn API 不向第三方提供资料数据。资料信息由候选人自行填写，通过 LinkedIn OAuth 验证（姓名、照片、资料链接）。"
+        },
+        {
+          "q": "会录制视频/音频吗？",
+          "a": "默认不录制。可在浏览器本地录制 (MediaRecorder)。媒体流不经过服务器 —— 采用点对点 WebRTC。"
+        },
+        {
+          "q": "有 TURN 服务器吗？",
+          "a": "默认仅提供 STUN。对称型 NAT 可能需要 TURN —— 请配置 TURN_URL、TURN_USERNAME、TURN_CREDENTIAL 环境变量。"
+        },
+        {
+          "q": "可以不使用 LinkedIn 吗？",
+          "a": "可以，演示模式无需 LinkedIn OAuth 即可使用。"
+        }
+      ]
+    },
+    "cta": {
+      "title": "立即开启您的第一场面试",
+      "button": "使用 LinkedIn 连接"
+    }
+  },
+  "auth": {
+    "loginTitle": "登录以继续",
+    "loginNote": "您的身份将通过 LinkedIn 验证；您将使用自己的资料进入房间。",
+    "linkedInBtn": "使用 LinkedIn 继续",
+    "demoBtn": "演示登录",
+    "demoName": "演示用姓名",
+    "demoPlaceholder": "例：张三",
+    "continue": "继续",
+    "back": "返回",
+    "oauthNotConfigured": "LinkedIn OAuth 未配置。请使用演示登录。",
+    "profileRequired": "完善资料以参加面试",
+    "editProfile": "编辑资料"
+  },
+  "dashboard": {
+    "title": "我的面试",
+    "empty": "暂无面试。创建您的第一个房间。",
+    "createRoom": "创建房间",
+    "roomTitle": "房间标题",
+    "roomTitlePlaceholder": "例：前端开发工程师面试",
+    "create": "创建",
+    "cancel": "取消",
+    "rooms": "房间",
+    "host": "主持人",
+    "participants": "参与者",
+    "created": "创建时间",
+    "actions": "操作",
+    "join": "加入",
+    "copyLink": "复制链接",
+    "delete": "删除",
+    "confirmDelete": "确定删除此房间？",
+    "noRooms": "您尚未创建任何房间。"
+  },
+  "profile": {
+    "title": "我的资料",
+    "subtitle": "加入房间时，这些信息将显示给其他参与者（若启用共享）。",
+    "sections": {
+      "basic": "基本信息",
+      "experience": "工作经历",
+      "education": "教育背景",
+      "skills": "技能",
+      "sharing": "共享设置"
+    },
+    "fields": {
+      "linkedinUrl": "LinkedIn 资料链接",
+      "fullName": "全名",
+      "headline": "标题",
+      "location": "所在地",
+      "summary": "简介",
+      "shareProfile": "与其他参与者共享我的资料"
+    },
+    "experience": {
+      "title": "职位",
+      "company": "公司",
+      "period": "时间段",
+      "description": "描述",
+      "add": "添加经历",
+      "remove": "移除"
+    },
+    "education": {
+      "school": "学校",
+      "degree": "学位",
+      "period": "时间段",
+      "add": "添加教育",
+      "remove": "移除"
+    },
+    "skills": {
+      "placeholder": "输入技能后按回车",
+      "add": "添加技能"
+    },
+    "save": "保存资料",
+    "saved": "资料已保存！",
+    "note": "数据为自我声明。LinkedIn API 不向第三方提供资料数据。验证通过 LinkedIn OAuth（姓名、照片、资料链接）。"
+  },
+  "room": {
+    "title": "面试房间",
+    "loading": "正在准备房间…",
+    "notFound": "未找到房间",
+    "backToDashboard": "返回面试列表",
+    "joinScreen": {
+      "title": "加入面试",
+      "yourName": "显示名称",
+      "namePlaceholder": "姓名",
+      "preview": "预览",
+      "micOn": "麦克风开启",
+      "micOff": "麦克风关闭",
+      "camOn": "摄像头开启",
+      "camOff": "摄像头关闭",
+      "join": "加入面试",
+      "rejoin": "重新加入",
+      "connecting": "连接中…",
+      "profileHint": "资料未共享。{{link}}"
+    },
+    "stage": {
+      "copyInvite": "复制邀请链接",
+      "copied": "已复制 ✓",
+      "participants": "人",
+      "leave": "离开"
+    },
+    "controls": {
+      "mic": "麦克风",
+      "micMuted": "静音",
+      "cam": "摄像头",
+      "camOff": "关闭",
+      "screen": "屏幕",
+      "screenSharing": "共享中",
+      "record": "录制",
+      "recording": "录制中 {{time}}",
+      "paused": "已暂停",
+      "transcript": "实时字幕",
+      "transcriptActive": "识别中",
+      "panel": "面板",
+      "participants": "参与者",
+      "leave": "离开",
+      "shortcuts": {
+        "mic": "M",
+        "cam": "C",
+        "screen": "S",
+        "panel": "P",
+        "record": "R",
+        "transcript": "T"
+      }
+    },
+    "sidePanel": {
+      "tabs": {
+        "profile": "LinkedIn 资料",
+        "chat": "聊天",
+        "transcript": "实时字幕",
+        "ai": "AI 评估"
+      },
+      "profile": {
+        "noProfile": "暂无共享资料。",
+        "editProfile": "编辑我的资料",
+        "candidateNote": "候选人使用 LinkedIn 账号加入并启用共享时，资料将显示在此。"
+      },
+      "chat": {
+        "empty": "暂无消息。可用于记笔记或分享链接。",
+        "placeholder": "输入消息…",
+        "send": "发送",
+        "disconnected": "已断开"
+      },
+      "transcript": {
+        "status": {
+          "listening": "聆听中…",
+          "idle": "待机"
+        },
+        "languages": {
+          "tr-TR": "土耳其语",
+          "en-US": "英语 (美国)",
+          "de-DE": "德语",
+          "fr-FR": "法语"
+        },
+        "actions": {
+          "toggle": "{{action}}",
+          "copy": "复制",
+          "clear": "清空"
+        },
+        "empty": {
+          "listening": "正在识别语音…",
+          "idle": "启动实时字幕后将显示在这里。"
+        }
+      },
+      "ai": {
+        "title": "AI 评估助手",
+        "hostOnly": "仅房间主持人（面试官）可使用 AI 评估。",
+        "position": "职位 (可选)",
+        "positionPlaceholder": "例：高级前端工程师",
+        "notes": "面试笔记",
+        "notesPlaceholder": "候选人回答、印象、技术细节…",
+        "evaluate": "评估",
+        "evaluating": "评估中…",
+        "result": {
+          "score": "总分",
+          "recommendation": {
+            "hire": "✓ 录用",
+            "no_hire": "✗ 不录用",
+            "uncertain": "? 不确定"
+          },
+          "rubric": "评分细则",
+          "strengths": "优势",
+          "concerns": "待改进",
+          "summary": "总结",
+          "model": "模型"
+        },
+        "actions": {
+          "copy": "复制报告",
+          "download": "下载 (.txt)"
+        },
+        "disclaimer": "评估仅基于您的笔记和候选人共享的资料。音视频绝不发送给 AI。",
+        "notConfigured": "AI 评估未配置 (需要 AI_API_KEY)。"
+      }
+    },
+    "states": {
+      "micReady": "麦克风就绪",
+      "camReady": "摄像头就绪",
+      "mediaError": "媒体错误: {{error}}",
+      "joinError": "加入失败: {{error}}",
+      "authRequired": "加入此房间需要登录。"
+    }
+  },
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "copy": "复制",
+    "copied": "已复制！",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "loading": "加载中…",
+    "error": "错误",
+    "success": "成功",
+    "confirm": "确认",
+    "yes": "是",
+    "no": "否",
+    "optional": "可选",
+    "required": "必填",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "actions": "操作",
+    "none": "无",
+    "empty": "无数据"
+  },
+  "errors": {
+    "network": "无法连接服务器。请检查网络连接。",
+    "unauthorized": "会话已过期。请重新登录。",
+    "forbidden": "无权执行此操作。",
+    "notFound": "资源未找到。",
+    "serverError": "服务器错误。请稍后重试。",
+    "validation": "请检查输入内容。"
+  },
+  "accessibility": {
+    "skipLink": "跳转到主要内容",
+    "mainContent": "主要内容",
+    "navigation": "导航",
+    "toggleTheme": "切换主题",
+    "toggleLanguage": "切换语言"
+  }
+}

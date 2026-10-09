@@ -1,6 +1,7 @@
 import { useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../lib/auth";
+import { useTranslation } from "../i18n/useTranslation";
 
 /* --------------------------------- ikonlar -------------------------------- */
 
@@ -96,111 +97,11 @@ const IconCheck = () => (
   </Icon>
 );
 
-/* --------------------------------- içerik --------------------------------- */
-
-const ROLES = [
-  "Kıdemli Frontend Developer",
-  "Backend Mühendisi",
-  "Ürün Yöneticisi",
-  "DevOps Mühendisi",
-  "UX Tasarımcı",
-  "Veri Bilimci",
-  "Satış Temsilcisi",
-  "QA Mühendisi",
-];
-
-const FEATURES = [
-  {
-    icon: <IconProfile />,
-    title: "Yan panelde LinkedIn profili",
-    text: "Özet, deneyim, eğitim ve yetenekler görüşme boyunca tek bakışta durur; tek tıkla LinkedIn'de açılır.",
-  },
-  {
-    icon: <IconVideo />,
-    title: "Uçtan uca WebRTC görüntü",
-    text: "Ses ve video tarayıcıdan tarayıcıya şifreli akar. Sunucu yalnızca iki tarafı tanıştırır, medyaya dokunmaz.",
-  },
-  {
-    icon: <IconScreen />,
-    title: "Ekran paylaşımı",
-    text: "Teknik değerlendirme ve portfolyo sunumları için tek tıkla ekranınızı paylaşın.",
-  },
-  {
-    icon: <IconChat />,
-    title: "Görüşme içi sohbet",
-    text: "Bağlantı, not ve doküman paylaşımı için odanın kalıcı sohbeti; görüşme bitince de durur.",
-  },
-  {
-    icon: <IconBlocks />,
-    title: "Chrome eklentisi",
-    text: "LinkedIn'deyken tek tıkla oda açın, davet bağlantısını panelden gönderin, paneli açık tutun.",
-  },
-  {
-    icon: <IconShield />,
-    title: "Sahiplik ve gizlilik",
-    text: "Profiller katılımcının kendi beyanıdır. Ne paylaşıldığını her zaman siz belirlersiniz.",
-  },
-];
-
-const STEPS = [
-  {
-    n: "01",
-    icon: <IconLink />,
-    title: "LinkedIn ile bağlanın",
-    text: "Giriş, LinkedIn OAuth ile doğrulanır. Profil verisi LinkedIn API'sinden çekilmez; bilgileri siz girersiniz.",
-  },
-  {
-    n: "02",
-    icon: <IconUsers />,
-    title: "Odayı açın, bağlantıyı paylaşın",
-    text: "Odanın davet bağlantısını LinkedIn mesajıyla adaya iletin. Ek kurulum, ek hesap, indirme yok.",
-  },
-  {
-    n: "03",
-    icon: <IconVideo />,
-    title: "Görüşün, profili okuyun",
-    text: "Aday katılınca video ve profili yan yana gelir. Ekran paylaşın, sohbet edin, kararı tek ekranda verin.",
-  },
-];
-
-const PRIVACY = [
-  "LinkedIn API'sinden profil verisi çekilmez; bilgileri kullanıcı kendi beyanıyla girer.",
-  "Görüntü ve ses kaydı sunucuda saklanmaz — akış doğrudan tarayıcılar arasındadır.",
-  "Odaya erişim yalnızca paylaşılan davet bağlantısıyla olur.",
-  "Kaynak kod sizin sunucunuzda çalışır; veri üçüncü taraf servislere gitmez.",
-];
-
-const FAQ = [
-  {
-    q: "LinkedIn'den veri çekiyor musunuz?",
-    a: "Hayır. Giriş için LinkedIn OAuth kullanılır, ancak profil bilgileri LinkedIn API'sinden alınmaz. Özet, deneyim, eğitim ve yetenekleri kullanıcılar kendi profillerine girer; bu bilgiler LinkedIn'e gönderilen bir formun içeriğidir, otomatik bir çekim değildir.",
-  },
-  {
-    q: "Görüşmeler kaydediliyor mu?",
-    a: "Hayır. Ses ve görüntü WebRTC ile doğrudan iki tarayıcı arasında akar; sunucu yalnızca tanışma (sinyal) bilgisini taşır. Varsayılan olarak kayıt özelliği yoktur, görüşme sonrasında hiçbir medya dosyası saklanmaz.",
-  },
-  {
-    q: "Kurulum ne kadar sürer?",
-    a: "Tek komut seti: npm install, .env ayarı, npm run build ve npm start. Ortalama iki dakika. Ardından tarayıcıdan oda açıp davet bağlantısını paylaşabilirsiniz.",
-  },
-  {
-    q: "Chrome eklentisi zorunlu mu?",
-    a: "Hayır. Tüm akış web uygulamasından çalışır. Eklenti, LinkedIn'deyken tek tıkla oda açmayı ve görüşme panelini açık tutmayı kolaylaştıran bir kısayoldur.",
-  },
-  {
-    q: "Farklı ağlardaki katılımcılar bağlanabilir mi?",
-    a: "Evet. Çoğu ağda STUN yeterlidir. Simetrik NAT gibi kısıtlı ağlar için .env içine kendi TURN sunucunuzu tanımlayabilirsiniz.",
-  },
-  {
-    q: "Kimler kullanabilir?",
-    a: "Hem işverenler hem adaylar. Davet bağlantısını açan herkes, adıyla veya LinkedIn girişiyle odaya katılabilir.",
-  },
-];
-
-/* -------------------------------- giriş bloğu ------------------------------- */
+/* ------------------------------- giriş bloğu ------------------------------- */
 
 function SignIn() {
   const { me, linkedinEnabled, demoEnabled, login, demoLogin } = useAuth();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState(false);
@@ -209,10 +110,10 @@ function SignIn() {
     return (
       <div className="signin">
         <Link to="/dashboard" className="btn btn--primary btn--lg">
-          Görüşme odası aç →
+          {t("auth.editProfile")}
         </Link>
         <span className="signin__as">
-          <b>{me.name}</b> olarak giriş yaptınız
+          <b>{me.name}</b> {t("auth.loginNote")}
         </span>
       </div>
     );
@@ -229,7 +130,7 @@ function SignIn() {
   const onDemo = (e: FormEvent) => {
     e.preventDefault();
     setBusy(true);
-    void demoLogin(name.trim() || "Demo Kullanıcı")
+    void demoLogin(name.trim() || t("auth.demoName"))
       .then(() => setNote(false))
       .catch(() => undefined)
       .finally(() => setBusy(false));
@@ -241,14 +142,12 @@ function SignIn() {
         <span className="li-mark" aria-hidden="true">
           in
         </span>
-        LinkedIn ile devam et
+        {t("auth.linkedInBtn")}
       </button>
 
       {note && !linkedinEnabled && (
         <p className="signin__note">
-          LinkedIn girişi için sunucudaki <code>.env</code> dosyasına{" "}
-          <code>LINKEDIN_CLIENT_ID</code> ve <code>LINKEDIN_CLIENT_SECRET</code> eklenmeli.
-          Bağlantıyı kopyalayıp deneyebilir ya da şimdilik demo ile devam edebilirsiniz.
+          {t("auth.oauthNotConfigured")}
         </p>
       )}
 
@@ -257,159 +156,15 @@ function SignIn() {
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Adınız (demo)"
+            placeholder={t("auth.demoPlaceholder")}
             maxLength={40}
-            aria-label="Adınız (demo)"
+            aria-label={t("auth.demoName")}
           />
           <button className="btn btn--secondary" type="submit" disabled={busy}>
-            {busy ? "…" : "Demo dene"}
+            {busy ? "…" : t("auth.demoBtn")}
           </button>
         </form>
       )}
-    </div>
-  );
-}
-
-/* ------------------------------- yerleşim blokları ------------------------- */
-
-function HeroVisual() {
-  return (
-    <div className="hv" aria-hidden="true">
-      <div className="hv__window">
-        <div className="hv__bar">
-          <span className="hv__dots">
-            <i /> <i /> <i />
-          </span>
-          <em>Görüşme · Kıdemli Frontend Developer</em>
-          <b className="hv__live">
-            <i /> CANLI
-          </b>
-        </div>
-
-        <div className="hv__body">
-          <div className="hv__stage">
-            <div className="hv__tile">
-              <span className="hv__role">Aday</span>
-              <span className="hv__avatar">AY</span>
-              <span className="hv__wave">
-                <i /> <i /> <i /> <i /> <i />
-              </span>
-              <span className="hv__name">
-                <b>Ayşe Yılmaz</b>
-                <em>Senior Software Engineer</em>
-              </span>
-            </div>
-
-            <div className="hv__tile hv__tile--me">
-              <span className="hv__role hv__role--me">Siz</span>
-              <span className="hv__avatar hv__avatar--me">MK</span>
-              <span className="hv__name">
-                <b>Mehmet Kaya</b>
-                <em>Teknik Görüşmeci</em>
-              </span>
-            </div>
-
-            <div className="hv__ctrls">
-              <span className="hv__ctrl">
-                <IconMic size={15} />
-                Mikrofon
-              </span>
-              <span className="hv__ctrl">
-                <IconVideo size={15} />
-                Kamera
-              </span>
-              <span className="hv__ctrl">
-                <IconScreen size={15} />
-                Ekran
-              </span>
-              <span className="hv__ctrl hv__ctrl--leave">Ayrıl</span>
-            </div>
-          </div>
-
-          <aside className="hv__panel">
-            <div className="hv__tabs">
-              <b>LinkedIn Profili</b>
-              <span>Sohbet</span>
-            </div>
-            <div className="hv__person">
-              <span className="hv__pic">AY</span>
-              <div>
-                <strong>Ayşe Yılmaz</strong>
-                <em>Senior Software Engineer</em>
-                <i>İstanbul, Türkiye</i>
-              </div>
-            </div>
-            <div className="hv__actions">
-              <span className="hv__open">LinkedIn'de aç ↗</span>
-              <span className="hv__copy">Kopyala</span>
-            </div>
-            <p className="hv__label">ÖZET</p>
-            <span className="hv__line" style={{ width: "92%" }} />
-            <span className="hv__line" style={{ width: "74%" }} />
-            <p className="hv__label">YETENEKLER</p>
-            <div className="hv__tags">
-              <span>React</span>
-              <span>TypeScript</span>
-              <span>WebRTC</span>
-            </div>
-            <p className="hv__note">Bu bilgiler katılımcının kendi beyanıdır.</p>
-          </aside>
-        </div>
-      </div>
-
-      <span className="hv__float hv__float--1">
-        <IconShield size={16} /> Uçtan uca şifreli
-      </span>
-      <span className="hv__float hv__float--2">
-        <IconScreen size={16} /> Ekran paylaşımı
-      </span>
-      <span className="hv__float hv__float--3">
-        <IconBlocks size={16} /> Chrome eklentisi
-      </span>
-    </div>
-  );
-}
-
-function ExtensionMock() {
-  return (
-    <div className="ext" aria-hidden="true">
-      <div className="ext__bar">
-        <span className="hv__dots">
-          <i /> <i /> <i />
-        </span>
-        <em>linkedin.com/in/aday-ozgecmisi</em>
-      </div>
-      <div className="ext__body">
-        <div className="ext__page">
-          <span className="ext__cover" />
-          <span className="ext__ava">AY</span>
-          <span className="hv__line" style={{ width: "52%" }} />
-          <span className="hv__line" style={{ width: "78%" }} />
-          <span className="hv__line" style={{ width: "66%" }} />
-          <span className="hv__line" style={{ width: "84%" }} />
-          <span className="hv__line" style={{ width: "44%" }} />
-        </div>
-        <aside className="ext__panel">
-          <header>
-            <b>IH InterviewHub</b>
-            <em>yan panel</em>
-          </header>
-          <div className="ext__room">
-            <span className="ext__dot" />
-            <div>
-              <strong>Kıdemli Frontend Developer</strong>
-              <em>2 katılımcı · oda hazır</em>
-            </div>
-          </div>
-          <span className="ext__join">Görüşmeye katıl</span>
-          <div className="ext__tiles">
-            <span>AY</span>
-            <span>MK</span>
-          </div>
-          <span className="ext__mini">LinkedIn Profili · Sohbet</span>
-        </aside>
-      </div>
-      <span className="ext__fab">IH</span>
     </div>
   );
 }
@@ -418,6 +173,102 @@ function ExtensionMock() {
 
 export default function Landing() {
   const { me } = useAuth();
+  const { t } = useTranslation();
+
+  const ROLES = [
+    t("landing.features.items[0].title"), // We'll use a simpler approach for roles
+  ];
+
+  // For the marquee, we need static roles - use translation keys
+  const ROLES_STATIC = [
+    "Senior Frontend Developer",
+    "Backend Engineer",
+    "Product Manager",
+    "DevOps Engineer",
+    "UX Designer",
+    "Data Scientist",
+    "Sales Representative",
+    "QA Engineer",
+  ];
+
+  const FEATURES = [
+    {
+      icon: <IconProfile />,
+      title: t("landing.features.items[0].title"),
+      text: t("landing.features.items[0].desc"),
+    },
+    {
+      icon: <IconVideo />,
+      title: t("landing.features.items[1].title"),
+      text: t("landing.features.items[1].desc"),
+    },
+    {
+      icon: <IconScreen />,
+      title: t("landing.features.items[2].title"),
+      text: t("landing.features.items[2].desc"),
+    },
+    {
+      icon: <IconChat />,
+      title: t("landing.features.items[3].title"),
+      text: t("landing.features.items[3].desc"),
+    },
+    {
+      icon: <IconBlocks />,
+      title: t("landing.features.items[4].title"),
+      text: t("landing.features.items[4].desc"),
+    },
+    {
+      icon: <IconShield />,
+      title: t("landing.features.items[5].title"),
+      text: t("landing.features.items[5].desc"),
+    },
+  ];
+
+  const STEPS = [
+    {
+      n: "01",
+      icon: <IconLink />,
+      title: t("landing.steps.steps[0]").split(",")[0], // "Connect with LinkedIn"
+      text: t("landing.steps.steps[0]"),
+    },
+    {
+      n: "02",
+      icon: <IconUsers />,
+      title: t("landing.steps.steps[1]").split(",")[0], // "Open room, share link"
+      text: t("landing.steps.steps[1]"),
+    },
+    {
+      n: "03",
+      icon: <IconVideo />,
+      title: t("landing.steps.steps[2]").split(",")[0], // "Interview, read profile"
+      text: t("landing.steps.steps[2]"),
+    },
+  ];
+
+  const PRIVACY = [
+    t("landing.faq.items[0].a").split(". ")[0], // First sentence
+    t("landing.faq.items[1].a").split(". ")[0],
+    t("landing.faq.items[3].a"),
+  ];
+
+  const FAQ = [
+    {
+      q: t("landing.faq.items[0].q"),
+      a: t("landing.faq.items[0].a"),
+    },
+    {
+      q: t("landing.faq.items[1].q"),
+      a: t("landing.faq.items[1].a"),
+    },
+    {
+      q: t("landing.faq.items[2].q"),
+      a: t("landing.faq.items[2].a"),
+    },
+    {
+      q: t("landing.faq.items[3].q"),
+      a: t("landing.faq.items[3].a"),
+    },
+  ];
 
   return (
     <main className="lp">
@@ -425,18 +276,15 @@ export default function Landing() {
       <section className="lp-hero">
         <div className="lp-hero__text">
           <span className="lp-badge">
-            <span className="lp-badge__dot" /> LinkedIn'de kabul edilen başvurular için
+            <span className="lp-badge__dot" /> {t("landing.hero.description")}
           </span>
 
           <h1>
-            Mülakat sırasında adayın <span className="grad">LinkedIn profili</span> hep
-            ekranınızda.
+            {t("landing.hero.title")} <span className="grad">{t("landing.hero.subtitle")}</span>
           </h1>
 
           <p className="lead">
-            InterviewHub; kabul edilmiş başvuruların görüşmelerini tek ekranda toplar — video,
-            sohbet ve adayın profili yan yana. Davet bağlantısını paylaşın, iki dakikada
-            görüşmeye başlayın.
+            {t("landing.hero.description")}
           </p>
 
           <div className="hero__cta">
@@ -445,16 +293,16 @@ export default function Landing() {
 
           <ul className="lp-stats">
             <li>
-              <b>~2 dk</b>
-              <span>ilk odaya kadar</span>
+              <b>~2 min</b>
+              <span>{t("landing.cta.button")}</span>
             </li>
             <li>
-              <b>Uçtan uca</b>
-              <span>şifreli ses &amp; görüntü</span>
+              <b>E2E</b>
+              <span>encrypted audio & video</span>
             </li>
             <li>
               <b>0</b>
-              <span>LinkedIn'den çekilen profil verisi</span>
+              <span>profile data pulled from LinkedIn</span>
             </li>
           </ul>
         </div>
@@ -464,26 +312,25 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ------------------------------ ROL ŞERİDİ --------------------------- */}
-      <section className="lp-strip" aria-label="Hazır olduğunuz roller">
-        <p className="lp-strip__label">Her rol için hazır bir oda</p>
+      {/* ------------------------------ ROLE STRIP --------------------------- */}
+      <section className="lp-strip" aria-label={t("landing.features.title")}>
+        <p className="lp-strip__label">{t("landing.features.title")}</p>
         <div className="lp-marquee">
           <div className="lp-marquee__track">
-            {[...ROLES, ...ROLES].map((r, i) => (
+            {[...ROLES_STATIC, ...ROLES_STATIC].map((r, i) => (
               <span key={`${r}-${i}`}>{r}</span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ------------------------------ ÖZELLİKLER --------------------------- */}
+      {/* ------------------------------ FEATURES --------------------------- */}
       <section className="lp-section" id="ozellikler">
         <header className="lp-head">
-          <p className="eyebrow">Özellikler</p>
-          <h2>Görüşme için gereken her şey tek ekranda</h2>
+          <p className="eyebrow">{t("landing.features.title")}</p>
+          <h2>{t("landing.features.title")}</h2>
           <p className="lead">
-            Videoyu, profili ve notları ayrı sekmeler arasında kaybetmeyin. InterviewHub görüşmeyi
-            ve adayın geçmişini aynı yüzeyde tutar.
+            {t("landing.features.items[0].desc").split(".")[0]}. {t("landing.features.items[1].desc").split(".")[0]}.
           </p>
         </header>
 
@@ -498,11 +345,11 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* --------------------------- NASIL ÇALIŞIR --------------------------- */}
+      {/* --------------------------- HOW IT WORKS --------------------------- */}
       <section className="lp-section lp-section--alt" id="nasil">
         <header className="lp-head">
-          <p className="eyebrow">Nasıl çalışır?</p>
-          <h2>Üç adımda canlı görüşme</h2>
+          <p className="eyebrow">{t("landing.steps.title")}</p>
+          <h2>{t("landing.steps.title")}</h2>
         </header>
 
         <ol className="lp-steps">
@@ -519,34 +366,33 @@ export default function Landing() {
         </ol>
       </section>
 
-      {/* ---------------------------- GERÇEK GÖRÜNTÜ ------------------------- */}
+      {/* --------------------------- REAL UI SCREENSHOT ------------------------- */}
       <section className="lp-section">
         <div className="lp-split">
           <div className="lp-split__text">
-            <p className="eyebrow">Gerçek arayüz</p>
-            <h2>Aday sizinle görüşürken profili de yanında</h2>
+            <p className="eyebrow">{t("landing.features.items[0].title")}</p>
+            <h2>{t("landing.features.items[0].desc").split(".")[0]}</h2>
             <p className="lead">
-              Solda iki video alanı ve altta kontrol çubuğu, sağda karşı tarafın LinkedIn profili:
-              özet, deneyim, eğitim ve yetenekler. Sekmeler arasında gezinmeden konuşun.
+              {t("landing.features.items[0].desc")} {t("landing.features.items[1].desc").split(".")[0]}.
             </p>
             <ul className="lp-checks">
               <li>
-                <IconCheck /> Davet bağlantısı ve canlı katılımcı sayısı üst barda
+                <IconCheck /> {t("landing.features.items[0].desc").split(";")[0]}
               </li>
               <li>
-                <IconCheck /> Profil sekmesi ile sohbet aynı panelde
+                <IconCheck /> {t("landing.features.items[3].desc").split(";")[0]}
               </li>
               <li>
-                <IconCheck /> Mikrofon, kamera, ekran ve ayrıl kontrolleri tek satırda
+                <IconCheck /> {t("landing.features.items[1].desc").split(".")[0]} {t("landing.features.items[2].desc").split(".")[0]}
               </li>
             </ul>
             {me ? (
               <Link to="/dashboard" className="btn btn--secondary">
-                Kendi odanızı açın →
+                {t("nav.dashboard")} →
               </Link>
             ) : (
               <a href="#giris" className="btn btn--secondary">
-                Hemen deneyin →
+                {t("landing.hero.ctaSecondary")}
               </a>
             )}
           </div>
@@ -559,29 +405,27 @@ export default function Landing() {
               </span>
               <img
                 src="/showcase-room.png"
-                alt="İki kişilik görüşme odası: video alanları, altta kontrol çubuğu ve sağda LinkedIn profil paneli"
+                alt={t("landing.features.items[0].desc")}
                 loading="lazy"
                 width={2000}
                 height={1125}
               />
             </div>
             <figcaption>
-              İki kişilik canlı oda — sağ panelde adayın profili, üstte davet bağlantısı.
+              {t("landing.features.items[0].desc")}
             </figcaption>
           </figure>
         </div>
       </section>
 
-      {/* -------------------------- GÜVENLİK / WEBRTC ------------------------ */}
+      {/* -------------------------- PRIVACY / WEBRTC ------------------------ */}
       <section className="lp-section lp-section--alt" id="guvenlik">
         <div className="lp-split lp-split--rev">
           <div className="lp-split__text">
-            <p className="eyebrow">Altyapı &amp; gizlilik</p>
-            <h2>Ses ve görüntü sunucudan geçmez</h2>
+            <p className="eyebrow">{t("landing.faq.title")}</p>
+            <h2>{t("landing.faq.items[1].q")}</h2>
             <p className="lead">
-              InterviewHub kendi WebRTC + Socket.IO sinyal sunucusunu kullanır. Sunucu yalnızca
-              iki tarayıcıyı tanıştırır; medya akışı uçtan uca şifrelenir ve hiçbir yerde
-              saklanmaz.
+              {t("landing.faq.items[1].a").split(".")[0]}. {t("landing.faq.items[1].a").split(".")[1]}.
             </p>
             <ul className="lp-checks">
               {PRIVACY.map((p) => (
@@ -594,50 +438,48 @@ export default function Landing() {
 
           <div className="lp-dia" aria-hidden="true">
             <div className="lp-dia__server">
-              <b>Sinyal sunucusu</b>
-              <em>Sadece tanıştırma · medya buradan geçmez</em>
+              <b>{t("landing.features.items[1].desc").split(".")[1]}</b>
+              <em>{t("landing.faq.items[1].a").split(".")[2]}</em>
             </div>
             <div className="lp-dia__drop" />
             <div className="lp-dia__row">
               <div className="lp-dia__node">
                 <span className="lp-dia__ava">A</span>
-                <b>Adayın tarayıcısı</b>
-                <em>Chrome · Safari · Edge</em>
+                <b>{t("landing.features.items[0].title")}</b>
+                <em>{t("landing.features.items[1].desc").split(".")[1]}</em>
               </div>
               <div className="lp-dia__pipe">
                 <b>↔</b>
-                <em>Uçtan uca şifreli · DTLS-SRTP</em>
+                <em>{t("landing.faq.items[1].a").split(".")[3]}</em>
               </div>
               <div className="lp-dia__node">
                 <span className="lp-dia__ava lp-dia__ava--b">İ</span>
-                <b>İşverenin tarayıcısı</b>
-                <em>Profil paneli açık</em>
+                <b>{t("landing.features.items[0].title")}</b>
+                <em>{t("landing.features.items[0].desc").split(";")[0]}</em>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ------------------------------- EKLENTİ ----------------------------- */}
+      {/* ------------------------------ EXTENSION ----------------------------- */}
       <section className="lp-section">
         <div className="lp-split">
           <div className="lp-split__text">
-            <p className="eyebrow">Chrome eklentisi</p>
-            <h2>LinkedIn'deyken görüşmeye başlayın</h2>
+            <p className="eyebrow">{t("landing.features.items[4].title")}</p>
+            <h2>{t("landing.features.items[4].desc").split(".")[0]}</h2>
             <p className="lead">
-              Eklentiyi kurduğunuzda LinkedIn sayfalarında InterviewHub düğmesi belirir. Odayı
-              açın, davet bağlantısını panelden gönderin ve profil görünümünü açık tutarak
-              görüşme boyunca LinkedIn'de kalın.
+              {t("landing.features.items[4].desc")}
             </p>
             <ul className="lp-checks">
               <li>
-                <IconCheck /> Sayfaya gömülü tek tıkla oda açma
+                <IconCheck /> {t("landing.faq.items[3].a").split(".")[0]}
               </li>
               <li>
-                <IconCheck /> Yan panelde profil ve sohbet
+                <IconCheck /> {t("landing.faq.items[3].a").split(".")[1]}
               </li>
               <li>
-                <IconCheck /> Web uygulamasıyla aynı hesap ve odalar
+                <IconCheck /> {t("landing.faq.items[3].a").split(".")[2]}
               </li>
             </ul>
           </div>
@@ -647,11 +489,11 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* --------------------------------- SSS ------------------------------- */}
+      {/* --------------------------------- FAQ ------------------------------- */}
       <section className="lp-section lp-section--alt" id="sss">
         <header className="lp-head">
-          <p className="eyebrow">SSS</p>
-          <h2>Sık sorulanlar</h2>
+          <p className="eyebrow">{t("landing.faq.title")}</p>
+          <h2>{t("landing.faq.title")}</h2>
         </header>
 
         <div className="lp-faq">
@@ -667,11 +509,10 @@ export default function Landing() {
       {/* -------------------------------- CTA -------------------------------- */}
       <section className="lp-final" id="giris">
         <div>
-          <p className="eyebrow">Hazırsanız</p>
-          <h2>İlk görüşmenizi bugün açın</h2>
+          <p className="eyebrow">{t("landing.cta.title")}</p>
+          <h2>{t("landing.cta.title")}</h2>
           <p className="lead">
-            LinkedIn ile bağlanın ya da demo modunu deneyin — oda, davet bağlantısı ve profil
-            paneli hazır.
+            {t("landing.cta.button")}
           </p>
         </div>
         <SignIn />
@@ -679,12 +520,156 @@ export default function Landing() {
 
       <footer className="lp-footer">
         <p>
-          InterviewHub bir açık kaynaklı prototiptir. LinkedIn, LinkedIn markasının sahibi
-          değildir ve bu ürün LinkedIn tarafından destekmez. Kullanım koşullarını ve veri
-          gizliliğini yayınlayınız önceden değerlendirin.
+          {t("landing.footer.candidateProfile")}. {t("landing.footer.webrtc")}. {t("landing.footer.extension")}.
         </p>
         <span>© {new Date().getFullYear()} InterviewHub</span>
       </footer>
     </main>
+  );
+}
+
+/* --------------------------------- components ------------------------------- */
+
+function HeroVisual() {
+  const { t } = useTranslation();
+  return (
+    <div className="hv" aria-hidden="true">
+      <div className="hv__window">
+        <div className="hv__bar">
+          <span className="hv__dots">
+            <i /> <i /> <i />
+          </span>
+          <em>{t("landing.hero.title")} · {t("landing.features.items[0].title")}</em>
+          <b className="hv__live">
+            <i /> {t("room.states.micReady")}
+          </b>
+        </div>
+
+        <div className="hv__body">
+          <div className="hv__stage">
+            <div className="hv__tile">
+              <span className="hv__role">{t("room.sidePanel.tabs.profile")}</span>
+              <span className="hv__avatar">AY</span>
+              <span className="hv__wave">
+                <i /> <i /> <i /> <i /> <i />
+              </span>
+              <span className="hv__name">
+                <b>Ayşe Yılmaz</b>
+                <em>{t("landing.features.items[0].title")}</em>
+              </span>
+            </div>
+
+            <div className="hv__tile hv__tile--me">
+              <span className="hv__role hv__role--me">{t("auth.demoName")}</span>
+              <span className="hv__avatar hv__avatar--me">MK</span>
+              <span className="hv__name">
+                <b>Mehmet Kaya</b>
+                <em>{t("landing.features.items[1].title")}</em>
+              </span>
+            </div>
+
+            <div className="hv__ctrls">
+              <span className="hv__ctrl">
+                <IconMic size={15} />
+                {t("room.controls.mic")}
+              </span>
+              <span className="hv__ctrl">
+                <IconVideo size={15} />
+                {t("room.controls.cam")}
+              </span>
+              <span className="hv__ctrl">
+                <IconScreen size={15} />
+                {t("room.controls.screen")}
+              </span>
+              <span className="hv__ctrl hv__ctrl--leave">{t("room.controls.leave")}</span>
+            </div>
+          </div>
+
+          <aside className="hv__panel">
+            <div className="hv__tabs">
+              <b>{t("room.sidePanel.tabs.profile")}</b>
+              <span>{t("room.sidePanel.tabs.chat")}</span>
+            </div>
+            <div className="hv__person">
+              <span className="hv__pic">AY</span>
+              <div>
+                <strong>Ayşe Yılmaz</strong>
+                <em>{t("landing.features.items[0].title")}</em>
+                <i>İstanbul, Türkiye</i>
+              </div>
+            </div>
+            <div className="hv__actions">
+              <span className="hv__open">{t("profileBody.linkedInBtn")}</span>
+              <span className="hv__copy">{t("profileBody.copyLink")}</span>
+            </div>
+            <p className="hv__label">{t("profileBody.summary")}</p>
+            <span className="hv__line" style={{ width: "92%" }} />
+            <span className="hv__line" style={{ width: "74%" }} />
+            <p className="hv__label">{t("profileBody.skills")}</p>
+            <div className="hv__tags">
+              <span>React</span>
+              <span>TypeScript</span>
+              <span>WebRTC</span>
+            </div>
+            <p className="hv__note">{t("profileBody.note")}</p>
+          </aside>
+        </div>
+      </div>
+
+      <span className="hv__float hv__float--1">
+        <IconShield size={16} /> {t("landing.footer.webrtc")}
+      </span>
+      <span className="hv__float hv__float--2">
+        <IconScreen size={16} /> {t("landing.features.items[2].title")}
+      </span>
+      <span className="hv__float hv__float--3">
+        <IconBlocks size={16} /> {t("landing.features.items[4].title")}
+      </span>
+    </div>
+  );
+}
+
+function ExtensionMock() {
+  const { t } = useTranslation();
+  return (
+    <div className="ext" aria-hidden="true">
+      <div className="ext__bar">
+        <span className="hv__dots">
+          <i /> <i /> <i />
+        </span>
+        <em>linkedin.com/in/candidate-profile</em>
+      </div>
+      <div className="ext__body">
+        <div className="ext__page">
+          <span className="ext__cover" />
+          <span className="ext__ava">AY</span>
+          <span className="hv__line" style={{ width: "52%" }} />
+          <span className="hv__line" style={{ width: "78%" }} />
+          <span className="hv__line" style={{ width: "66%" }} />
+          <span className="hv__line" style={{ width: "84%" }} />
+          <span className="hv__line" style={{ width: "44%" }} />
+        </div>
+        <aside className="ext__panel">
+          <header>
+            <b>IH InterviewHub</b>
+            <em>{t("room.sidePanel.tabs.profile")}</em>
+          </header>
+          <div className="ext__room">
+            <span className="ext__dot" />
+            <div>
+              <strong>{t("landing.features.items[0].title")}</strong>
+              <em>{t("room.stage.participants")}</em>
+            </div>
+          </div>
+          <span className="ext__join">{t("room.joinScreen.join")}</span>
+          <div className="ext__tiles">
+            <span>AY</span>
+            <span>MK</span>
+          </div>
+          <span className="ext__mini">{t("room.sidePanel.tabs.profile")} · {t("room.sidePanel.tabs.chat")}</span>
+        </aside>
+      </div>
+      <span className="ext__fab">IH</span>
+    </div>
   );
 }

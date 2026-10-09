@@ -1,0 +1,332 @@
+{
+  "app": {
+    "name": "InterviewHub",
+    "tagline": "Video Interview Rooms with LinkedIn Profiles",
+    "description": "InterviewHub - Video interview rooms for accepted LinkedIn applications. See the candidate's LinkedIn profile during the interview."
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Interviews",
+    "profile": "My Profile",
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "theme": "Theme",
+    "language": "Language"
+  },
+  "landing": {
+    "hero": {
+      "title": "InterviewHub",
+      "subtitle": "Video Interview Rooms with LinkedIn Profiles",
+      "description": "During the interview, the candidate's LinkedIn profile stays on your screen. Everything you need in one place.",
+      "ctaPrimary": "Connect with LinkedIn",
+      "ctaSecondary": "Try Demo →",
+      "demoNotice": "LinkedIn OAuth not configured — demo mode active"
+    },
+    "features": {
+      "title": "Everything in one screen",
+      "items": [
+        {
+          "title": "LinkedIn profile in side panel",
+          "desc": "Candidate's profile visible throughout the interview"
+        },
+        {
+          "title": "End-to-end WebRTC video",
+          "desc": "Direct peer-to-peer, media never touches our servers"
+        },
+        {
+          "title": "Screen sharing",
+          "desc": "Share your screen with one click"
+        },
+        {
+          "title": "In-meeting chat",
+          "desc": "Take notes or share links during the call"
+        },
+        {
+          "title": "Chrome Extension",
+          "desc": "Start interviews directly from LinkedIn profiles"
+        },
+        {
+          "title": "Ownership & privacy",
+          "desc": "You own your data, no third-party tracking"
+        }
+      ]
+    },
+    "steps": {
+      "title": "Three steps to live interview",
+      "steps": [
+        "Connect with LinkedIn",
+        "Open room, share link",
+        "Interview, read profile"
+      ]
+    },
+    "footer": {
+      "candidateProfile": "Candidate's LinkedIn profile stays beside you during the interview",
+      "webrtc": "Video and audio never go through our servers",
+      "extension": "Start meetings while on LinkedIn with Chrome extension"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "q": "Is LinkedIn data fetched via API?",
+          "a": "No. LinkedIn API doesn't provide profile data to third parties. Profile info is self-declared by the candidate, verified via LinkedIn OAuth (name, photo, profile URL)."
+        },
+        {
+          "q": "Do you record video/audio?",
+          "a": "Not by default. You can record locally in your browser (MediaRecorder). Media never touches our servers — it's peer-to-peer WebRTC."
+        },
+        {
+          "q": "Is there a TURN server?",
+          "a": "Only STUN by default. Symmetric NAT may need TURN — configure TURN_URL, TURN_USERNAME, TURN_CREDENTIAL env vars."
+        },
+        {
+          "q": "Can I use it without LinkedIn?",
+          "a": "Yes, demo login works without LinkedIn OAuth."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Start your first interview today",
+      "button": "Connect with LinkedIn"
+    }
+  },
+  "auth": {
+    "loginTitle": "Sign in to continue",
+    "loginNote": "Your identity is verified with LinkedIn; you join the room with your own profile.",
+    "linkedInBtn": "Continue with LinkedIn",
+    "demoBtn": "Demo Login",
+    "demoName": "Your name for demo",
+    "demoPlaceholder": "e.g. Jane Doe",
+    "continue": "Continue",
+    "back": "Back",
+    "oauthNotConfigured": "LinkedIn OAuth not configured. Use demo login.",
+    "profileRequired": "Complete your profile to join interviews",
+    "editProfile": "Edit Profile"
+  },
+  "dashboard": {
+    "title": "Your Interviews",
+    "empty": "No interviews yet. Create your first room.",
+    "createRoom": "Create Room",
+    "roomTitle": "Room Title",
+    "roomTitlePlaceholder": "e.g. Frontend Developer Interview",
+    "create": "Create",
+    "cancel": "Cancel",
+    "rooms": "Rooms",
+    "host": "Host",
+    "participants": "Participants",
+    "created": "Created",
+    "actions": "Actions",
+    "join": "Join",
+    "copyLink": "Copy Link",
+    "delete": "Delete",
+    "confirmDelete": "Delete this room?",
+    "noRooms": "You haven't created any rooms yet."
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "This information is shown to other participants when you join a room (if you enable sharing).",
+    "sections": {
+      "basic": "Basic Info",
+      "experience": "Experience",
+      "education": "Education",
+      "skills": "Skills",
+      "sharing": "Sharing Settings"
+    },
+    "fields": {
+      "linkedinUrl": "LinkedIn Profile URL",
+      "fullName": "Full Name",
+      "headline": "Headline",
+      "location": "Location",
+      "summary": "Summary",
+      "shareProfile": "Share my profile with other participants"
+    },
+    "experience": {
+      "title": "Job Title",
+      "company": "Company",
+      "period": "Period",
+      "description": "Description",
+      "add": "Add Experience",
+      "remove": "Remove"
+    },
+    "education": {
+      "school": "School",
+      "degree": "Degree",
+      "period": "Period",
+      "add": "Add Education",
+      "remove": "Remove"
+    },
+    "skills": {
+      "placeholder": "Add skill and press Enter",
+      "add": "Add Skill"
+    },
+    "save": "Save Profile",
+    "saved": "Profile saved!",
+    "note": "Data is self-declared. LinkedIn API doesn't provide profile data to third parties. Verification is via LinkedIn OAuth (name, photo, profile URL)."
+  },
+  "room": {
+    "title": "Interview Room",
+    "loading": "Preparing room…",
+    "notFound": "Room not found",
+    "backToDashboard": "Back to Interviews",
+    "joinScreen": {
+      "title": "Join Interview",
+      "yourName": "Your Display Name",
+      "namePlaceholder": "First Last",
+      "preview": "Preview",
+      "micOn": "Microphone On",
+      "micOff": "Microphone Off",
+      "camOn": "Camera On",
+      "camOff": "Camera Off",
+      "join": "Join Interview",
+      "rejoin": "Rejoin",
+      "connecting": "Connecting…",
+      "profileHint": "Profile not shared. {{link}}"
+    },
+    "stage": {
+      "copyInvite": "Copy Invite Link",
+      "copied": "Copied ✓",
+      "participants": "people",
+      "leave": "Leave"
+    },
+    "controls": {
+      "mic": "Microphone",
+      "micMuted": "Muted",
+      "cam": "Camera",
+      "camOff": "Off",
+      "screen": "Screen",
+      "screenSharing": "Sharing",
+      "record": "Record",
+      "recording": "Recording {{time}}",
+      "paused": "Paused",
+      "transcript": "Transcript",
+      "transcriptActive": "Typing",
+      "panel": "Panel",
+      "participants": "Participants",
+      "leave": "Leave",
+      "shortcuts": {
+        "mic": "M",
+        "cam": "C",
+        "screen": "S",
+        "panel": "P",
+        "record": "R",
+        "transcript": "T"
+      }
+    },
+    "sidePanel": {
+      "tabs": {
+        "profile": "LinkedIn Profile",
+        "chat": "Chat",
+        "transcript": "Transcript",
+        "ai": "AI Evaluation"
+      },
+      "profile": {
+        "noProfile": "No profile shared yet.",
+        "editProfile": "Edit My Profile",
+        "candidateNote": "Candidate's LinkedIn profile appears here when they join with their LinkedIn account and enable sharing."
+      },
+      "chat": {
+        "empty": "No messages yet. Use for notes or sharing links.",
+        "placeholder": "Type a message…",
+        "send": "Send",
+        "disconnected": "Disconnected"
+      },
+      "transcript": {
+        "status": {
+          "listening": "Listening…",
+          "idle": "Standby"
+        },
+        "languages": {
+          "tr-TR": "Turkish",
+          "en-US": "English (US)",
+          "de-DE": "German",
+          "fr-FR": "French"
+        },
+        "actions": {
+          "toggle": "{{action}}",
+          "copy": "Copy",
+          "clear": "Clear"
+        },
+        "empty": {
+          "listening": "Detecting speech…",
+          "idle": "Transcript appears here when started."
+        }
+      },
+      "ai": {
+        "title": "AI Evaluation Assistant",
+        "hostOnly": "Only the room host (interviewer) can use AI evaluation.",
+        "position": "Position (optional)",
+        "positionPlaceholder": "e.g. Senior Frontend Developer",
+        "notes": "Interview Notes",
+        "notesPlaceholder": "Candidate's answers, impressions, technical details…",
+        "evaluate": "Evaluate",
+        "evaluating": "Evaluating…",
+        "result": {
+          "score": "Overall Score",
+          "recommendation": {
+            "hire": "✓ Hire",
+            "no_hire": "✗ No Hire",
+            "uncertain": "? Uncertain"
+          },
+          "rubric": "Criteria",
+          "strengths": "Strengths",
+          "concerns": "Areas for Improvement",
+          "summary": "Summary",
+          "model": "Model"
+        },
+        "actions": {
+          "copy": "Copy Report",
+          "download": "Download (.txt)"
+        },
+        "disclaimer": "Evaluation is based only on your notes and the candidate's shared profile. Audio/video is never sent to AI.",
+        "notConfigured": "AI evaluation not configured (AI_API_KEY required)."
+      }
+    },
+    "states": {
+      "micReady": "Microphone ready",
+      "camReady": "Camera ready",
+      "mediaError": "Media error: {{error}}",
+      "joinError": "Failed to join: {{error}}",
+      "authRequired": "You must sign in to join this room."
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading…",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "optional": "Optional",
+    "required": "Required",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "actions": "Actions",
+    "none": "None",
+    "empty": "No data"
+  },
+  "errors": {
+    "network": "Cannot reach server. Check your connection.",
+    "unauthorized": "Session expired. Please sign in again.",
+    "forbidden": "You don't have permission for this action.",
+    "notFound": "Resource not found.",
+    "serverError": "Server error. Please try again later.",
+    "validation": "Please check your input."
+  },
+  "accessibility": {
+    "skipLink": "Skip to main content",
+    "mainContent": "Main content",
+    "navigation": "Navigation",
+    "toggleTheme": "Toggle theme",
+    "toggleLanguage": "Change language"
+  }
+}

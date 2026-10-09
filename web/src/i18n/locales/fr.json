@@ -1,0 +1,332 @@
+{
+  "app": {
+    "name": "InterviewHub",
+    "tagline": "Salles d'entretien vidéo avec profils LinkedIn",
+    "description": "InterviewHub - Salles d'entretien vidéo pour candidatures LinkedIn acceptées. Le profil LinkedIn du candidat est visible pendant l'entretien."
+  },
+  "nav": {
+    "home": "Accueil",
+    "dashboard": "Entretiens",
+    "profile": "Mon profil",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "theme": "Thème",
+    "language": "Langue"
+  },
+  "landing": {
+    "hero": {
+      "title": "InterviewHub",
+      "subtitle": "Salles d'entretien vidéo avec profils LinkedIn",
+      "description": "Pendant l'entretien, le profil LinkedIn du candidat reste sur votre écran. Tout ce dont vous avez besoin en un seul endroit.",
+      "ctaPrimary": "Se connecter avec LinkedIn",
+      "ctaSecondary": "Essayer la démo →",
+      "demoNotice": "LinkedIn OAuth non configuré — mode démo actif"
+    },
+    "features": {
+      "title": "Tout sur un seul écran",
+      "items": [
+        {
+          "title": "Profil LinkedIn dans le panneau latéral",
+          "desc": "Le profil du candidat est visible pendant tout l'entretien"
+        },
+        {
+          "title": "Vidéo WebRTC de bout en bout",
+          "desc": "Pair-à-pair direct, les médias ne passent jamais par nos serveurs"
+        },
+        {
+          "title": "Partage d'écran",
+          "desc": "Partagez votre écran en un clic"
+        },
+        {
+          "title": "Chat pendant l'entretien",
+          "desc": "Prenez des notes ou partagez des liens pendant l'appel"
+        },
+        {
+          "title": "Extension Chrome",
+          "desc": "Lancez des entretiens directement depuis les profils LinkedIn"
+        },
+        {
+          "title": "Propriété et confidentialité",
+          "desc": "Vos données vous appartiennent, aucun suivi tiers"
+        }
+      ]
+    },
+    "steps": {
+      "title": "Trois étapes pour l'entretien en direct",
+      "steps": [
+        "Se connecter avec LinkedIn",
+        "Ouvrir la salle, partager le lien",
+        "Entretien, lire le profil"
+      ]
+    },
+    "footer": {
+      "candidateProfile": "Le profil LinkedIn du candidat reste à côté de vous pendant l'entretien",
+      "webrtc": "La vidéo et l'audio ne passent jamais par nos serveurs",
+      "extension": "Démarrez des réunions depuis LinkedIn avec l'extension Chrome"
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "items": [
+        {
+          "q": "Les données LinkedIn sont-elles récupérées via l'API ?",
+          "a": "Non. L'API LinkedIn ne fournit pas de données de profil aux tiers. Les infos de profil sont déclarées par le candidat, vérifiées via LinkedIn OAuth (nom, photo, URL du profil)."
+        },
+        {
+          "q": "La vidéo/l'audio sont-ils enregistrés ?",
+          "a": "Pas par défaut. Vous pouvez enregistrer localement dans votre navigateur (MediaRecorder). Les médias ne touchent jamais nos serveurs — c'est du WebRTC pair-à-pair."
+        },
+        {
+          "q": "Y a-t-il un serveur TURN ?",
+          "a": "Seulement STUN par défaut. Le NAT symétrique peut nécessiter TURN — configurez TURN_URL, TURN_USERNAME, TURN_CREDENTIAL comme variables d'environnement."
+        },
+        {
+          "q": "Puis-je l'utiliser sans LinkedIn ?",
+          "a": "Oui, la connexion démo fonctionne sans LinkedIn OAuth."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Commencez votre premier entretien aujourd'hui",
+      "button": "Se connecter avec LinkedIn"
+    }
+  },
+  "auth": {
+    "loginTitle": "Connectez-vous pour continuer",
+    "loginNote": "Votre identité est vérifiée avec LinkedIn ; vous rejoignez la salle avec votre propre profil.",
+    "linkedInBtn": "Continuer avec LinkedIn",
+    "demoBtn": "Connexion démo",
+    "demoName": "Votre nom pour la démo",
+    "demoPlaceholder": "ex. Jean Dupont",
+    "continue": "Continuer",
+    "back": "Retour",
+    "oauthNotConfigured": "LinkedIn OAuth non configuré. Utilisez la connexion démo.",
+    "profileRequired": "Complétez votre profil pour rejoindre les entretiens",
+    "editProfile": "Modifier le profil"
+  },
+  "dashboard": {
+    "title": "Vos Entretiens",
+    "empty": "Aucun entretien pour l'instant. Créez votre première salle.",
+    "createRoom": "Créer une salle",
+    "roomTitle": "Titre de la salle",
+    "roomTitlePlaceholder": "ex. Entretien Développeur Frontend",
+    "create": "Créer",
+    "cancel": "Annuler",
+    "rooms": "Salles",
+    "host": "Hôte",
+    "participants": "Participants",
+    "created": "Créé le",
+    "actions": "Actions",
+    "join": "Rejoindre",
+    "copyLink": "Copier le lien",
+    "delete": "Supprimer",
+    "confirmDelete": "Supprimer cette salle ?",
+    "noRooms": "Vous n'avez créé aucune salle."
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "subtitle": "Ces informations sont montrées aux autres participants quand vous rejoignez une salle (si le partage est activé).",
+    "sections": {
+      "basic": "Infos de base",
+      "experience": "Expérience",
+      "education": "Formation",
+      "skills": "Compétences",
+      "sharing": "Paramètres de partage"
+    },
+    "fields": {
+      "linkedinUrl": "URL du profil LinkedIn",
+      "fullName": "Nom complet",
+      "headline": "Titre",
+      "location": "Localisation",
+      "summary": "Résumé",
+      "shareProfile": "Partager mon profil avec les autres participants"
+    },
+    "experience": {
+      "title": "Poste",
+      "company": "Entreprise",
+      "period": "Période",
+      "description": "Description",
+      "add": "Ajouter une expérience",
+      "remove": "Supprimer"
+    },
+    "education": {
+      "school": "École",
+      "degree": "Diplôme",
+      "period": "Période",
+      "add": "Ajouter une formation",
+      "remove": "Supprimer"
+    },
+    "skills": {
+      "placeholder": "Ajoutez une compétence et appuyez sur Entrée",
+      "add": "Ajouter une compétence"
+    },
+    "save": "Enregistrer le profil",
+    "saved": "Profil enregistré !",
+    "note": "Données auto-déclarées. L'API LinkedIn ne donne pas de données de profil aux tiers. Vérification via LinkedIn OAuth (nom, photo, URL du profil)."
+  },
+  "room": {
+    "title": "Salle d'Entretien",
+    "loading": "Préparation de la salle…",
+    "notFound": "Salle introuvable",
+    "backToDashboard": "Retour aux Entretiens",
+    "joinScreen": {
+      "title": "Rejoindre l'Entretien",
+      "yourName": "Votre nom affiché",
+      "namePlaceholder": "Prénom Nom",
+      "preview": "Aperçu",
+      "micOn": "Micro activé",
+      "micOff": "Micro coupé",
+      "camOn": "Caméra activée",
+      "camOff": "Caméra coupée",
+      "join": "Rejoindre l'Entretien",
+      "rejoin": "Rejoindre à nouveau",
+      "connecting": "Connexion…",
+      "profileHint": "Profil non partagé. {{link}}"
+    },
+    "stage": {
+      "copyInvite": "Copier le lien d'invitation",
+      "copied": "Copié ✓",
+      "participants": "personnes",
+      "leave": "Quitter"
+    },
+    "controls": {
+      "mic": "Microphone",
+      "micMuted": "Muet",
+      "cam": "Caméra",
+      "camOff": "Éteint",
+      "screen": "Écran",
+      "screenSharing": "Partage",
+      "record": "Enregistrement",
+      "recording": "Enregistrement {{time}}",
+      "paused": "En pause",
+      "transcript": "Transcription",
+      "transcriptActive": "Écriture",
+      "panel": "Panneau",
+      "participants": "Participants",
+      "leave": "Quitter",
+      "shortcuts": {
+        "mic": "M",
+        "cam": "C",
+        "screen": "S",
+        "panel": "P",
+        "record": "R",
+        "transcript": "T"
+      }
+    },
+    "sidePanel": {
+      "tabs": {
+        "profile": "Profil LinkedIn",
+        "chat": "Discussion",
+        "transcript": "Transcription",
+        "ai": "Évaluation IA"
+      },
+      "profile": {
+        "noProfile": "Aucun profil partagé pour l'instant.",
+        "editProfile": "Modifier mon profil",
+        "candidateNote": "Le profil LinkedIn du candidat apparaît ici quand il rejoint avec son compte LinkedIn et active le partage."
+      },
+      "chat": {
+        "empty": "Aucun message pour l'instant. Utilisez pour notes ou partage de liens.",
+        "placeholder": "Écrivez un message…",
+        "send": "Envoyer",
+        "disconnected": "Déconnecté"
+      },
+      "transcript": {
+        "status": {
+          "listening": "Écoute…",
+          "idle": "En attente"
+        },
+        "languages": {
+          "tr-TR": "Turc",
+          "en-US": "Anglais (US)",
+          "de-DE": "Allemand",
+          "fr-FR": "Français"
+        },
+        "actions": {
+          "toggle": "{{action}}",
+          "copy": "Copier",
+          "clear": "Effacer"
+        },
+        "empty": {
+          "listening": "Détection de la parole…",
+          "idle": "La transcription apparaîtra ici au démarrage."
+        }
+      },
+      "ai": {
+        "title": "Assistant d'évaluation IA",
+        "hostOnly": "Seul l'hôte de la salle (recruteur) peut utiliser l'évaluation IA.",
+        "position": "Poste (optionnel)",
+        "positionPlaceholder": "ex. Développeur Frontend Senior",
+        "notes": "Notes d'entretien",
+        "notesPlaceholder": "Réponses du candidat, impressions, détails techniques…",
+        "evaluate": "Évaluer",
+        "evaluating": "Évaluation en cours…",
+        "result": {
+          "score": "Score global",
+          "recommendation": {
+            "hire": "✓ Embaucher",
+            "no_hire": "✗ Ne pas embaucher",
+            "uncertain": "? Incertain"
+          },
+          "rubric": "Critères",
+          "strengths": "Points forts",
+          "concerns": "Points d'amélioration",
+          "summary": "Résumé",
+          "model": "Modèle"
+        },
+        "actions": {
+          "copy": "Copier le rapport",
+          "download": "Télécharger (.txt)"
+        },
+        "disclaimer": "L'évaluation est basée uniquement sur vos notes et le profil partagé du candidat. L'audio/vidéo n'est jamais envoyé à l'IA.",
+        "notConfigured": "Évaluation IA non configurée (AI_API_KEY requise)."
+      }
+    },
+    "states": {
+      "micReady": "Microphone prêt",
+      "camReady": "Caméra prête",
+      "mediaError": "Erreur média : {{error}}",
+      "joinError": "Échec de la connexion : {{error}}",
+      "authRequired": "Vous devez être connecté pour rejoindre cette salle."
+    }
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "loading": "Chargement…",
+    "error": "Erreur",
+    "success": "Succès",
+    "confirm": "Confirmer",
+    "yes": "Oui",
+    "no": "Non",
+    "optional": "Optionnel",
+    "required": "Requis",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "actions": "Actions",
+    "none": "Aucun",
+    "empty": "Aucune donnée"
+  },
+  "errors": {
+    "network": "Impossible d'atteindre le serveur. Vérifiez votre connexion.",
+    "unauthorized": "Session expirée. Reconnectez-vous.",
+    "forbidden": "Vous n'avez pas la permission pour cette action.",
+    "notFound": "Ressource introuvable.",
+    "serverError": "Erreur serveur. Réessayez plus tard.",
+    "validation": "Veuillez vérifier vos saisies."
+  },
+  "accessibility": {
+    "skipLink": "Aller au contenu principal",
+    "mainContent": "Contenu principal",
+    "navigation": "Navigation",
+    "toggleTheme": "Changer le thème",
+    "toggleLanguage": "Changer la langue"
+  }
+}

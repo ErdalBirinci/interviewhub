@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { absorbTokenFromUrl, AuthProvider } from "./lib/auth";
+import "./i18n"; // i18n initialize
 import "./styles.css";
 
 // ?token=... ile acilan sayfalarda token'i render'dan (ve ilk fetch'lerden) once em:

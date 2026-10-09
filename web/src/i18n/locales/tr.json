@@ -1,0 +1,332 @@
+{
+  "app": {
+    "name": "InterviewHub",
+    "tagline": "LinkedIn Profiliyle Video Görüşme Odaları",
+    "description": "InterviewHub - LinkedIn ile kabul edilen başvurular için video görüşme odaları. Görüşme sırasında adayın LinkedIn profili ekranda."
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "dashboard": "Görüşmeler",
+    "profile": "Profilim",
+    "login": "Giriş Yap",
+    "logout": "Çıkış Yap",
+    "theme": "Tema",
+    "language": "Dil"
+  },
+  "landing": {
+    "hero": {
+      "title": "InterviewHub",
+      "subtitle": "LinkedIn Profiliyle Video Görüşme Odaları",
+      "description": "Görüşme sırasında adayın LinkedIn profili hep ekranınızda. Görüşme için gereken her şey tek ekranda.",
+      "ctaPrimary": "LinkedIn ile Bağlan",
+      "ctaSecondary": "Hemen Dene →",
+      "demoNotice": "LinkedIn OAuth yapılandırılmamış — demo modu aktif"
+    },
+    "features": {
+      "title": "Görüşme için gereken her şey tek ekranda",
+      "items": [
+        {
+          "title": "Yan panelde LinkedIn profili",
+          "desc": "Adayın profili görüşme boyunca görünür"
+        },
+        {
+          "title": "Uçtan uca WebRTC görüntü",
+          "desc": "Doğrudan peer-to-peer, medya sunucudan geçmez"
+        },
+        {
+          "title": "Ekran paylaşımı",
+          "desc": "Bir tıkla ekranınızı paylaşın"
+        },
+        {
+          "title": "Görüşme içi sohbet",
+          "desc": "Görüşme sırasında not alın veya bağlantı paylaşın"
+        },
+        {
+          "title": "Chrome eklentisi",
+          "desc": "LinkedIn profillerinden doğrudan görüşme başlatın"
+        },
+        {
+          "title": "Sahiplik ve gizlilik",
+          "desc": "Verileriniz sizde, üçüncü taraf takibi yok"
+        }
+      ]
+    },
+    "steps": {
+      "title": "Üç adımda canlı görüşme",
+      "steps": [
+        "LinkedIn ile bağlanın",
+        "Odayı açın, bağlantıyı paylaşın",
+        "Görüşün, profili okuyun"
+      ]
+    },
+    "footer": {
+      "candidateProfile": "Adayınız sizinle görüşürken profili de yanında",
+      "webrtc": "Ses ve görüntü sunucudan geçmez",
+      "extension": "LinkedIn'deyken görüşmeye başlayın"
+    },
+    "faq": {
+      "title": "Sık Sorulanlar",
+      "items": [
+        {
+          "q": "LinkedIn verisi API'den mi çekiliyor?",
+          "a": "Hayır. LinkedIn API'si üçüncü taraflara profil verisi vermez. Profil bilgileri adayın kendi beyanıdır, doğrulama LinkedIn OAuth ile yapılır (isim, foto, profil URL)."
+        },
+        {
+          "q": "Video/ses kaydediliyor mu?",
+          "a": "Varsayılan olarak hayır. Tarayıcınızda yerel kayıt yapabilirsiniz (MediaRecorder). Medya asla sunucumuzdan geçmez — peer-to-peer WebRTC."
+        },
+        {
+          "q": "TURN sunucusu var mı?",
+          "a": "Varsayılan olarak sadece STUN. Simetrik NAT için TURN gerekebilir — TURN_URL, TURN_USERNAME, TURN_CREDENTIAL env değişkenlerini ayarlayın."
+        },
+        {
+          "q": "LinkedIn olmadan kullanabilir miyim?",
+          "a": "Evet, demo girişi LinkedIn OAuth olmadan çalışır."
+        }
+      ]
+    },
+    "cta": {
+      "title": "İlk görüşmenizi bugün açın",
+      "button": "LinkedIn ile Bağlan"
+    }
+  },
+  "auth": {
+    "loginTitle": "Devam etmek için giriş yapın",
+    "loginNote": "Kimliğiniz LinkedIn ile doğrulanır; odaya kendi profilinizle katılırsınız.",
+    "linkedInBtn": "LinkedIn ile Devam Et",
+    "demoBtn": "Demo Girişi",
+    "demoName": "Demo için adınız",
+    "demoPlaceholder": "Örn. Ahmet Yılmaz",
+    "continue": "Devam Et",
+    "back": "Geri",
+    "oauthNotConfigured": "LinkedIn OAuth yapılandırılmamış. Demo girişi kullanın.",
+    "profileRequired": "Görüşmelere katılmak için profilinizi tamamlayın",
+    "editProfile": "Profili Düzenle"
+  },
+  "dashboard": {
+    "title": "Görüşmeleriniz",
+    "empty": "Henüz görüşme yok. İlk odanızı oluşturun.",
+    "createRoom": "Oda Oluştur",
+    "roomTitle": "Oda Başlığı",
+    "roomTitlePlaceholder": "Örn. Frontend Geliştirici Görüşmesi",
+    "create": "Oluştur",
+    "cancel": "İptal",
+    "rooms": "Odalar",
+    "host": "Sahip",
+    "participants": "Katılımcı",
+    "created": "Oluşturma",
+    "actions": "İşlemler",
+    "join": "Katıl",
+    "copyLink": "Bağlantıyı Kopyala",
+    "delete": "Sil",
+    "confirmDelete": "Bu odayı silmek istediğinizden emin misiniz?",
+    "noRooms": "Henüz oda oluşturmadınız."
+  },
+  "profile": {
+    "title": "Profilim",
+    "subtitle": "Bu bilgiler odaya katıldığınızda diğer katılımcılara gösterilir (paylaşım açıksa).",
+    "sections": {
+      "basic": "Temel Bilgiler",
+      "experience": "Deneyim",
+      "education": "Eğitim",
+      "skills": "Yetenekler",
+      "sharing": "Paylaşım Ayarları"
+    },
+    "fields": {
+      "linkedinUrl": "LinkedIn Profil URL",
+      "fullName": "Ad Soyad",
+      "headline": "Başlık",
+      "location": "Konum",
+      "summary": "Özet",
+      "shareProfile": "Profilimi diğer katılımcılarla paylaş"
+    },
+    "experience": {
+      "title": "Pozisyon",
+      "company": "Şirket",
+      "period": "Dönem",
+      "description": "Açıklama",
+      "add": "Deneyim Ekle",
+      "remove": "Kaldır"
+    },
+    "education": {
+      "school": "Okul",
+      "degree": "Derece",
+      "period": "Dönem",
+      "add": "Eğitim Ekle",
+      "remove": "Kaldır"
+    },
+    "skills": {
+      "placeholder": "Yetenek ekleyin ve Enter'a basın",
+      "add": "Yetenek Ekle"
+    },
+    "save": "Profili Kaydet",
+    "saved": "Profil kaydedildi!",
+    "note": "Bilgiler adayın kendi beyanıdır. LinkedIn API'si üçüncü taraflara profil verisi vermez. Doğrulama LinkedIn OAuth ile yapılır (isim, foto, profil URL)."
+  },
+  "room": {
+    "title": "Görüşme Odası",
+    "loading": "Oda hazırlanıyor…",
+    "notFound": "Oda bulunamadı",
+    "backToDashboard": "Görüşmelere Dön",
+    "joinScreen": {
+      "title": "Görüşmeye Katıl",
+      "yourName": "Görünen Adınız",
+      "namePlaceholder": "Ad Soyad",
+      "preview": "Önizleme",
+      "micOn": "Mikrofon Açık",
+      "micOff": "Mikrofon Kapalı",
+      "camOn": "Kamera Açık",
+      "camOff": "Kamera Kapalı",
+      "join": "Görüşmeye Katıl",
+      "rejoin": "Yeniden Katıl",
+      "connecting": "Bağlanılıyor…",
+      "profileHint": "Profil paylaşılmadı. {{link}}"
+    },
+    "stage": {
+      "copyInvite": "Davet Bağlantısını Kopyala",
+      "copied": "Kopyalandı ✓",
+      "participants": "kişi",
+      "leave": "Ayrıl"
+    },
+    "controls": {
+      "mic": "Mikrofon",
+      "micMuted": "Sessiz",
+      "cam": "Kamera",
+      "camOff": "Kapalı",
+      "screen": "Ekran",
+      "screenSharing": "Paylaşılıyor",
+      "record": "Kayıt",
+      "recording": "Kayıt {{time}}",
+      "paused": "Duraklatıldı",
+      "transcript": "Transkript",
+      "transcriptActive": "Yazılıyor",
+      "panel": "Panel",
+      "participants": "Katılımcılar",
+      "leave": "Ayrıl",
+      "shortcuts": {
+        "mic": "M",
+        "cam": "C",
+        "screen": "S",
+        "panel": "P",
+        "record": "R",
+        "transcript": "T"
+      }
+    },
+    "sidePanel": {
+      "tabs": {
+        "profile": "LinkedIn Profili",
+        "chat": "Sohbet",
+        "transcript": "Transkript",
+        "ai": "AI Değerlendirme"
+      },
+      "profile": {
+        "noProfile": "Henüz profil paylaşılmadı.",
+        "editProfile": "Profili Düzenle",
+        "candidateNote": "Aday LinkedIn hesabıyla katıldığında ve profili paylaştığında burada görünecek."
+      },
+      "chat": {
+        "empty": "Henüz mesaj yok. Not almak veya bağlantı paylaşmak için kullanın.",
+        "placeholder": "Mesaj yazın…",
+        "send": "Gönder",
+        "disconnected": "Bağlantı yok"
+      },
+      "transcript": {
+        "status": {
+          "listening": "Dinleniyor…",
+          "idle": "Beklemede"
+        },
+        "languages": {
+          "tr-TR": "Türkçe",
+          "en-US": "İngilizce (ABD)",
+          "de-DE": "Almanca",
+          "fr-FR": "Fransızca"
+        },
+        "actions": {
+          "toggle": "{{action}}",
+          "copy": "Kopyala",
+          "clear": "Temizle"
+        },
+        "empty": {
+          "listening": "Konuşma algılanıyor…",
+          "idle": "Transkripsiyon başlatıldığında buraya yazılacak."
+        }
+      },
+      "ai": {
+        "title": "AI Değerlendirme Asistanı",
+        "hostOnly": "Sadece oda sahibi (mülakatçı) AI değerlendirme yapabilir.",
+        "position": "Pozisyon (isteğe bağlı)",
+        "positionPlaceholder": "Örn. Senior Frontend Geliştirici",
+        "notes": "Görüşme Notları",
+        "notesPlaceholder": "Adayın cevapları, izlenimleriniz, teknik detaylar…",
+        "evaluate": "Değerlendir",
+        "evaluating": "Değerlendiriliyor…",
+        "result": {
+          "score": "Genel Puan",
+          "recommendation": {
+            "hire": "✓ İşe Al",
+            "no_hire": "✗ İşe Alma",
+            "uncertain": "? Kararsız"
+          },
+          "rubric": "Kriterler",
+          "strengths": "Güçlü Yönler",
+          "concerns": "Geliştirilecek Yönler",
+          "summary": "Özet",
+          "model": "Model"
+        },
+        "actions": {
+          "copy": "Raporu Kopyala",
+          "download": "İndir (.txt)"
+        },
+        "disclaimer": "Değerlendirme yalnızca yazdığınız notlar ve adayın paylaştığı profil bilgisiyle yapılır. Ses/video asla AI'a gönderilmez.",
+        "notConfigured": "AI değerlendirme yapılandırılmamış (AI_API_KEY gerekli)."
+      }
+    },
+    "states": {
+      "micReady": "Mikrofon hazır",
+      "camReady": "Kamera hazır",
+      "mediaError": "Medya hatası: {{error}}",
+      "joinError": "Katılım başarısız: {{error}}",
+      "authRequired": "Bu odaya katılmak için giriş yapmalısınız."
+    }
+  },
+  "common": {
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı!",
+    "close": "Kapat",
+    "back": "Geri",
+    "next": "İleri",
+    "loading": "Yükleniyor…",
+    "error": "Hata",
+    "success": "Başarılı",
+    "confirm": "Onayla",
+    "yes": "Evet",
+    "no": "Hayır",
+    "optional": "İsteğe Bağlı",
+    "required": "Zorunlu",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "sort": "Sırala",
+    "actions": "İşlemler",
+    "none": "Yok",
+    "empty": "Veri yok"
+  },
+  "errors": {
+    "network": "Sunucuya ulaşılamıyor. Bağlantınızı kontrol edin.",
+    "unauthorized": "Oturum süresi doldu. Tekrar giriş yapın.",
+    "forbidden": "Bu işlem için yetkiniz yok.",
+    "notFound": "Kaynak bulunamadı.",
+    "serverError": "Sunucu hatası. Lütfen daha sonra tekrar deneyin.",
+    "validation": "Lütfen girdiğiniz bilgileri kontrol edin."
+  },
+  "accessibility": {
+    "skipLink": "Ana içeriğe atla",
+    "mainContent": "Ana içerik",
+    "navigation": "Navigasyon",
+    "toggleTheme": "Temayı değiştir",
+    "toggleLanguage": "Dili değiştir"
+  }
+}

@@ -1,0 +1,332 @@
+{
+  "app": {
+    "name": "InterviewHub",
+    "tagline": "Video-Interview-Räume mit LinkedIn-Profilen",
+    "description": "InterviewHub - Video-Interview-Räume für akzeptierte LinkedIn-Bewerbungen. Das LinkedIn-Profil des Kandidaten ist während des Interviews sichtbar."
+  },
+  "nav": {
+    "home": "Startseite",
+    "dashboard": "Interviews",
+    "profile": "Mein Profil",
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "theme": "Design",
+    "language": "Sprache"
+  },
+  "landing": {
+    "hero": {
+      "title": "InterviewHub",
+      "subtitle": "Video-Interview-Räume mit LinkedIn-Profilen",
+      "description": "Während des Interviews bleibt das LinkedIn-Profil des Kandidaten auf Ihrem Bildschirm. Alles, was Sie brauchen, an einem Ort.",
+      "ctaPrimary": "Mit LinkedIn verbinden",
+      "ctaSecondary": "Demo testen →",
+      "demoNotice": "LinkedIn OAuth nicht konfiguriert — Demo-Modus aktiv"
+    },
+    "features": {
+      "title": "Alles auf einem Bildschirm",
+      "items": [
+        {
+          "title": "LinkedIn-Profil im Seitenpanel",
+          "desc": "Das Profil des Kandidaten ist während des gesamten Interviews sichtbar"
+        },
+        {
+          "title": "Ende-zu-Ende WebRTC Video",
+          "desc": "Direkt Peer-to-Peer, Medien berühren unsere Server nie"
+        },
+        {
+          "title": "Bildschirmfreigabe",
+          "desc": "Teilen Sie Ihren Bildschirm mit einem Klick"
+        },
+        {
+          "title": "In-Meeting-Chat",
+          "desc": "Notizen machen oder Links während des Anrufs teilen"
+        },
+        {
+          "title": "Chrome-Erweiterung",
+          "desc": "Interviews direkt von LinkedIn-Profilen starten"
+        },
+        {
+          "title": "Eigentum & Datenschutz",
+          "desc": "Ihre Daten gehören Ihnen, kein Tracking durch Dritte"
+        }
+      ]
+    },
+    "steps": {
+      "title": "Drei Schritte zum Live-Interview",
+      "steps": [
+        "Mit LinkedIn verbinden",
+        "Raum öffnen, Link teilen",
+        "Interviewen, Profil lesen"
+      ]
+    },
+    "footer": {
+      "candidateProfile": "Das LinkedIn-Profil des Kandidaten bleibt während des Interviews neben Ihnen",
+      "webrtc": "Video und Audio gehen nie durch unsere Server",
+      "extension": "Interviews starten, während Sie auf LinkedIn sind"
+    },
+    "faq": {
+      "title": "Häufige Fragen",
+      "items": [
+        {
+          "q": "Wird LinkedIn-Daten über die API abgerufen?",
+          "a": "Nein. Die LinkedIn-API stellt keine Profildaten für Dritte bereit. Profilinformationen werden vom Kandidaten selbst angegeben, verifiziert über LinkedIn OAuth (Name, Foto, Profil-URL)."
+        },
+        {
+          "q": "Wird Video/Audio aufgezeichnet?",
+          "a": "Standardmäßig nicht. Sie können lokal in Ihrem Browser aufnehmen (MediaRecorder). Medien gehen nie durch unsere Server — es ist Peer-to-Peer WebRTC."
+        },
+        {
+          "q": "Gibt es einen TURN-Server?",
+          "a": "Standardmäßig nur STUN. Symmetrisches NAT benötigt evtl. TURN — konfigurieren Sie TURN_URL, TURN_USERNAME, TURN_CREDENTIAL als Umgebungsvariablen."
+        },
+        {
+          "q": "Kann ich es ohne LinkedIn nutzen?",
+          "a": "Ja, Demo-Login funktioniert ohne LinkedIn OAuth."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Starten Sie Ihr erstes Interview heute",
+      "button": "Mit LinkedIn verbinden"
+    }
+  },
+  "auth": {
+    "loginTitle": "Anmelden um fortzufahren",
+    "loginNote": "Ihre Identität wird mit LinkedIn verifiziert; Sie treten dem Raum mit Ihrem eigenen Profil bei.",
+    "linkedInBtn": "Mit LinkedIn fortfahren",
+    "demoBtn": "Demo-Login",
+    "demoName": "Ihr Name für Demo",
+    "demoPlaceholder": "z.B. Max Mustermann",
+    "continue": "Fortfahren",
+    "back": "Zurück",
+    "oauthNotConfigured": "LinkedIn OAuth nicht konfiguriert. Demo-Login nutzen.",
+    "profileRequired": "Vervollständigen Sie Ihr Profil für Interviews",
+    "editProfile": "Profil bearbeiten"
+  },
+  "dashboard": {
+    "title": "Ihre Interviews",
+    "empty": "Noch keine Interviews. Erstellen Sie Ihren ersten Raum.",
+    "createRoom": "Raum erstellen",
+    "roomTitle": "Raumtitel",
+    "roomTitlePlaceholder": "z.B. Frontend-Entwickler Interview",
+    "create": "Erstellen",
+    "cancel": "Abbrechen",
+    "rooms": "Räume",
+    "host": "Gastgeber",
+    "participants": "Teilnehmer",
+    "created": "Erstellt",
+    "actions": "Aktionen",
+    "join": "Beitreten",
+    "copyLink": "Link kopieren",
+    "delete": "Löschen",
+    "confirmDelete": "Diesen Raum wirklich löschen?",
+    "noRooms": "Sie haben noch keine Räume erstellt."
+  },
+  "profile": {
+    "title": "Mein Profil",
+    "subtitle": "Diese Informationen werden anderen Teilnehmern angezeigt, wenn Sie einem Raum beitreten (wenn Teilen aktiviert ist).",
+    "sections": {
+      "basic": "Grunddaten",
+      "experience": "Berufserfahrung",
+      "education": "Ausbildung",
+      "skills": "Fähigkeiten",
+      "sharing": "Teileinstellungen"
+    },
+    "fields": {
+      "linkedinUrl": "LinkedIn-Profil-URL",
+      "fullName": "Vollständiger Name",
+      "headline": "Überschrift",
+      "location": "Standort",
+      "summary": "Zusammenfassung",
+      "shareProfile": "Mein Profil mit anderen Teilnehmern teilen"
+    },
+    "experience": {
+      "title": "Position",
+      "company": "Unternehmen",
+      "period": "Zeitraum",
+      "description": "Beschreibung",
+      "add": "Erfahrung hinzufügen",
+      "remove": "Entfernen"
+    },
+    "education": {
+      "school": "Schule/Universität",
+      "degree": "Abschluss",
+      "period": "Zeitraum",
+      "add": "Ausbildung hinzufügen",
+      "remove": "Entfernen"
+    },
+    "skills": {
+      "placeholder": "Fähigkeit hinzufügen und Enter drücken",
+      "add": "Fähigkeit hinzufügen"
+    },
+    "save": "Profil speichern",
+    "saved": "Profil gespeichert!",
+    "note": "Daten sind selbsterklärt. LinkedIn-API gibt keine Profildaten an Dritte. Verifizierung über LinkedIn OAuth (Name, Foto, Profil-URL)."
+  },
+  "room": {
+    "title": "Interview-Raum",
+    "loading": "Raum wird vorbereitet…",
+    "notFound": "Raum nicht gefunden",
+    "backToDashboard": "Zurück zu Interviews",
+    "joinScreen": {
+      "title": "Interview beitreten",
+      "yourName": "Ihr Anzeigename",
+      "namePlaceholder": "Vorname Nachname",
+      "preview": "Vorschau",
+      "micOn": "Mikrofon an",
+      "micOff": "Mikrofon aus",
+      "camOn": "Kamera an",
+      "camOff": "Kamera aus",
+      "join": "Interview beitreten",
+      "rejoin": "Erneut beitreten",
+      "connecting": "Verbinde…",
+      "profileHint": "Profil nicht geteilt. {{link}}"
+    },
+    "stage": {
+      "copyInvite": "Einladungslink kopieren",
+      "copied": "Kopiert ✓",
+      "participants": "Personen",
+      "leave": "Verlassen"
+    },
+    "controls": {
+      "mic": "Mikrofon",
+      "micMuted": "Stumm",
+      "cam": "Kamera",
+      "camOff": "Aus",
+      "screen": "Bildschirm",
+      "screenSharing": "Wird geteilt",
+      "record": "Aufnahme",
+      "recording": "Aufnahme {{time}}",
+      "paused": "Pausiert",
+      "transcript": "Transkript",
+      "transcriptActive": "Schreibt",
+      "panel": "Panel",
+      "participants": "Teilnehmer",
+      "leave": "Verlassen",
+      "shortcuts": {
+        "mic": "M",
+        "cam": "C",
+        "screen": "S",
+        "panel": "P",
+        "record": "R",
+        "transcript": "T"
+      }
+    },
+    "sidePanel": {
+      "tabs": {
+        "profile": "LinkedIn-Profil",
+        "chat": "Chat",
+        "transcript": "Transkript",
+        "ai": "KI-Bewertung"
+      },
+      "profile": {
+        "noProfile": "Noch kein Profil geteilt.",
+        "editProfile": "Mein Profil bearbeiten",
+        "candidateNote": "Das LinkedIn-Profil des Kandidaten erscheint hier, wenn er mit seinem LinkedIn-Konto beitritt und das Teilen aktiviert."
+      },
+      "chat": {
+        "empty": "Noch keine Nachrichten. Für Notizen oder Link-Teilen nutzen.",
+        "placeholder": "Nachricht eingeben…",
+        "send": "Senden",
+        "disconnected": "Getrennt"
+      },
+      "transcript": {
+        "status": {
+          "listening": "Hört zu…",
+          "idle": "Bereit"
+        },
+        "languages": {
+          "tr-TR": "Türkisch",
+          "en-US": "Englisch (US)",
+          "de-DE": "Deutsch",
+          "fr-FR": "Französisch"
+        },
+        "actions": {
+          "toggle": "{{action}}",
+          "copy": "Kopieren",
+          "clear": "Löschen"
+        },
+        "empty": {
+          "listening": "Erkenne Sprache…",
+          "idle": "Transkript erscheint hier beim Start."
+        }
+      },
+      "ai": {
+        "title": "KI-Bewertungsassistent",
+        "hostOnly": "Nur der Raum-Gastgeber (Interviewer) kann die KI-Bewertung nutzen.",
+        "position": "Position (optional)",
+        "positionPlaceholder": "z.B. Senior Frontend-Entwickler",
+        "notes": "Interview-Notizen",
+        "notesPlaceholder": "Antworten des Kandidaten, Eindrücke, technische Details…",
+        "evaluate": "Bewerten",
+        "evaluating": "Wird bewertet…",
+        "result": {
+          "score": "Gesamtpunktzahl",
+          "recommendation": {
+            "hire": "✓ Einstellen",
+            "no_hire": "✗ Nicht einstellen",
+            "uncertain": "? Unentschieden"
+          },
+          "rubric": "Kriterien",
+          "strengths": "Stärken",
+          "concerns": "Verbesserungsbereiche",
+          "summary": "Zusammenfassung",
+          "model": "Modell"
+        },
+        "actions": {
+          "copy": "Bericht kopieren",
+          "download": "Herunterladen (.txt)"
+        },
+        "disclaimer": "Bewertung basiert nur auf Ihren Notizen und dem geteilten Profil des Kandidaten. Audio/Video wird nie an KI gesendet.",
+        "notConfigured": "KI-Bewertung nicht konfiguriert (AI_API_KEY erforderlich)."
+      }
+    },
+    "states": {
+      "micReady": "Mikrofon bereit",
+      "camReady": "Kamera bereit",
+      "mediaError": "Medienfehler: {{error}}",
+      "joinError": "Beitritt fehlgeschlagen: {{error}}",
+      "authRequired": "Sie müssen angemeldet sein, um diesem Raum beizutreten."
+    }
+  },
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "loading": "Lädt…",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "confirm": "Bestätigen",
+    "yes": "Ja",
+    "no": "Nein",
+    "optional": "Optional",
+    "required": "Erforderlich",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "sort": "Sortieren",
+    "actions": "Aktionen",
+    "none": "Keine",
+    "empty": "Keine Daten"
+  },
+  "errors": {
+    "network": "Server nicht erreichbar. Verbindung prüfen.",
+    "unauthorized": "Sitzung abgelaufen. Erneut anmelden.",
+    "forbidden": "Keine Berechtigung für diese Aktion.",
+    "notFound": "Ressource nicht gefunden.",
+    "serverError": "Serverfehler. Bitte später erneut versuchen.",
+    "validation": "Eingaben prüfen."
+  },
+  "accessibility": {
+    "skipLink": "Zum Hauptinhalt springen",
+    "mainContent": "Hauptinhalt",
+    "navigation": "Navigation",
+    "toggleTheme": "Design umschalten",
+    "toggleLanguage": "Sprache ändern"
+  }
+}
