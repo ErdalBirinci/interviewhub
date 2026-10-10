@@ -406,7 +406,9 @@ export default function Landing() {
                 <em>localhost:4000/room/s_r7xjb_UQ</em>
               </span>
               <img
-                src="/showcase-room.png"
+                // Mutlak yol kullanma: site /interviewhub/ altinda yayinda,
+                // BASE_URL build sirasinda VITE_BASE ile belirlenir (bkz. main.tsx).
+                src={`${import.meta.env.BASE_URL}showcase-room.png`}
                 alt={t("landing.features.items.0.desc")}
                 loading="lazy"
                 width={2000}
