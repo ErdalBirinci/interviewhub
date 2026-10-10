@@ -216,7 +216,37 @@
       ]
     },
     "showcase": {
-      "heading": "Adayın profili görüşmenin yanında kalır"
+      "heading": "Adayın profili görüşmenin yanında kalır",
+      "check0": "Adayın özeti, deneyimi ve becerileri görünür kalır",
+      "check1": "LinkedIn profilini tek tıkla açın",
+      "check2": "Görüşmeden çıkmadan sohbete geçin",
+      "check3": "Teknik incelemeler için ekranınızı paylaşın"
+    },
+    "privacy": {
+      "eyebrow": "Gizlilik ve WebRTC",
+      "title": "Medyanız sunucumuza hiç dokunmaz",
+      "lead": "Ses ve görüntü doğrudan iki tarayıcı arasında akar. Sunucu yalnızca sinyalleşmeyi taşır — hangi katılımcı hangi odaya katılıyor — ve medyayı asla görmez veya saklamaz.",
+      "checks": {
+        "0": "Varsayılan olarak kayıt özelliği açık değildir",
+        "1": "Görüşme bittikten sonra hiçbir şey saklanmaz",
+        "2": "Profiller katılımcının kendi beyanıdır ve LinkedIn OAuth ile doğrulanır"
+      },
+      "diagram": {
+        "server": "Sinyalleşme sunucusu",
+        "serverNote": "Yalnızca tanıştırma",
+        "interviewer": "Görüşmeci",
+        "candidate": "Aday",
+        "mediaNote": "Medya tarayıcıda kalır",
+        "pipe": "P2P medya"
+      }
+    },
+    "extension": {
+      "heading": "LinkedIn'den çıkmadan oda açın",
+      "checks": {
+        "0": "Tüm akış web uygulamasından çalışır; eklenti isteğe bağlıdır",
+        "1": "Herhangi bir LinkedIn profilinden tek tıkla oda açın",
+        "2": "Davet bağlantısını panelden gönderin ve görüşme boyunca açık tutun"
+      }
     }
   },
   "media": {

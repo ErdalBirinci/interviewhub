@@ -216,7 +216,37 @@
       ]
     },
     "showcase": {
-      "heading": "Le profil du candidat reste à côté de la conversation"
+      "heading": "Le profil du candidat reste à côté de la conversation",
+      "check0": "Le résumé, l'expérience et les compétences du candidat restent visibles",
+      "check1": "Ouvrir son profil LinkedIn en un clic",
+      "check2": "Passer au chat sans quitter l'appel",
+      "check3": "Partager votre écran pour les revues techniques"
+    },
+    "privacy": {
+      "eyebrow": "Confidentialité & WebRTC",
+      "title": "Vos médias ne touchent jamais notre serveur",
+      "lead": "L'audio et la vidéo transitent directement entre les deux navigateurs. Le serveur ne transporte que la signalisation — qui rejoint quelle salle — et ne voit ni ne stocke jamais les médias.",
+      "checks": {
+        "0": "Aucune fonction d'enregistrement n'est activée par défaut",
+        "1": "Rien n'est conservé après la fin de l'entretien",
+        "2": "Les profils sont la déclaration propre du participant, vérifiée par LinkedIn OAuth"
+      },
+      "diagram": {
+        "server": "Serveur de signalisation",
+        "serverNote": "Mise en relation uniquement",
+        "interviewer": "Recruteur",
+        "candidate": "Candidat",
+        "mediaNote": "Les médias restent dans le navigateur",
+        "pipe": "Médias P2P"
+      }
+    },
+    "extension": {
+      "heading": "Ouvrir une salle sans quitter LinkedIn",
+      "checks": {
+        "0": "Tout le parcours fonctionne depuis l'application web — l'extension est facultative",
+        "1": "Ouvrir une salle en un clic depuis n'importe quel profil LinkedIn",
+        "2": "Envoyer le lien d'invitation depuis le panneau et le garder ouvert pendant l'entretien"
+      }
     }
   },
   "media": {

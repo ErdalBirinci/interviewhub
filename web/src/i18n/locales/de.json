@@ -216,7 +216,37 @@
       ]
     },
     "showcase": {
-      "heading": "Das Profil des Kandidaten bleibt im Gespräch an der Seite"
+      "heading": "Das Profil des Kandidaten bleibt im Gespräch an der Seite",
+      "check0": "Zusammenfassung, Erfahrung und Kenntnisse des Kandidaten bleiben sichtbar",
+      "check1": "Sein LinkedIn-Profil mit einem Klick öffnen",
+      "check2": "Ohne das Gespräch zu verlassen zum Chat wechseln",
+      "check3": "Bildschirm für technische Reviews teilen"
+    },
+    "privacy": {
+      "eyebrow": "Datenschutz & WebRTC",
+      "title": "Ihre Medien berühren unseren Server nie",
+      "lead": "Audio und Video fließen direkt zwischen den beiden Browsern. Der Server überträgt nur die Signalisierung — wer an welchem Raum teilnimmt — und sieht oder speichert niemals Medien.",
+      "checks": {
+        "0": "Standardmäßig ist keine Aufzeichnungsfunktion aktiv",
+        "1": "Nach dem Ende des Gesprächs wird nichts gespeichert",
+        "2": "Profile sind die eigene Angabe der Teilnehmer und werden durch LinkedIn OAuth verifiziert"
+      },
+      "diagram": {
+        "server": "Signalisierungsserver",
+        "serverNote": "Nur Vermittlung",
+        "interviewer": "Interviewer",
+        "candidate": "Kandidat",
+        "mediaNote": "Medien bleiben im Browser",
+        "pipe": "P2P-Medien"
+      }
+    },
+    "extension": {
+      "heading": "Raum eröffnen, ohne LinkedIn zu verlassen",
+      "checks": {
+        "0": "Der gesamte Ablauf funktioniert auch in der Web-App — die Erweiterung ist optional",
+        "1": "Mit einem Klick von jedem LinkedIn-Profil aus einen Raum öffnen",
+        "2": "Einladungslink im Panel senden und während des Gesprächs geöffnet lassen"
+      }
     }
   },
   "media": {

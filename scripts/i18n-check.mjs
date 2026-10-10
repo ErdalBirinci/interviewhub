@@ -130,6 +130,62 @@ function checkStructureContracts(localesDir) {
 }
 
 /**
+ * Kaynak kodda `t("anahtar").split("ayrac")[indeks]` kullanimlarini bulur.
+ */
+const SPLIT_INDEX_PATTERN =
+  /\bt\(\s*["'`]([a-zA-Z0-9_.\[\]]+)["'`]\s*\)\s*\.split\(\s*["'`]([^"'`]+)["'`]\s*\)\s*\[\s*(\d+)\s*\]/g;
+
+/**
+ * Bilesenlerin `split(sep)[indeks]` ile aldigi parcanin HER dilde gercekten
+ * uretilebildigini dogrular.
+ *
+ * Neden gerekli: indeks 0 disindaki bir istek, metnin o dilde yeterince parca
+ * icermemesi halinde `undefined` dondurur. React undefined'i bos render eder —
+ * boylece ekranda sessizce eksik etiket cikar. Ayirac dogru olsa bile parca
+ * bos kalabilir. En cok etkilenen diller, nokta yerine baska karakter
+ * kullandiklarindan ja/zh olur; ornek: ".split(\".\")[3]" Japonca'da hic
+ * bolunmeyen bir cumlede 4. parçayi ister.
+ *
+ * Bu kontrol olmasa bu sinif hatayi production'da sessizce yasar — bir kez
+ * 8 dil x 33 bolgede goruldu.
+ */
+function checkSplitIndices(localesDir, sourceFiles) {
+  const out = [];
+  const uses = new Map(); // "key|sep|index" -> { key, sep, index, where[] }
+
+  for (const file of sourceFiles) {
+    const src = fs.readFileSync(file, "utf8");
+    for (const m of src.matchAll(SPLIT_INDEX_PATTERN)) {
+      const [, key, sep, idx] = m;
+      const index = Number(idx);
+      const id = `${key}|${sep}|${index}`;
+      if (!uses.has(id)) uses.set(id, { key, sep, index, where: [] });
+      uses.get(id).where.push(path.relative(root, file));
+    }
+  }
+  if (!uses.size) return out;
+
+  for (const file of fs.readdirSync(localesDir).filter((f) => f.endsWith(".json"))) {
+    const data = JSON.parse(fs.readFileSync(path.join(localesDir, file), "utf8"));
+    for (const { key, sep, index, where } of uses.values()) {
+      const value = key.split(".").reduce((acc, part) => acc?.[part], data);
+      if (typeof value !== "string") continue; // bu anahtar bu dilde/almada yok
+      const parts = value.split(sep);
+      const shown = `${where[0]}${where.length > 1 ? ` +${where.length - 1} dosya` : ""}`;
+      if (parts[index] === undefined) {
+        out.push(
+          `${file}: "${key}" icinde "${sep}" yalnizca ${parts.length} parca uretiyor, ` +
+            `ama [${index}] isteniyor -> undefined (${shown})`,
+        );
+      } else if (!parts[index].trim()) {
+        out.push(`${file}: "${key}" parca[${index}] bos (${shown})`);
+      }
+    }
+  }
+  return out;
+}
+
+/**
  * Kullanilan anahtarlarin gercek i18next tarafindan cozuldugunu dogrular.
  * i18next'i ayni kaynaklardan kurar ve anahtari tek tek istek eder; cevap
  * anahtarin kendisine esitse cozum basarisizdir.
@@ -299,6 +355,10 @@ for (const project of PROJECTS) {
     const runtimeProblems = await checkWithRealI18next(localesDir, usedKeys, masterData);
     problems.push(...runtimeProblems.map((p) => `[${name}] ${p}`));
   }
+
+  // 7) split(sep)[indeks] kullanimlarinin her dilde uretilebilirligi.
+  //    Bu, "ceviriden UI metni turetme" kuralinin indeks bazli denetimidir.
+  problems.push(...checkSplitIndices(localesDir, sourceFiles).map((p) => `[${name}] ${p}`));
 
   totalUsedKeys += usedKeys.size;
   totalSourceFiles += sourceFiles.length;

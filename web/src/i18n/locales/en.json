@@ -216,7 +216,37 @@
       ]
     },
     "showcase": {
-      "heading": "The candidate's profile stays beside the conversation"
+      "heading": "The candidate's profile stays beside the conversation",
+      "check0": "The candidate's summary, experience and skills stay visible",
+      "check1": "Open their LinkedIn profile in one click",
+      "check2": "Switch to chat without leaving the call",
+      "check3": "Share your screen for technical reviews"
+    },
+    "privacy": {
+      "eyebrow": "Privacy & WebRTC",
+      "title": "Your media never touches our server",
+      "lead": "Audio and video flow directly between the two browsers. The server only carries the signalling — who is joining which room — and never sees or stores media.",
+      "checks": {
+        "0": "No recording feature is on by default",
+        "1": "Nothing is stored after the meeting ends",
+        "2": "Profiles are the participant's own declaration, verified by LinkedIn OAuth"
+      },
+      "diagram": {
+        "server": "Signalling server",
+        "serverNote": "Introductions only",
+        "interviewer": "Interviewer",
+        "candidate": "Candidate",
+        "mediaNote": "Media stays in the browser",
+        "pipe": "P2P media"
+      }
+    },
+    "extension": {
+      "heading": "Open a room without leaving LinkedIn",
+      "checks": {
+        "0": "The whole flow works from the web app — the extension is optional",
+        "1": "Open a room with one click from any LinkedIn profile",
+        "2": "Send the invite link from the panel and keep it open while you talk"
+      }
     }
   },
   "media": {

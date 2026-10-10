@@ -247,10 +247,31 @@ export default function Landing() {
     },
   ];
 
+  // PRIVACY ve EXTENSION listeleri artik kendi anahtarlarini kullanir.
+  // Once bu metinler SSS cevaplarindan split() ile turetiliyordu; bu, bazi
+  // dillerde cumle sayisi indeksten az oldugu icin bos metin, bazi dillerde
+  // anlamsiz parca ("No") uretiyordu. Ayrinti icin README'deki
+  // "ceviriden UI metni turetme" kuralina bakin.
   const PRIVACY = [
-    t("landing.faq.items.0.a").split(". ")[0], // First sentence
-    t("landing.faq.items.1.a").split(". ")[0],
-    t("landing.faq.items.3.a"),
+    t("landing.privacy.checks.0"),
+    t("landing.privacy.checks.1"),
+    t("landing.privacy.checks.2"),
+  ];
+
+  const EXT_CHECKS = [
+    t("landing.extension.checks.0"),
+    t("landing.extension.checks.1"),
+    t("landing.extension.checks.2"),
+  ];
+
+  // Showcase listesi de ayri anahtarlar. Once features.items.N.desc'den
+  // split() ile aliniyordu; ilk madde lead ile neredeyse birebir ayni metni
+  // gosteriyordu. Simdi metinler ekran goruntusunde gorulen seyi tarif eder.
+  const SHOWCASE_CHECKS = [
+    t("landing.showcase.check0"),
+    t("landing.showcase.check1"),
+    t("landing.showcase.check2"),
+    t("landing.showcase.check3"),
   ];
 
   const FAQ = [
@@ -377,18 +398,11 @@ export default function Landing() {
             <h2>{t("landing.showcase.heading")}</h2>
             <p className="lead">{t("landing.features.items.0.desc")}</p>
             <ul className="lp-checks">
-              <li>
-                <IconCheck /> {t("landing.features.items.0.desc").split(";")[0]}
-              </li>
-              <li>
-                <IconCheck /> {t("landing.features.items.3.desc").split(";")[0]}
-              </li>
-              <li>
-                <IconCheck /> {t("landing.features.items.1.desc").split(".")[0]}
-              </li>
-              <li>
-                <IconCheck /> {t("landing.features.items.2.desc").split(".")[0]}
-              </li>
+              {SHOWCASE_CHECKS.map((c) => (
+                <li key={c}>
+                  <IconCheck /> {c}
+                </li>
+              ))}
             </ul>
             {me ? (
               <Link to="/dashboard" className="btn btn--secondary">
@@ -413,8 +427,12 @@ export default function Landing() {
                 src={`${import.meta.env.BASE_URL}showcase-room.png`}
                 alt={t("landing.features.items.0.desc")}
                 loading="lazy"
-                width={2000}
-                height={1125}
+                // width/height yalnizca "yer ayirma" icindir (CLS onlemi); CSS
+                // height:100%/auto ile gercek orani dosyadan alir. Bu degerler
+                // PNG'nin IHDR boyutuyla ESLESMELI, aksi halde gorsel yuklenirken
+                // sayfa kayar. Guncellemek icin: npm run showcase
+                width={2880}
+                height={1800}
               />
             </div>
             <figcaption>
@@ -428,11 +446,9 @@ export default function Landing() {
       <section className="lp-section lp-section--alt" id="guvenlik">
         <div className="lp-split lp-split--rev">
           <div className="lp-split__text">
-            <p className="eyebrow">{t("landing.faq.title")}</p>
-            <h2>{t("landing.faq.items.1.q")}</h2>
-            <p className="lead">
-              {t("landing.faq.items.1.a").split(".")[0]}. {t("landing.faq.items.1.a").split(".")[1]}.
-            </p>
+            <p className="eyebrow">{t("landing.privacy.eyebrow")}</p>
+            <h2>{t("landing.privacy.title")}</h2>
+            <p className="lead">{t("landing.privacy.lead")}</p>
             <ul className="lp-checks">
               {PRIVACY.map((p) => (
                 <li key={p}>
@@ -442,26 +458,28 @@ export default function Landing() {
             </ul>
           </div>
 
+          {/* Diyagram suslu elementtir (aria-hidden): yine de metinleri kendi
+              anahtarlarindan gelir; SSS cevaplarindan split() ile alinmiyordu. */}
           <div className="lp-dia" aria-hidden="true">
             <div className="lp-dia__server">
-              <b>{t("landing.features.items.1.desc").split(".")[1]}</b>
-              <em>{t("landing.faq.items.1.a").split(".")[2]}</em>
+              <b>{t("landing.privacy.diagram.server")}</b>
+              <em>{t("landing.privacy.diagram.serverNote")}</em>
             </div>
             <div className="lp-dia__drop" />
             <div className="lp-dia__row">
               <div className="lp-dia__node">
                 <span className="lp-dia__ava">A</span>
-                <b>{t("landing.features.items.0.title")}</b>
-                <em>{t("landing.features.items.1.desc").split(".")[1]}</em>
+                <b>{t("landing.privacy.diagram.interviewer")}</b>
+                <em>{t("landing.privacy.diagram.mediaNote")}</em>
               </div>
               <div className="lp-dia__pipe">
                 <b>↔</b>
-                <em>{t("landing.faq.items.1.a").split(".")[3]}</em>
+                <em>{t("landing.privacy.diagram.pipe")}</em>
               </div>
               <div className="lp-dia__node">
-                <span className="lp-dia__ava lp-dia__ava--b">İ</span>
-                <b>{t("landing.features.items.0.title")}</b>
-                <em>{t("landing.features.items.0.desc").split(";")[0]}</em>
+                <span className="lp-dia__ava lp-dia__ava--b">M</span>
+                <b>{t("landing.privacy.diagram.candidate")}</b>
+                <em>{t("landing.privacy.diagram.mediaNote")}</em>
               </div>
             </div>
           </div>
@@ -473,20 +491,16 @@ export default function Landing() {
         <div className="lp-split">
           <div className="lp-split__text">
             <p className="eyebrow">{t("landing.features.items.4.title")}</p>
-            <h2>{t("landing.features.items.4.desc").split(".")[0]}</h2>
-            <p className="lead">
-              {t("landing.features.items.4.desc")}
-            </p>
+            {/* Baslik ayri anahtar: once desc'in ilk parcasiydi; aciklama tek
+                cumle oldugu icun lead ile birebir ayni metni uretiyordu. */}
+            <h2>{t("landing.extension.heading")}</h2>
+            <p className="lead">{t("landing.features.items.4.desc")}</p>
             <ul className="lp-checks">
-              <li>
-                <IconCheck /> {t("landing.faq.items.3.a").split(".")[0]}
-              </li>
-              <li>
-                <IconCheck /> {t("landing.faq.items.3.a").split(".")[1]}
-              </li>
-              <li>
-                <IconCheck /> {t("landing.faq.items.3.a").split(".")[2]}
-              </li>
+              {EXT_CHECKS.map((c) => (
+                <li key={c}>
+                  <IconCheck /> {c}
+                </li>
+              ))}
             </ul>
           </div>
           <div className="lp-split__visual">

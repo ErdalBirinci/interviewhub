@@ -216,7 +216,37 @@
       ]
     },
     "showcase": {
-      "heading": "El perfil del candidato se mantiene junto a la conversación"
+      "heading": "El perfil del candidato se mantiene junto a la conversación",
+      "check0": "El resumen, la experiencia y las aptitudes del candidato siguen visibles",
+      "check1": "Abre su perfil de LinkedIn con un clic",
+      "check2": "Cambia al chat sin salir de la llamada",
+      "check3": "Comparte tu pantalla para revisiones técnicas"
+    },
+    "privacy": {
+      "eyebrow": "Privacidad y WebRTC",
+      "title": "Tus medios nunca tocan nuestro servidor",
+      "lead": "El audio y el video fluyen directamente entre los dos navegadores. El servidor solo transporta la señalización — quién entra en qué sala — y nunca ve ni almacena medios.",
+      "checks": {
+        "0": "No hay función de grabación activada por defecto",
+        "1": "No se guarda nada después de que la entrevista termina",
+        "2": "Los perfiles son la declaración propia del participante, verificada con LinkedIn OAuth"
+      },
+      "diagram": {
+        "server": "Servidor de señalización",
+        "serverNote": "Solo presenta",
+        "interviewer": "Entrevistador",
+        "candidate": "Candidato",
+        "mediaNote": "Los medios se quedan en el navegador",
+        "pipe": "Medios P2P"
+      }
+    },
+    "extension": {
+      "heading": "Abre una sala sin salir de LinkedIn",
+      "checks": {
+        "0": "Todo el flujo funciona desde la aplicación web; la extensión es opcional",
+        "1": "Abre una sala con un clic desde cualquier perfil de LinkedIn",
+        "2": "Envía el enlace de invitación desde el panel y mantenlo abierto durante la entrevista"
+      }
     }
   },
   "media": {

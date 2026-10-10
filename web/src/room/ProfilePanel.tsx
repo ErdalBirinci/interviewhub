@@ -143,7 +143,10 @@ export default function ProfilePanel({ peers, selfId, selectedId, onSelect }: Pr
             <span className="person__avatar">{initials(peer.name)}</span>
             <span className="person__name">
               {peer.name}
-              {peer.id === selfId && <em>(siz)</em>}
+              {/* Ayri anahtar: VideoTile'daki selfSuffix ile ayni metin.
+                  Burada sabit "(siz)" yaziyordu — karede "(you)" gorunurken
+                  panel rozetinde Turkce kalmis olarak karisiyordu. */}
+              {peer.id === selfId && <em>{t("room.selfSuffix")}</em>}
             </span>
             <span className={`person__dot ${peer.profile ? "person__dot--on" : ""}`} />
           </button>
