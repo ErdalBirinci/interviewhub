@@ -128,10 +128,13 @@
   },
   "landing": {
     "cta": {
-      "button": "Mit LinkedIn verbinden",
-      "title": "Starten Sie Ihr erstes Interview heute"
+      "eyebrow": "Loslegen",
+      "title": "Starten Sie Ihr erstes Interview heute",
+      "button": "Mit LinkedIn verbinden"
     },
     "faq": {
+      "eyebrow": "FAQ",
+      "title": "Häufige Fragen",
       "items": [
         {
           "a": "Nein. Die LinkedIn-API stellt keine Profildaten für Dritte bereit. Profilinformationen werden vom Kandidaten selbst angegeben, verifiziert über LinkedIn OAuth (Name, Foto, Profil-URL).",
@@ -157,10 +160,12 @@
           "a": "Sowohl Arbeitgeber als auch Kandidaten. Jeder, der den Einladungslink öffnet, kann dem Raum unter eigenem Namen oder mit LinkedIn-Login beitreten.",
           "q": "Wer kann es nutzen?"
         }
-      ],
-      "title": "Häufige Fragen"
+      ]
     },
     "features": {
+      "eyebrow": "Funktionen",
+      "title": "Alles auf einem Bildschirm",
+      "lead": "Entwickelt für technische und Portfolio-Vorstellungsgespräche – Profil, Gespräch und Notizen bleiben während des gesamten Gesprächs nebeneinander.",
       "items": [
         {
           "desc": "Das Profil des Kandidaten ist während des gesamten Interviews sichtbar",
@@ -186,8 +191,7 @@
           "desc": "Ihre Daten gehören Ihnen, kein Tracking durch Dritte",
           "title": "Eigentum & Datenschutz"
         }
-      ],
-      "title": "Alles auf einem Bildschirm"
+      ]
     },
     "footer": {
       "candidateProfile": "Das LinkedIn-Profil des Kandidaten bleibt während des Interviews neben Ihnen",
@@ -203,12 +207,16 @@
       "title": "InterviewHub"
     },
     "steps": {
+      "eyebrow": "So funktioniert's",
+      "title": "Drei Schritte zum Live-Interview",
       "steps": [
         "Mit LinkedIn verbinden — Die Anmeldung wird über LinkedIn OAuth verifiziert. Profildaten werden nicht aus der LinkedIn-API gezogen; Sie geben sie selbst ein.",
         "Raum öffnen und Link teilen — Senden Sie den Einladungslink des Raums an den Kandidaten über eine LinkedIn-Nachricht. Keine Einrichtung, kein extra Konto, kein Download.",
         "Interview führen und Profil lesen — Wenn der Kandidat beitritt, kommen Video und Profil zusammen. Bildschirm teilen, chatten und auf einem Bildschirm entscheiden."
-      ],
-      "title": "Drei Schritte zum Live-Interview"
+      ]
+    },
+    "showcase": {
+      "heading": "Das Profil des Kandidaten bleibt im Gespräch an der Seite"
     }
   },
   "media": {

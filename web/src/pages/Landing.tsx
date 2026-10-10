@@ -329,11 +329,9 @@ export default function Landing() {
       {/* ------------------------------ FEATURES --------------------------- */}
       <section className="lp-section" id="ozellikler">
         <header className="lp-head">
-          <p className="eyebrow">{t("landing.features.title")}</p>
+          <p className="eyebrow">{t("landing.features.eyebrow")}</p>
           <h2>{t("landing.features.title")}</h2>
-          <p className="lead">
-            {t("landing.features.items.0.desc").split(".")[0]}. {t("landing.features.items.1.desc").split(".")[0]}.
-          </p>
+          <p className="lead">{t("landing.features.lead")}</p>
         </header>
 
         <div className="lp-grid">
@@ -350,7 +348,7 @@ export default function Landing() {
       {/* --------------------------- HOW IT WORKS --------------------------- */}
       <section className="lp-section lp-section--alt" id="nasil">
         <header className="lp-head">
-          <p className="eyebrow">{t("landing.steps.title")}</p>
+          <p className="eyebrow">{t("landing.steps.eyebrow")}</p>
           <h2>{t("landing.steps.title")}</h2>
         </header>
 
@@ -373,10 +371,11 @@ export default function Landing() {
         <div className="lp-split">
           <div className="lp-split__text">
             <p className="eyebrow">{t("landing.features.items.0.title")}</p>
-            <h2>{t("landing.features.items.0.desc").split(".")[0]}</h2>
-            <p className="lead">
-              {t("landing.features.items.0.desc")} {t("landing.features.items.1.desc").split(".")[0]}.
-            </p>
+            {/* Baslik artik ayri bir anahtar: desc cumlesinin ilk parcasi alinmiyor,
+                cunku aciklama tek uzun cumle oldugu icin bu, lead ile birebir ayni
+                metni uretiyordu (bazi dillerde hic bolunmuyordu). */}
+            <h2>{t("landing.showcase.heading")}</h2>
+            <p className="lead">{t("landing.features.items.0.desc")}</p>
             <ul className="lp-checks">
               <li>
                 <IconCheck /> {t("landing.features.items.0.desc").split(";")[0]}
@@ -385,7 +384,10 @@ export default function Landing() {
                 <IconCheck /> {t("landing.features.items.3.desc").split(";")[0]}
               </li>
               <li>
-                <IconCheck /> {t("landing.features.items.1.desc").split(".")[0]} {t("landing.features.items.2.desc").split(".")[0]}
+                <IconCheck /> {t("landing.features.items.1.desc").split(".")[0]}
+              </li>
+              <li>
+                <IconCheck /> {t("landing.features.items.2.desc").split(".")[0]}
               </li>
             </ul>
             {me ? (
@@ -496,7 +498,7 @@ export default function Landing() {
       {/* --------------------------------- FAQ ------------------------------- */}
       <section className="lp-section lp-section--alt" id="sss">
         <header className="lp-head">
-          <p className="eyebrow">{t("landing.faq.title")}</p>
+          <p className="eyebrow">{t("landing.faq.eyebrow")}</p>
           <h2>{t("landing.faq.title")}</h2>
         </header>
 
@@ -513,7 +515,7 @@ export default function Landing() {
       {/* -------------------------------- CTA -------------------------------- */}
       <section className="lp-final" id="giris">
         <div>
-          <p className="eyebrow">{t("landing.cta.title")}</p>
+          <p className="eyebrow">{t("landing.cta.eyebrow")}</p>
           <h2>{t("landing.cta.title")}</h2>
           <p className="lead">
             {t("landing.cta.button")}

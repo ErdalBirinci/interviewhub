@@ -128,10 +128,13 @@
   },
   "landing": {
     "cta": {
-      "button": "Connect with LinkedIn",
-      "title": "Open your first interview today"
+      "eyebrow": "Get started",
+      "title": "Open your first interview today",
+      "button": "Connect with LinkedIn"
     },
     "faq": {
+      "eyebrow": "FAQ",
+      "title": "Frequently asked questions",
       "items": [
         {
           "a": "No. LinkedIn OAuth is used for login, but profile information is not taken from the LinkedIn API. Users enter the summary, experience, education and skills into their own profiles themselves; this content is a form submitted to us, not an automatic pull.",
@@ -157,10 +160,12 @@
           "a": "Both employers and candidates. Anyone who opens the invite link can join the room under their own name or with a LinkedIn login.",
           "q": "Who can use it?"
         }
-      ],
-      "title": "Frequently asked questions"
+      ]
     },
     "features": {
+      "eyebrow": "Features",
+      "title": "Everything an interview needs, on one screen",
+      "lead": "Built for technical and portfolio interviews, with everything side by side for the whole conversation.",
       "items": [
         {
           "desc": "Summary, experience, education and skills stay at a glance throughout the interview; opens on LinkedIn with one click.",
@@ -186,8 +191,7 @@
           "desc": "Profiles are the participant's own declaration. You always decide what is shared.",
           "title": "Ownership and privacy"
         }
-      ],
-      "title": "Everything an interview needs, on one screen"
+      ]
     },
     "footer": {
       "candidateProfile": "The candidate's LinkedIn profile stays beside you during the interview",
@@ -203,12 +207,16 @@
       "title": "InterviewHub"
     },
     "steps": {
+      "eyebrow": "How it works",
+      "title": "Live interviews in three steps",
       "steps": [
         "Connect with LinkedIn — Login is verified with LinkedIn OAuth. Profile data is not pulled from the LinkedIn API; you enter the information yourself.",
         "Open a room and share the link — Send the room's invite link to the candidate through a LinkedIn message. No extra setup, no extra account, no download.",
         "Interview and read the profile — When the candidate joins, video and profile come together. Share your screen, chat, and decide on one screen."
-      ],
-      "title": "Live interviews in three steps"
+      ]
+    },
+    "showcase": {
+      "heading": "The candidate's profile stays beside the conversation"
     }
   },
   "media": {

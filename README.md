@@ -74,6 +74,32 @@ node scripts/i18n-merge.mjs web/src/i18n/locales/ hedef-dil.json yeni-anahtarlar
 
 Yani yeni bir özellik unutulmuş bir çeviriyi sessizce üretime taşıyamaz — test kırılır.
 
+### Çeviriden UI metni türetme (yapmayın)
+
+Ekran görüntüsü testleriyle yakalanan gerçek bir hata sınıfı: çeviriyi
+`split()` ile parçalayıp ikinci bir arayüz metni **türetmek**. Örnek:
+
+```tsx
+// HATA: başlık, açıklamanın ilk cümlesinden geliyor
+<h2>{t("landing.features.items.0.desc").split(".")[0]}</h2>
+<p className="lead">{t("landing.features.items.0.desc")}</p>
+```
+
+Bunun üç sonucu var ve hepsi production'da göründü:
+
+1. **Açıklama tek cümleyse** başlık ile gövde birebir aynı metin olur
+   (ekranda üst üste iki kez).
+2. **Ayracı içermeyen dillerde** `split()` hiç bölemez, alınan parça tüm
+   cümledir — `ja`, `zh`, `ru`, `de` nokta yerine `。` kullandığı için
+   nokta ayıracı işlemez.
+3. **Parçaları birleştirmek** nokta koymadan iki cümleyi yanyana yapıştırır
+   ("…browser to browser Share your screen…").
+
+Kural: **Her görünen metin kendi anahtarına sahip olsun.** Türetilmiş metin
+gerekliyse ayraç, tüm dillerde *zorunlu* olmalı ve bunu `STRUCTURE_CONTRACTS`
+korumalıdır. Bkz. `web/src/pages/Landing.tsx` içindeki
+`landing.features.eyebrow` / `landing.showcase.heading` örnekleri.
+
 ---
 
 ## Kurulum
@@ -139,7 +165,8 @@ npm run test:all      # typecheck + sinyal + WebRTC e2e + eklenti e2e
 
 | Betik | Ne yapar |
 |---|---|
-| `npm run test:i18n` | **i18n tutarlılığı**: web + eklenti için 8 dil paritesi, tanımsız anahtar, boş çeviri |
+| `npm run test:i18n` | **i18n tutarlılığı**: web + eklenti için 8 dil paritesi, tanımsız anahtar, boş çeviri, gerçek i18next çözme testi |
+| `npm run test:asset` | **Asset yolları**: `web/src` + `web/index.html` içinde base'siz mutlak varlık referansı (`/showcase.png` gibi) var mı. Pages `/interviewhub/` altında yayında, bu yüzden yollar `BASE_URL` ile kurulmalı |
 | `npm run test:signal` | Socket.IO sinyal katmanı: katılma, peer olayları, relay, sohbet. Argüman verilmezse test ortamını (demo kullanıcılar + oda + profil) **kendisi hazırlar** |
 | `npm run test:e2e` | **Gerçek Chrome'da** iki sekme açar, odaya girer, P2P + medya akışını doğrular (CDP gerekir). Test ortamı yoksa kendisi oluşturur |
 | `npm run test:ext` | **Eklenti E2E**: LinkedIn sayfasında FAB enjeksiyonu + trusted tıklama ile yan panelin açılması + panel arayüzü |

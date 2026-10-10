@@ -128,10 +128,13 @@
   },
   "landing": {
     "cta": {
-      "button": "Conectar con LinkedIn",
-      "title": "Comience su primera entrevista hoy"
+      "eyebrow": "Empezar",
+      "title": "Comience su primera entrevista hoy",
+      "button": "Conectar con LinkedIn"
     },
     "faq": {
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Preguntas Frecuentes",
       "items": [
         {
           "a": "No. La API de LinkedIn no proporciona datos de perfil a terceros. La información del perfil es auto-declarada por el candidato, verificada vía LinkedIn OAuth (nombre, foto, URL del perfil).",
@@ -157,10 +160,12 @@
           "a": "Tanto empleadores como candidatos. Cualquiera que abra el enlace de invitación puede unirse a la sala con su nombre o con inicio de sesión de LinkedIn.",
           "q": "¿Quién puede usarlo?"
         }
-      ],
-      "title": "Preguntas Frecuentes"
+      ]
     },
     "features": {
+      "eyebrow": "Funciones",
+      "title": "Todo en una sola pantalla",
+      "lead": "Pensado para entrevistas técnicas y de portafolio: el perfil, la llamada y las notas permanecen juntos durante toda la conversación.",
       "items": [
         {
           "desc": "El perfil del candidato visible durante toda la entrevista",
@@ -186,8 +191,7 @@
           "desc": "Sus datos son suyos, sin rastreo de terceros",
           "title": "Propiedad y privacidad"
         }
-      ],
-      "title": "Todo en una sola pantalla"
+      ]
     },
     "footer": {
       "candidateProfile": "El perfil de LinkedIn del candidato se queda a su lado durante la entrevista",
@@ -203,12 +207,16 @@
       "title": "InterviewHub"
     },
     "steps": {
+      "eyebrow": "Cómo funciona",
+      "title": "Tres pasos para la entrevista en vivo",
       "steps": [
         "Conectar con LinkedIn — El inicio de sesión se verifica con LinkedIn OAuth. Los datos del perfil no se obtienen de la API de LinkedIn; los introduces tú mismo.",
         "Abrir una sala y compartir el enlace — Envía el enlace de invitación de la sala al candidato por un mensaje de LinkedIn. Sin configuración, sin cuenta adicional, sin descargas.",
         "Entrevistar y leer el perfil — Cuando el candidato se une, el vídeo y el perfil se juntan. Comparte tu pantalla, chatea y decide en una sola pantalla."
-      ],
-      "title": "Tres pasos para la entrevista en vivo"
+      ]
+    },
+    "showcase": {
+      "heading": "El perfil del candidato se mantiene junto a la conversación"
     }
   },
   "media": {

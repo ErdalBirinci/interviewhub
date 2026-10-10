@@ -128,10 +128,13 @@
   },
   "landing": {
     "cta": {
-      "button": "LinkedIn ile Bağlan",
-      "title": "İlk görüşmenizi bugün açın"
+      "eyebrow": "Başlayın",
+      "title": "İlk görüşmenizi bugün açın",
+      "button": "LinkedIn ile Bağlan"
     },
     "faq": {
+      "eyebrow": "SSS",
+      "title": "Sık Sorulanlar",
       "items": [
         {
           "a": "Hayır. LinkedIn API'si üçüncü taraflara profil verisi vermez. Profil bilgileri adayın kendi beyanıdır, doğrulama LinkedIn OAuth ile yapılır (isim, foto, profil URL).",
@@ -157,10 +160,12 @@
           "a": "Hem işverenler hem adaylar. Davet bağlantısını açan herkes, kendi adıyla veya LinkedIn girişiyle odaya katılabilir.",
           "q": "Kimler kullanabilir?"
         }
-      ],
-      "title": "Sık Sorulanlar"
+      ]
     },
     "features": {
+      "eyebrow": "Özellikler",
+      "title": "Görüşme için gereken her şey tek ekranda",
+      "lead": "Teknik ve portfolyo mülakatları için tasarlandı; profil, görüşme ve notlar mülakat boyunca yan yana kalır.",
       "items": [
         {
           "desc": "Adayın profili görüşme boyunca görünür",
@@ -186,8 +191,7 @@
           "desc": "Verileriniz sizde, üçüncü taraf takibi yok",
           "title": "Sahiplik ve gizlilik"
         }
-      ],
-      "title": "Görüşme için gereken her şey tek ekranda"
+      ]
     },
     "footer": {
       "candidateProfile": "Adayınız sizinle görüşürken profili de yanında",
@@ -203,12 +207,16 @@
       "title": "InterviewHub"
     },
     "steps": {
+      "eyebrow": "Nasıl çalışır",
+      "title": "Üç adımda canlı görüşme",
       "steps": [
         "LinkedIn ile bağlanın — Giriş LinkedIn OAuth ile doğrulanır. Profil verisi LinkedIn API'sinden çekilmez; bilgileri kendiniz girersiniz.",
         "Odayı açın ve bağlantıyı paylaşın — Odaya davet bağlantısını LinkedIn mesajıyla adayla paylaşın. Kurulum yok, ek hesap yok, indirme yok.",
         "Görüşmeyi yapın ve profili okuyun — Aday katıldığında video ve profil yan yana gelir. Ekranınızı paylaşın, sohbet edin ve tek ekranda karar verin."
-      ],
-      "title": "Üç adımda canlı görüşme"
+      ]
+    },
+    "showcase": {
+      "heading": "Adayın profili görüşmenin yanında kalır"
     }
   },
   "media": {

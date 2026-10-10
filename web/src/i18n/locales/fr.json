@@ -128,10 +128,13 @@
   },
   "landing": {
     "cta": {
-      "button": "Se connecter avec LinkedIn",
-      "title": "Commencez votre premier entretien aujourd'hui"
+      "eyebrow": "Commencer",
+      "title": "Commencez votre premier entretien aujourd'hui",
+      "button": "Se connecter avec LinkedIn"
     },
     "faq": {
+      "eyebrow": "FAQ",
+      "title": "Questions fréquentes",
       "items": [
         {
           "a": "Non. L'API LinkedIn ne fournit pas de données de profil aux tiers. Les infos de profil sont déclarées par le candidat, vérifiées via LinkedIn OAuth (nom, photo, URL du profil).",
@@ -157,10 +160,12 @@
           "a": "Les employeurs comme les candidats. Toute personne qui ouvre le lien d'invitation peut rejoindre la salle sous son nom ou avec une connexion LinkedIn.",
           "q": "Qui peut l'utiliser ?"
         }
-      ],
-      "title": "Questions fréquentes"
+      ]
     },
     "features": {
+      "eyebrow": "Fonctionnalités",
+      "title": "Tout sur un seul écran",
+      "lead": "Conçu pour les entretiens techniques et de portfolio — le profil, l'appel et les notes restent côte à côte pendant tout l'entretien.",
       "items": [
         {
           "desc": "Le profil du candidat est visible pendant tout l'entretien",
@@ -186,8 +191,7 @@
           "desc": "Vos données vous appartiennent, aucun suivi tiers",
           "title": "Propriété et confidentialité"
         }
-      ],
-      "title": "Tout sur un seul écran"
+      ]
     },
     "footer": {
       "candidateProfile": "Le profil LinkedIn du candidat reste à côté de vous pendant l'entretien",
@@ -203,12 +207,16 @@
       "title": "InterviewHub"
     },
     "steps": {
+      "eyebrow": "Comment ça marche",
+      "title": "Trois étapes pour l'entretien en direct",
       "steps": [
         "Se connecter avec LinkedIn — La connexion est vérifiée via LinkedIn OAuth. Les données de profil ne proviennent pas de l'API LinkedIn ; vous les saisissez vous-même.",
         "Ouvrir une salle et partager le lien — Envoyez le lien d'invitation de la salle au candidat par un message LinkedIn. Aucune configuration, aucun compte supplémentaire, aucun téléchargement.",
         "Mener l'entretien et lire le profil — Quand le candidat rejoint, la vidéo et le profil se rejoignent. Partagez votre écran, discutez et décidez sur un seul écran."
-      ],
-      "title": "Trois étapes pour l'entretien en direct"
+      ]
+    },
+    "showcase": {
+      "heading": "Le profil du candidat reste à côté de la conversation"
     }
   },
   "media": {
