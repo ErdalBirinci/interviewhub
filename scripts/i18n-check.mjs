@@ -95,6 +95,41 @@ function collectSourceFiles(dir) {
 /* ---------------------------------- kontroller ------------------------------ */
 
 /**
+ * Bilesenlerin deger uzerinde string islem yaptigi (split vb.) anahtarlar icin
+ * yapi sozlesmesi. Bir dil bu ayiriciyi unutursa bilesen sessizce bozuk
+ * gorunur (orn. baslik ile govde metni ayni olur) — bu kontrol onu testte yakalar.
+ */
+const STRUCTURE_CONTRACTS = [
+  {
+    // Landing.tsx: title = deger.split(" — ")[0], text = deger
+    key: "landing.steps.steps",
+    separator: " — ",
+    why: "baslik/govde ayirimi icin em-dash zorunlu",
+  },
+];
+
+function checkStructureContracts(localesDir) {
+  const out = [];
+  for (const file of fs.readdirSync(localesDir).filter((f) => f.endsWith(".json"))) {
+    const lang = file.replace(/\.json$/, "");
+    const data = JSON.parse(fs.readFileSync(path.join(localesDir, file), "utf8"));
+    for (const c of STRUCTURE_CONTRACTS) {
+      const value = c.key.split(".").reduce((acc, part) => acc?.[part], data);
+      if (value === undefined) continue; // bu anahtar bu projeye ait degil
+      const items = Array.isArray(value) ? value : [value];
+      items.forEach((v, i) => {
+        if (typeof v !== "string" || !v.includes(c.separator)) {
+          out.push(
+            `${file}: "${c.key}${Array.isArray(value) ? `.${i}` : ""}" ayirici "${c.separator}" icermiyor — ${c.why}`,
+          );
+        }
+      });
+    }
+  }
+  return out;
+}
+
+/**
  * Kullanilan anahtarlarin gercek i18next tarafindan cozuldugunu dogrular.
  * i18next'i ayni kaynaklardan kurar ve anahtari tek tek istek eder; cevap
  * anahtarin kendisine esitse cozum basarisizdir.
@@ -252,7 +287,10 @@ for (const project of PROJECTS) {
     }
   }
 
-  // 5) Gercek i18next ile COZME testi.
+  // 5) Bilesenlerin split ile ayirdigi degerlerde yapilandirma sozlesmesi
+  problems.push(...checkStructureContracts(localesDir).map((p) => `[${name}] ${p}`));
+
+  // 6) Gercek i18next ile COZME testi.
   //    "Anahtar JSON'da var" ile "i18next o anahtari buluyor" ayni sey degildir.
   //    Or: "landing.features.items[0].title" JSON'da kalinca flat() tarafinda
   //    "var" gorunur ama i18next keySeparator nokta oldugu icin bunu COZEMEZ ve

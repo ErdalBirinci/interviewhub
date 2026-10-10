@@ -204,9 +204,9 @@
     },
     "steps": {
       "steps": [
-        "LinkedIn ile bağlanın",
-        "Odayı açın, bağlantıyı paylaşın",
-        "Görüşün, profili okuyun"
+        "LinkedIn ile bağlanın — Giriş LinkedIn OAuth ile doğrulanır. Profil verisi LinkedIn API'sinden çekilmez; bilgileri kendiniz girersiniz.",
+        "Odayı açın ve bağlantıyı paylaşın — Odaya davet bağlantısını LinkedIn mesajıyla adayla paylaşın. Kurulum yok, ek hesap yok, indirme yok.",
+        "Görüşmeyi yapın ve profili okuyun — Aday katıldığında video ve profil yan yana gelir. Ekranınızı paylaşın, sohbet edin ve tek ekranda karar verin."
       ],
       "title": "Üç adımda canlı görüşme"
     }

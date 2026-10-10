@@ -204,9 +204,9 @@
     },
     "steps": {
       "steps": [
-        "Se connecter avec LinkedIn",
-        "Ouvrir la salle, partager le lien",
-        "Entretien, lire le profil"
+        "Se connecter avec LinkedIn — La connexion est vérifiée via LinkedIn OAuth. Les données de profil ne proviennent pas de l'API LinkedIn ; vous les saisissez vous-même.",
+        "Ouvrir une salle et partager le lien — Envoyez le lien d'invitation de la salle au candidat par un message LinkedIn. Aucune configuration, aucun compte supplémentaire, aucun téléchargement.",
+        "Mener l'entretien et lire le profil — Quand le candidat rejoint, la vidéo et le profil se rejoignent. Partagez votre écran, discutez et décidez sur un seul écran."
       ],
       "title": "Trois étapes pour l'entretien en direct"
     }

@@ -228,19 +228,21 @@ export default function Landing() {
     {
       n: "01",
       icon: <IconLink />,
-      title: t("landing.steps.steps.0").split(",")[0], // "Connect with LinkedIn"
+      // Degerler "Kisa etiket — Aciklama" bicimindedir; ayirc em-dash'tir.
+      // Ayirici olarak virgul kullanilamaz: bazi diller etiketin icinde virgul icerir.
+      title: t("landing.steps.steps.0").split(" — ")[0],
       text: t("landing.steps.steps.0"),
     },
     {
       n: "02",
       icon: <IconUsers />,
-      title: t("landing.steps.steps.1").split(",")[0], // "Open room, share link"
+      title: t("landing.steps.steps.1").split(" — ")[0],
       text: t("landing.steps.steps.1"),
     },
     {
       n: "03",
       icon: <IconVideo />,
-      title: t("landing.steps.steps.2").split(",")[0], // "Interview, read profile"
+      title: t("landing.steps.steps.2").split(" — ")[0],
       text: t("landing.steps.steps.2"),
     },
   ];

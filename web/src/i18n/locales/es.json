@@ -204,9 +204,9 @@
     },
     "steps": {
       "steps": [
-        "Conectar con LinkedIn",
-        "Abrir sala, compartir enlace",
-        "Entrevistar, leer perfil"
+        "Conectar con LinkedIn — El inicio de sesión se verifica con LinkedIn OAuth. Los datos del perfil no se obtienen de la API de LinkedIn; los introduces tú mismo.",
+        "Abrir una sala y compartir el enlace — Envía el enlace de invitación de la sala al candidato por un mensaje de LinkedIn. Sin configuración, sin cuenta adicional, sin descargas.",
+        "Entrevistar y leer el perfil — Cuando el candidato se une, el vídeo y el perfil se juntan. Comparte tu pantalla, chatea y decide en una sola pantalla."
       ],
       "title": "Tres pasos para la entrevista en vivo"
     }

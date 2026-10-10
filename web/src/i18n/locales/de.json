@@ -204,9 +204,9 @@
     },
     "steps": {
       "steps": [
-        "Mit LinkedIn verbinden",
-        "Raum öffnen, Link teilen",
-        "Interviewen, Profil lesen"
+        "Mit LinkedIn verbinden — Die Anmeldung wird über LinkedIn OAuth verifiziert. Profildaten werden nicht aus der LinkedIn-API gezogen; Sie geben sie selbst ein.",
+        "Raum öffnen und Link teilen — Senden Sie den Einladungslink des Raums an den Kandidaten über eine LinkedIn-Nachricht. Keine Einrichtung, kein extra Konto, kein Download.",
+        "Interview führen und Profil lesen — Wenn der Kandidat beitritt, kommen Video und Profil zusammen. Bildschirm teilen, chatten und auf einem Bildschirm entscheiden."
       ],
       "title": "Drei Schritte zum Live-Interview"
     }

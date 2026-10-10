@@ -68,7 +68,9 @@ node scripts/i18n-merge.mjs web/src/i18n/locales/ hedef-dil.json yeni-anahtarlar
 - 8 dil × anahtar paritesi (eksik/fazla anahtar)
 - Kaynak kodda kullanılan `t("anahtar")` / `translate("anahtar")` ve HTML'deki
   `data-i18n*` niteliklerindeki anahtarların tanımlı olması
-- Boş çeviri içeren anahtar
+- **Her anahtarın gerçek i18next ile çözülmesi** — "JSON'da anahtar var" ile
+  "i18next onu buluyor" aynı şey değildir (ör. `items[0].x` çözülmez, `items.0.x` çözülür)
+- Bileşenin `split()` ile ayırdığı değerlerde ayraç zorunluluğu (bkz. `STRUCTURE_CONTRACTS`)
 
 Yani yeni bir özellik unutulmuş bir çeviriyi sessizce üretime taşıyamaz — test kırılır.
 
