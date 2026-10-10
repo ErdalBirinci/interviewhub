@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from "react";
 import { useAuth } from "../lib/auth";
+import { useTranslation } from "../i18n/useTranslation";
 
 export default function LoginCard({ title, note }: { title?: string; note?: string }) {
   const { login, demoLogin, linkedinEnabled, demoEnabled } = useAuth();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -12,7 +14,7 @@ export default function LoginCard({ title, note }: { title?: string; note?: stri
     setBusy(true);
     setError(null);
     try {
-      await demoLogin(name.trim() || "Demo Kullanıcı");
+      await demoLogin(name.trim() || t("auth.demoFallbackName"));
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -23,46 +25,41 @@ export default function LoginCard({ title, note }: { title?: string; note?: stri
   if (!linkedinEnabled && !demoEnabled) {
     return (
       <div className="card login-card">
-        <h2>Giriş yapılamıyor</h2>
-        <p className="muted">
-          Sunucuda LinkedIn OAuth yapılandırılmamış ve demo girişi kapalı. Sunucu klasöründeki{" "}
-          <code>.env</code> dosyasına <code>LINKEDIN_CLIENT_ID</code> ve{" "}
-          <code>LINKEDIN_CLIENT_SECRET</code> ekleyin.
-        </p>
+        <h2>{t("auth.cannotLogin")}</h2>
+        <p className="muted">{t("auth.notConfigured")}</p>
       </div>
     );
   }
 
   return (
     <div className="card login-card">
-      <h2>{title ?? "Devam etmek için giriş yapın"}</h2>
+      <h2>{title ?? t("auth.loginTitle")}</h2>
       {note && <p className="muted">{note}</p>}
 
       {linkedinEnabled && (
         <button className="btn btn--linkedin btn--block" onClick={login}>
-          LinkedIn ile giriş yap
+          {t("auth.linkedInBtn")}
         </button>
       )}
 
-      {linkedinEnabled && demoEnabled && <div className="divider">veya</div>}
+      {linkedinEnabled && demoEnabled && <div className="divider">{t("auth.or")}</div>}
 
       {demoEnabled && (
         <form onSubmit={onDemo} className="demo-form">
           <label className="field">
-            <span>Adınız (demo girişi)</span>
+            <span>{t("auth.nameLabel")}</span>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Örn. Ayşe Yılmaz"
+              placeholder={t("auth.namePlaceholder")}
               maxLength={60}
+              aria-label={t("auth.nameLabel")}
             />
           </label>
           <button className="btn btn--secondary btn--block" disabled={busy} type="submit">
-            {busy ? "Giriş yapılıyor…" : "Demo olarak devam et"}
+            {busy ? t("auth.demoSubmitting") : t("auth.demoSubmit")}
           </button>
-          <p className="hint">
-            Demo girişi, gerçek LinkedIn hesabı bağlamadan tüm akışı test etmenizi sağlar.
-          </p>
+          <p className="hint">{t("auth.demoHint")}</p>
         </form>
       )}
 

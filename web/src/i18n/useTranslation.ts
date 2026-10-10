@@ -14,6 +14,7 @@ export function useTranslation() {
 
   return {
     t,
+    i18n,
     changeLanguage,
     currentLanguage,
     currentLanguageInfo,

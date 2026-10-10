@@ -1,332 +1,562 @@
 {
-  "app": {
-    "name": "InterviewHub",
-    "tagline": "LinkedInプロフィール付きビデオ面接ルーム",
-    "description": "InterviewHub - 承認されたLinkedIn応募者向けのビデオ面接ルーム。面接中に候補者のLinkedInプロフィールが表示されます。"
+  "accessibility": {
+    "mainContent": "メインコンテンツ",
+    "mobileMenu": "メニュー",
+    "navigation": "ナビゲーション",
+    "notifications": "通知",
+    "skipLink": "メインコンテンツへスキップ",
+    "toggleLanguage": "言語切り替え",
+    "toggleTheme": "テーマ切り替え",
+    "userMenu": "ユーザーメニュー"
   },
-  "nav": {
-    "home": "ホーム",
-    "dashboard": "面接",
-    "profile": "マイプロフィール",
-    "login": "ログイン",
-    "logout": "ログアウト",
-    "theme": "テーマ",
-    "language": "言語"
+  "app": {
+    "description": "InterviewHub - 承認されたLinkedIn応募者向けのビデオ面接ルーム。面接中に候補者のLinkedInプロフィールが表示されます。",
+    "name": "InterviewHub",
+    "skipToContent": "メインコンテンツへスキップ",
+    "tagline": "LinkedInプロフィール付きビデオ面接ルーム"
+  },
+  "auth": {
+    "back": "戻る",
+    "cannotLogin": "ログインできません",
+    "continue": "続行",
+    "ctxError": "useAuth は AuthProvider 内で使用する必要があります。",
+    "demoBtn": "デモログイン",
+    "demoFallbackName": "デモユーザー",
+    "demoHint": "デモログインでは、実際の LinkedIn アカウントを接続せずに全機能を試せます。",
+    "demoName": "デモ用のお名前",
+    "demoPlaceholder": "例: 山田太郎",
+    "demoSubmit": "デモとして続行",
+    "demoSubmitting": "ログイン中…",
+    "editProfile": "プロフィール編集",
+    "envHint": ".env ファイルに追加",
+    "linkedInBtn": "LinkedInで続行",
+    "loginNote": "本人確認はLinkedInで行われます。自分のプロフィールでルームに参加します。",
+    "loginTitle": "続けるにはログイン",
+    "nameLabel": "お名前（デモログイン）",
+    "namePlaceholder": "例: 山田太郎",
+    "notConfigured": "サーバーで LinkedIn OAuth が設定されておらず、デモログインも無効です。サーバーフォルダの .env ファイルに LINKEDIN_CLIENT_ID と LINKEDIN_CLIENT_SECRET を追加してください。",
+    "oauthNotConfigured": "LinkedIn OAuth未設定。デモログインをご利用ください。",
+    "or": "または",
+    "profileRequired": "面接参加のためプロフィールを完成させてください"
+  },
+  "common": {
+    "actions": "アクション",
+    "back": "戻る",
+    "cancel": "キャンセル",
+    "close": "閉じる",
+    "closeMenu": "メニューを閉じる",
+    "confirm": "確認",
+    "copied": "コピーしました！",
+    "copy": "コピー",
+    "delete": "削除",
+    "demo": "デモ",
+    "demoVerified": "デモログイン",
+    "edit": "編集",
+    "empty": "データなし",
+    "error": "エラー",
+    "filter": "フィルター",
+    "linkedinAccount": "LinkedIn",
+    "loading": "読み込み中…",
+    "markAllRead": "すべて既読にする",
+    "menu": "メニュー",
+    "next": "次へ",
+    "no": "いいえ",
+    "none": "なし",
+    "notifications": "通知",
+    "notificationsAria": "通知",
+    "openMenu": "メニューを開く",
+    "optional": "任意",
+    "required": "必須",
+    "save": "保存",
+    "search": "検索",
+    "searchPlaceholder": "検索…",
+    "sort": "並び替え",
+    "success": "成功",
+    "viewAll": "すべて表示",
+    "yes": "はい"
+  },
+  "dashboard": {
+    "actions": "アクション",
+    "bannerText": "面接中に表示される LinkedIn 情報を入力するにはプロフィールページを開いてください。候補者も自分のプロフィールで参加します。",
+    "bannerTitle": "プロフィールがまだ完成していません。",
+    "cancel": "キャンセル",
+    "candidateAlso": "候補者も自分のプロフィールで参加します。",
+    "confirmDelete": "このルームを削除しますか？",
+    "copied": "コピーしました ✓",
+    "copyFailed": "クリップボードにコピーできませんでした。リンク: ",
+    "copyLink": "リンクをコピー",
+    "create": "作成",
+    "createLoginNote": "LinkedIn アカウントでログインすると、ルームとプロフィールにアクセスできます。",
+    "createLoginTitle": "面接ルームを作成しましょう",
+    "createProfile": "プロフィールを作成 →",
+    "createRoom": "ルーム作成",
+    "created": "作成日",
+    "creating": "作成中…",
+    "delete": "削除",
+    "editProfile": "プロフィールを編集",
+    "empty": "まだ面接がありません。最初のルームを作成しましょう。",
+    "emptyHint": "上から最初のルームを作成し、リンクを LinkedIn で候補者に送ってください。",
+    "emptyRoom": "空",
+    "emptyTitle": "面接ルームがまだありません",
+    "extensionHint": "LinkedIn 上でワンクリックでルームを開くには、extension/dist フォルダを chrome://extensions から「パッケージ化されていない拡張機能」として読み込んでください。",
+    "extensionTitle": "Chrome 拡張機能",
+    "eyebrow": "ダッシュボード",
+    "hint": "作成されたリンクを LinkedIn で候補者に送ってください。候補者は承認済み応募の会話からリンクを開き、自分のプロフィールで参加します。",
+    "host": "ホスト",
+    "join": "参加",
+    "liveOnline": "● {{count}} 人がオンライン",
+    "manifestV3": "マニフェスト V3",
+    "newRoom": "新しい面接ルーム",
+    "noRooms": "ルームを作成していません。",
+    "participants": "参加者",
+    "profilePage": "プロフィールページ",
+    "roomTitle": "ルームタイトル",
+    "roomTitlePlaceholder": "例: フロントエンド開発者面接",
+    "rooms": "ルーム",
+    "roomsTitle": "あなたのルーム",
+    "title": "あなたの面接",
+    "unpacked": "パッケージ化されていない拡張機能"
+  },
+  "errors": {
+    "forbidden": "このアクションの権限がありません。",
+    "network": "サーバーに接続できません。接続を確認してください。",
+    "notFound": "リソースが見つかりません。",
+    "requestFailed": "リクエスト失敗 ({{status}})",
+    "serverError": "サーバーエラー。後で再試行してください。",
+    "unauthorized": "セッションが期限切れです。再ログインしてください。",
+    "validation": "入力内容を確認してください。"
   },
   "landing": {
-    "hero": {
-      "title": "InterviewHub",
-      "subtitle": "LinkedInプロフィール付きビデオ面接ルーム",
-      "description": "面接中、候補者のLinkedInプロフィールが画面上に表示されます。必要なものがすべて1か所に。",
-      "ctaPrimary": "LinkedInで接続",
-      "ctaSecondary": "デモを試す →",
-      "demoNotice": "LinkedIn OAuth未設定 — デモモード有効"
+    "cta": {
+      "button": "LinkedInで接続",
+      "title": "今すぐ最初の面接を始めましょう"
     },
-    "features": {
-      "title": "すべて1画面に",
+    "faq": {
       "items": [
         {
-          "title": "サイドパネルにLinkedInプロフィール",
-          "desc": "候補者のプロフィールが面接中ずっと表示"
+          "a": "いいえ。LinkedIn APIはサードパーティにプロフィールデータを提供しません。プロフィール情報は候補者の自己申告であり、LinkedIn OAuthで検証されます（名前、写真、プロフィールURL）。",
+          "q": "LinkedInデータはAPIから取得されますか？"
         },
         {
-          "title": "エンドツーエンドWebRTCビデオ",
-          "desc": "直接ピアツーピア、メディアはサーバーを経由しない"
+          "a": "デフォルトではいいえ。ブラウザでローカル録画可能（MediaRecorder）。メディアはサーバーを経由しません — ピアツーピアWebRTCです。",
+          "q": "ビデオ/オーディオは録画されますか？"
         },
         {
-          "title": "画面共有",
-          "desc": "ワンクリックで画面を共有"
+          "a": "デフォルトはSTUNのみ。対称NATにはTURNが必要な場合があります — TURN_URL、TURN_USERNAME、TURN_CREDENTIALを環境変数で設定。",
+          "q": "TURNサーバーはありますか？"
         },
         {
-          "title": "面接中チャット",
-          "desc": "通話中にメモやリンクを共有"
+          "a": "はい、デモログインはLinkedIn OAuthなしで動作します。",
+          "q": "LinkedInなしで使えますか？"
         },
         {
-          "title": "Chrome拡張機能",
-          "desc": "LinkedInプロフィールから直接面接を開始"
+          "a": "はい。ほとんどのネットワークでは STUN で十分です。対称 NAT などの制限されたネットワークでは、.env に独自の TURN サーバーを設定できます。",
+          "q": "異なるネットワークの参加者でも接続できますか？"
         },
         {
-          "title": "データ所有権とプライバシー",
-          "desc": "あなたのデータはあなたのもの、サードパーティ追跡なし"
+          "a": "雇用主と候補者の両方です。招待リンクを開いた人は誰でも、自分の名前または LinkedIn ログインでルームに参加できます。",
+          "q": "誰が使えますか？"
         }
-      ]
+      ],
+      "title": "よくある質問"
+    },
+    "features": {
+      "items": [
+        {
+          "desc": "候補者のプロフィールが面接中ずっと表示",
+          "title": "サイドパネルにLinkedInプロフィール"
+        },
+        {
+          "desc": "直接ピアツーピア、メディアはサーバーを経由しない",
+          "title": "エンドツーエンドWebRTCビデオ"
+        },
+        {
+          "desc": "ワンクリックで画面を共有",
+          "title": "画面共有"
+        },
+        {
+          "desc": "通話中にメモやリンクを共有",
+          "title": "面接中チャット"
+        },
+        {
+          "desc": "LinkedInプロフィールから直接面接を開始",
+          "title": "Chrome拡張機能"
+        },
+        {
+          "desc": "あなたのデータはあなたのもの、サードパーティ追跡なし",
+          "title": "データ所有権とプライバシー"
+        }
+      ],
+      "title": "すべて1画面に"
+    },
+    "footer": {
+      "candidateProfile": "面接中、候補者のLinkedInプロフィールが傍らに",
+      "extension": "LinkedIn上でChrome拡張から会議を開始",
+      "webrtc": "ビデオとオーディオはサーバーを経由しない"
+    },
+    "hero": {
+      "ctaPrimary": "LinkedInで接続",
+      "ctaSecondary": "デモを試す →",
+      "demoNotice": "LinkedIn OAuth未設定 — デモモード有効",
+      "description": "面接中、候補者のLinkedInプロフィールが画面上に表示されます。必要なものがすべて1か所に。",
+      "subtitle": "LinkedInプロフィール付きビデオ面接ルーム",
+      "title": "InterviewHub"
     },
     "steps": {
-      "title": "ライブ面接まで3ステップ",
       "steps": [
         "LinkedInで接続",
         "ルームを開き、リンクを共有",
         "面接実施、プロフィール確認"
-      ]
-    },
-    "footer": {
-      "candidateProfile": "面接中、候補者のLinkedInプロフィールが傍らに",
-      "webrtc": "ビデオとオーディオはサーバーを経由しない",
-      "extension": "LinkedIn上でChrome拡張から会議を開始"
-    },
-    "faq": {
-      "title": "よくある質問",
-      "items": [
-        {
-          "q": "LinkedInデータはAPIから取得されますか？",
-          "a": "いいえ。LinkedIn APIはサードパーティにプロフィールデータを提供しません。プロフィール情報は候補者の自己申告であり、LinkedIn OAuthで検証されます（名前、写真、プロフィールURL）。"
-        },
-        {
-          "q": "ビデオ/オーディオは録画されますか？",
-          "a": "デフォルトではいいえ。ブラウザでローカル録画可能（MediaRecorder）。メディアはサーバーを経由しません — ピアツーピアWebRTCです。"
-        },
-        {
-          "q": "TURNサーバーはありますか？",
-          "a": "デフォルトはSTUNのみ。対称NATにはTURNが必要な場合があります — TURN_URL、TURN_USERNAME、TURN_CREDENTIALを環境変数で設定。"
-        },
-        {
-          "q": "LinkedInなしで使えますか？",
-          "a": "はい、デモログインはLinkedIn OAuthなしで動作します。"
-        }
-      ]
-    },
-    "cta": {
-      "title": "今すぐ最初の面接を始めましょう",
-      "button": "LinkedInで接続"
+      ],
+      "title": "ライブ面接まで3ステップ"
     }
   },
-  "auth": {
-    "loginTitle": "続けるにはログイン",
-    "loginNote": "本人確認はLinkedInで行われます。自分のプロフィールでルームに参加します。",
-    "linkedInBtn": "LinkedInで続行",
-    "demoBtn": "デモログイン",
-    "demoName": "デモ用のお名前",
-    "demoPlaceholder": "例: 山田太郎",
-    "continue": "続行",
-    "back": "戻る",
-    "oauthNotConfigured": "LinkedIn OAuth未設定。デモログインをご利用ください。",
-    "profileRequired": "面接参加のためプロフィールを完成させてください",
-    "editProfile": "プロフィール編集"
+  "media": {
+    "aborted": "メディア要求はキャンセルされました。",
+    "accessFailed": "メディアデバイスにアクセスできません。",
+    "cameraOnly": "カメラを開けませんでした - 音声のみで参加します。",
+    "inUse": "デバイスは他のアプリケーションで使用中です。",
+    "micOnly": "マイクを開けませんでした - 音声は相手侧に届きません。",
+    "notFound": "カメラまたはマイクが見つかりません。それでも参加できます。",
+    "notReady": "カメラ/マイクの準備ができませんでした。メディアなしでも参加できます。",
+    "permissionDenied": "カメラ/マイクの権限が拒否されました。ブラウザのアドレスバーのカメラアイコンから許可できます。",
+    "unsupported": "ブラウザはメディアデバイスへのアクセスをサポートしていません。HTTPS または localhost が必要です。"
   },
-  "dashboard": {
-    "title": "あなたの面接",
-    "empty": "まだ面接がありません。最初のルームを作成しましょう。",
-    "createRoom": "ルーム作成",
-    "roomTitle": "ルームタイトル",
-    "roomTitlePlaceholder": "例: フロントエンド開発者面接",
-    "create": "作成",
-    "cancel": "キャンセル",
-    "rooms": "ルーム",
-    "host": "ホスト",
-    "participants": "参加者",
-    "created": "作成日",
-    "actions": "アクション",
-    "join": "参加",
-    "copyLink": "リンクをコピー",
-    "delete": "削除",
-    "confirmDelete": "このルームを削除しますか？",
-    "noRooms": "ルームを作成していません。"
+  "nav": {
+    "dashboard": "面接",
+    "home": "ホーム",
+    "language": "言語",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "profile": "マイプロフィール",
+    "theme": "テーマ"
   },
   "profile": {
-    "title": "マイプロフィール",
-    "subtitle": "この情報はルーム参加時に他の参加者に表示されます（共有有効時）。",
-    "sections": {
-      "basic": "基本情報",
-      "experience": "職務経験",
-      "education": "学歴",
-      "skills": "スキル",
-      "sharing": "共有設定"
-    },
-    "fields": {
-      "linkedinUrl": "LinkedInプロフィールURL",
-      "fullName": "氏名",
-      "headline": "見出し",
-      "location": "所在地",
-      "summary": "概要",
-      "shareProfile": "他の参加者とプロフィールを共有"
-    },
-    "experience": {
-      "title": "役職",
-      "company": "会社名",
-      "period": "期間",
-      "description": "説明",
-      "add": "経験を追加",
-      "remove": "削除"
-    },
     "education": {
-      "school": "学校名",
+      "add": "学歴を追加",
       "degree": "学位",
       "period": "期間",
-      "add": "学歴を追加",
-      "remove": "削除"
+      "remove": "削除",
+      "school": "学校名"
     },
-    "skills": {
-      "placeholder": "スキルを追加してEnterキー",
-      "add": "スキル追加"
+    "experience": {
+      "add": "経験を追加",
+      "company": "会社名",
+      "description": "説明",
+      "period": "期間",
+      "remove": "削除",
+      "title": "役職"
     },
+    "fields": {
+      "fullName": "氏名",
+      "headline": "見出し",
+      "linkedinUrl": "LinkedInプロフィールURL",
+      "location": "所在地",
+      "shareProfile": "他の参加者とプロフィールを共有",
+      "summary": "概要"
+    },
+    "note": "データは自己申告です。LinkedIn APIはサードパーティにプロフィールデータを提供しません。検証はLinkedIn OAuthで行われます（名前、写真、プロフィールURL）。",
     "save": "プロフィール保存",
     "saved": "プロフィールを保存しました！",
-    "note": "データは自己申告です。LinkedIn APIはサードパーティにプロフィールデータを提供しません。検証はLinkedIn OAuthで行われます（名前、写真、プロフィールURL）。"
+    "sections": {
+      "basic": "基本情報",
+      "education": "学歴",
+      "experience": "職務経験",
+      "sharing": "共有設定",
+      "skills": "スキル"
+    },
+    "skills": {
+      "add": "スキル追加",
+      "placeholder": "スキルを追加してEnterキー"
+    },
+    "subtitle": "この情報はルーム参加時に他の参加者に表示されます（共有有効時）。",
+    "title": "マイプロフィール"
+  },
+  "profileEditor": {
+    "add": "+ 追加",
+    "backToDashboard": "← ダッシュボード",
+    "bannerText": "これらの項目はご自身で入力します。InterviewHub は LinkedIn API からプロフィールデータを取得しません。LinkedIn ログインは本人確認のみを行います。この情報は共有が有効な場合のみ相手侧に表示されます。",
+    "company": "会社名",
+    "degree": "学部 / 学位",
+    "description": "説明",
+    "eduPeriodPlaceholder": "2015 - 2019",
+    "education": "学歴",
+    "experience": "職務経歴",
+    "eyebrow": "面接中に表示される情報",
+    "fullName": "氏名 *",
+    "headline": "肩書き",
+    "headlinePlaceholder": "例: シニアフロントエンドエンジニア",
+    "identity": "本人情報",
+    "linkedinUrl": "LinkedIn プロフィール URL",
+    "linkedinUrlPlaceholder": "https://www.linkedin.com/in/username",
+    "location": "所在地",
+    "locationPlaceholder": "イスタンブール、トルコ",
+    "loginTitle": "プロフィールを編集するにはログインしてください",
+    "noEducation": "学歴がまだ追加されていません。",
+    "noExperience": "職務経歴がまだ追加されていません。",
+    "period": "期間",
+    "periodPlaceholder": "2021 - 現在",
+    "position": "役職",
+    "save": "保存",
+    "saved": "保存しました ✓",
+    "saving": "保存中…",
+    "school": "学校名",
+    "shareLabel": "面接中にこのプロフィールを相手侧に表示する（共有が有効）",
+    "skills": "スキル",
+    "skillsHint": "カンマ区切りで入力",
+    "skillsPlaceholder": "React, TypeScript, WebRTC…",
+    "summary": "概要",
+    "summaryPlaceholder": "簡潔なプロフィール概要…",
+    "title": "LinkedIn プロフィールカード"
+  },
+  "recording": {
+    "error": "録画中にエラーが発生しました。",
+    "noStream": "録画できるメディアストリームがありません。"
   },
   "room": {
-    "title": "面接ルーム",
-    "loading": "ルームを準備中…",
-    "notFound": "ルームが見つかりません",
-    "backToDashboard": "面接一覧へ",
-    "joinScreen": {
-      "title": "面接に参加",
-      "yourName": "表示名",
-      "namePlaceholder": "氏名",
-      "preview": "プレビュー",
-      "micOn": "マイクオン",
-      "micOff": "マイクオフ",
-      "camOn": "カメラオン",
-      "camOff": "カメラオフ",
-      "join": "面接に参加",
-      "rejoin": "再参加",
-      "connecting": "接続中…",
-      "profileHint": "プロフィール未共有。{{link}}"
-    },
-    "stage": {
-      "copyInvite": "招待リンクをコピー",
-      "copied": "コピー済み ✓",
-      "participants": "人",
-      "leave": "退室"
-    },
+    "backInterviews": "← 面接",
+    "backToInterviews": "面接一覧へ",
+    "camOff": "カメラオフ",
+    "camOn": "カメラオン",
+    "connected": "接続済み",
+    "connecting": "接続中…",
     "controls": {
-      "mic": "マイク",
-      "micMuted": "ミュート",
       "cam": "カメラ",
+      "camLabel": "カメラ",
       "camOff": "オフ",
-      "screen": "画面",
-      "screenSharing": "共有中",
-      "record": "録画",
-      "recording": "録画中 {{time}}",
-      "paused": "一時停止",
-      "transcript": "文字起こし",
-      "transcriptActive": "書き起こし中",
-      "panel": "パネル",
-      "participants": "参加者",
+      "camOffAria": "カメラをオンにする",
+      "camOffLabel": "オフ",
+      "camOffTitle": "カメラをオンにする (C)",
+      "camOnAria": "カメラをオフにする",
+      "camOnTitle": "カメラをオフにする (C)",
       "leave": "退室",
+      "leaveAria": "面接を退出",
+      "leaveLabel": "退出",
+      "leaveTitle": "面接を退出",
+      "mic": "マイク",
+      "micLabel": "マイク",
+      "micMuted": "ミュート",
+      "micOffAria": "マイクをオンにする",
+      "micOffTitle": "マイクをオンにする (M)",
+      "micOnAria": "マイクをオフにする",
+      "micOnTitle": "マイクをオフにする (M)",
+      "mutedLabel": "ミュート",
+      "panel": "パネル",
+      "panelAria": "パネル",
+      "panelTitle": "パネル表示切り替え (P)",
+      "participants": "参加者",
+      "participantsTitle": "ルーム内の人数",
+      "paused": "一時停止",
+      "record": "録画",
+      "recordPauseAria": "録画を一時停止",
+      "recordPauseTitle": "録画を一時停止",
+      "recordPausedLabel": "一時停止",
+      "recordResumeAria": "録画を再開",
+      "recordResumeTitle": "録画を再開",
+      "recordStartAria": "録画を開始",
+      "recordStartLabel": "録画",
+      "recordStartTitle": "録画を開始 (R)",
+      "recording": "録画中 {{time}}",
+      "recordingLabel": "録画",
+      "screen": "画面",
+      "screenAria": "画面を共有",
+      "screenLabel": "画面",
+      "screenSharing": "共有中",
+      "screenSharingLabel": "共有中",
+      "screenTitle": "画面を共有 (S)",
       "shortcuts": {
-        "mic": "M",
         "cam": "C",
-        "screen": "S",
+        "mic": "M",
         "panel": "P",
         "record": "R",
+        "screen": "S",
         "transcript": "T"
-      }
+      },
+      "transcript": "文字起こし",
+      "transcriptActive": "書き起こし中",
+      "transcriptActiveLabel": "書き起こし中",
+      "transcriptLabel": "文字起こし",
+      "transcriptStartAria": "文字起こしを開始",
+      "transcriptStartTitle": "文字起こしを開始 (T)",
+      "transcriptStopAria": "文字起こしを停止",
+      "transcriptStopTitle": "文字起こしを停止 (T)"
     },
+    "copied": "コピー済み ✓",
+    "copyInvite": "招待リンクをコピー",
+    "displayName": "表示名",
+    "enterName": "名前を入力してください。",
+    "eyebrow": "面接ルーム",
+    "invalidLink": "リンクが無効である可能性があります。",
+    "join": "面接に参加",
+    "joinLoginNote": "本人確認は LinkedIn で行われます。自分のプロフィールでルームに参加します。",
+    "joinLoginTitle": "面接に参加するにはログイン",
+    "joinScreen": {
+      "camOff": "カメラオフ",
+      "camOn": "カメラオン",
+      "connecting": "接続中…",
+      "join": "面接に参加",
+      "micOff": "マイクオフ",
+      "micOn": "マイクオン",
+      "namePlaceholder": "氏名",
+      "preview": "プレビュー",
+      "profileHint": "プロフィール未共有。{{link}}",
+      "rejoin": "再参加",
+      "title": "面接に参加",
+      "yourName": "表示名"
+    },
+    "leftMeeting": "面接を退出しました。再度参加できます。",
+    "loadingMeta": "ルームを読み込み中…",
+    "micOff": "マイクオフ",
+    "micOn": "マイクオン",
+    "namePlaceholder": "姓 名",
+    "notFound": "ルームが見つかりません",
+    "notFoundTitle": "ルームが見つかりません",
+    "people": "人",
+    "preparing": "ルームを準備中…",
+    "preparingMedia": "カメラ/マイクを準備中…",
+    "preview": "プレビュー",
+    "profileLink": "プロフィールを追加 →",
+    "profileNotShared": "プロフィールは共有されていません。",
+    "rejoin": "再参加",
+    "sideHide": "パネルを非表示",
     "sidePanel": {
-      "tabs": {
-        "profile": "LinkedInプロフィール",
-        "chat": "チャット",
-        "transcript": "文字起こし",
-        "ai": "AI評価"
-      },
-      "profile": {
-        "noProfile": "まだプロフィールが共有されていません。",
-        "editProfile": "マイプロフィール編集",
-        "candidateNote": "候補者がLinkedInアカウントで参加し共有を有効にすると、ここにプロフィールが表示されます。"
-      },
-      "chat": {
-        "empty": "メッセージはまだありません。メモやリンク共有にご利用ください。",
-        "placeholder": "メッセージを入力…",
-        "send": "送信",
-        "disconnected": "切断中"
-      },
-      "transcript": {
-        "status": {
-          "listening": "聴取中…",
-          "idle": "待機中"
-        },
-        "languages": {
-          "tr-TR": "トルコ語",
-          "en-US": "英語 (米国)",
-          "de-DE": "ドイツ語",
-          "fr-FR": "フランス語"
-        },
-        "actions": {
-          "toggle": "{{action}}",
-          "copy": "コピー",
-          "clear": "クリア"
-        },
-        "empty": {
-          "listening": "音声を検出中…",
-          "idle": "文字起こし開始時にここに表示されます。"
-        }
-      },
       "ai": {
-        "title": "AI評価アシスタント",
-        "hostOnly": "ルームホスト（面接官）のみAI評価を利用できます。",
-        "position": "職種 (任意)",
-        "positionPlaceholder": "例: シニアフロントエンドエンジニア",
-        "notes": "面接メモ",
-        "notesPlaceholder": "候補者の回答、印象、技術的詳細…",
+        "actions": {
+          "copy": "レポートをコピー",
+          "download": "ダウンロード (.txt)"
+        },
+        "disclaimer": "評価はメモと候補者の共有プロフィールのみに基づきます。音声/動画はAIに送信されません。",
         "evaluate": "評価する",
         "evaluating": "評価中…",
+        "failed": "評価に失敗しました。",
+        "forbidden": "この操作の権限がありません（ホストのみ）。",
+        "hostOnly": "ルームホスト（面接官）のみAI評価を利用できます。",
+        "notConfigured": "AI評価未設定 (AI_API_KEYが必要)。",
+        "notes": "面接メモ",
+        "notesPlaceholder": "候補者の回答、印象、技術的詳細…",
+        "notesRequired": "面接メモを空にすることはできません。",
+        "position": "職種 (任意)",
+        "positionPlaceholder": "例: シニアフロントエンドエンジニア",
+        "reportCandidate": "候補者",
+        "reportConcerns": "改善点:",
+        "reportDate": "日付",
+        "reportHire": "採用",
+        "reportNoHire": "不採用",
+        "reportPosition": "職種",
+        "reportRecommendation": "推奨",
+        "reportRoom": "ルーム",
+        "reportRubric": "--- 評価基準 ---",
+        "reportScore": "総合スコア",
+        "reportStrengths": "強み:",
+        "reportSummary": "要約:",
+        "reportTitle": "InterviewHub — AI 評価レポート",
+        "reportUncertain": "判断保留",
         "result": {
-          "score": "総合スコア",
+          "concerns": "改善点",
+          "model": "モデル",
           "recommendation": {
             "hire": "✓ 採用",
             "no_hire": "✓ 不採用",
             "uncertain": "? 判断保留"
           },
           "rubric": "評価基準",
+          "score": "総合スコア",
           "strengths": "強み",
-          "concerns": "改善点",
-          "summary": "要約",
-          "model": "モデル"
+          "summary": "要約"
         },
+        "title": "AI評価アシスタント"
+      },
+      "chat": {
+        "ariaLabel": "チャットメッセージ",
+        "disconnected": "切断中",
+        "empty": "メッセージはまだありません。メモやリンク共有にご利用ください。",
+        "placeholder": "メッセージを入力…",
+        "send": "送信"
+      },
+      "profile": {
+        "candidateNote": "候補者がLinkedInアカウントで参加し共有を有効にすると、ここにプロフィールが表示されます。",
+        "copyLink": "リンクをコピー",
+        "editProfile": "マイプロフィール編集",
+        "education": "学歴",
+        "experience": "職務経歴",
+        "linkedInOpen": "LinkedIn で開く ↗",
+        "noParticipants": "他の参加者はまだいません。招待リンクを共有してください。",
+        "noProfile": "まだプロフィールが共有されていません。",
+        "notShared": "はまだプロフィール情報を共有していません。",
+        "note": "この情報は参加者自身の申告です。LinkedIn API からデータは取得しません。",
+        "peopleAriaLabel": "参加者",
+        "skills": "スキル",
+        "summary": "概要"
+      },
+      "tabs": {
+        "ai": "AI評価",
+        "chat": "チャット",
+        "profile": "LinkedInプロフィール",
+        "transcript": "文字起こし"
+      },
+      "transcript": {
         "actions": {
-          "copy": "レポートをコピー",
-          "download": "ダウンロード (.txt)"
+          "clear": "クリア",
+          "copy": "コピー",
+          "toggle": "{{action}}"
         },
-        "disclaimer": "評価はメモと候補者の共有プロフィールのみに基づきます。音声/動画はAIに送信されません。",
-        "notConfigured": "AI評価未設定 (AI_API_KEYが必要)。"
+        "ariaLabel": "リアルタイム文字起こし",
+        "empty": {
+          "idle": "文字起こし開始時にここに表示されます。",
+          "listening": "音声を検出中…"
+        },
+        "languages": {
+          "de-DE": "ドイツ語",
+          "en-US": "英語 (米国)",
+          "fr-FR": "フランス語",
+          "tr-TR": "トルコ語"
+        },
+        "start": "開始",
+        "status": {
+          "idle": "待機中",
+          "listening": "聴取中…"
+        },
+        "stop": "停止"
       }
     },
+    "sideShow": "パネルを表示",
+    "stage": {
+      "copied": "コピー済み ✓",
+      "copyInvite": "招待リンクをコピー",
+      "leave": "退室",
+      "participants": "人"
+    },
     "states": {
-      "micReady": "マイク準備完了",
+      "authRequired": "このルームに参加するにはログインが必要です。",
       "camReady": "カメラ準備完了",
-      "mediaError": "メディアエラー: {{error}}",
       "joinError": "参加失敗: {{error}}",
-      "authRequired": "このルームに参加するにはログインが必要です。"
-    }
+      "mediaError": "メディアエラー: {{error}}",
+      "micReady": "マイク準備完了"
+    },
+    "tile": {
+      "connecting": "接続中…",
+      "failed": "接続が切れました",
+      "host": "ホスト",
+      "micOff": "マイクオフ",
+      "screenSharing": "画面共有中"
+    },
+    "title": "面接ルーム",
+    "transcriptPanel": {
+      "start": "開始",
+      "stop": "停止"
+    },
+    "selfSuffix": "(あなた)"
   },
-  "common": {
-    "save": "保存",
-    "cancel": "キャンセル",
-    "delete": "削除",
-    "edit": "編集",
-    "copy": "コピー",
-    "copied": "コピーしました！",
-    "close": "閉じる",
-    "back": "戻る",
-    "next": "次へ",
-    "loading": "読み込み中…",
-    "error": "エラー",
-    "success": "成功",
-    "confirm": "確認",
-    "yes": "はい",
-    "no": "いいえ",
-    "optional": "任意",
-    "required": "必須",
-    "search": "検索",
-    "filter": "フィルター",
-    "sort": "並び替え",
-    "actions": "アクション",
-    "none": "なし",
-    "empty": "データなし"
+  "rtc": {
+    "authRequired": "このルームに参加するにはログインが必要です。",
+    "connectFailed": "サーバーに接続できません。接続を確認してください。",
+    "joinFailed": "ルームに参加できませんでした。",
+    "reconnectFailed": "サーバーに接続できません。接続を確認して再試行してください。",
+    "screenFailed": "画面を選択できませんでした。",
+    "screenUnsupported": "このブラウザは画面共有をサポートしていません。"
   },
-  "errors": {
-    "network": "サーバーに接続できません。接続を確認してください。",
-    "unauthorized": "セッションが期限切れです。再ログインしてください。",
-    "forbidden": "このアクションの権限がありません。",
-    "notFound": "リソースが見つかりません。",
-    "serverError": "サーバーエラー。後で再試行してください。",
-    "validation": "入力内容を確認してください。"
-  },
-  "accessibility": {
-    "skipLink": "メインコンテンツへスキップ",
-    "mainContent": "メインコンテンツ",
-    "navigation": "ナビゲーション",
-    "toggleTheme": "テーマ切り替え",
-    "toggleLanguage": "言語切り替え"
+  "transcription": {
+    "error": "文字起こしエラー: {{error}}",
+    "unsupported": "このブラウザは Web Speech API をサポートしていません。"
   }
 }

@@ -599,19 +599,19 @@ function HeroVisual() {
               </div>
             </div>
             <div className="hv__actions">
-              <span className="hv__open">{t("profileBody.linkedInBtn")}</span>
-              <span className="hv__copy">{t("profileBody.copyLink")}</span>
+              <span className="hv__open">{t("room.sidePanel.profile.linkedInOpen")}</span>
+              <span className="hv__copy">{t("room.sidePanel.profile.copyLink")}</span>
             </div>
-            <p className="hv__label">{t("profileBody.summary")}</p>
+            <p className="hv__label">{t("room.sidePanel.profile.summary")}</p>
             <span className="hv__line" style={{ width: "92%" }} />
             <span className="hv__line" style={{ width: "74%" }} />
-            <p className="hv__label">{t("profileBody.skills")}</p>
+            <p className="hv__label">{t("room.sidePanel.profile.skills")}</p>
             <div className="hv__tags">
               <span>React</span>
               <span>TypeScript</span>
               <span>WebRTC</span>
             </div>
-            <p className="hv__note">{t("profileBody.note")}</p>
+            <p className="hv__note">{t("room.sidePanel.profile.note")}</p>
           </aside>
         </div>
       </div>

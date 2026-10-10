@@ -47,10 +47,23 @@ i18n
     interpolation: { escapeValue: false },
     react: { useSuspense: false },
     detection: {
-      order: ["localStorage", "navigator", "htmlTag"],
+      // Yalnizca kullanicinin acik secimi (localStorage) oncelikli.
+      // Tarayici dili/HTML lang bilerek dinlenmiyor: site varsayilan olarak
+      // Ingilizce (fallbackLng) acilir, kullanici isterse dil degistirir ve
+      // bu secim localStorage'da kalir.
+      order: ["localStorage"],
       caches: ["localStorage"],
       lookupLocalStorage: "ih_lang",
     },
   });
+
+/**
+ * Bilesen disinda (hook, util, servis) calisan cevirici.
+ * React hook'i degildir; dogrudan i18n orneginden okur.
+ * Ornek: translate('media.permissionDenied')
+ */
+export function translate(key: string, options?: Record<string, unknown>): string {
+  return i18n.t(key, options);
+}
 
 export default i18n;

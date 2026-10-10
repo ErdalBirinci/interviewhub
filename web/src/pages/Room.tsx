@@ -12,8 +12,8 @@ import VideoTile from "../room/VideoTile";
 import AIEvaluationPanel from "../room/AIEvaluationPanel";
 import { useMedia } from "../room/useMedia";
 import { useRoom } from "../room/useRoom";
-import { useRecording } from "../room/useRecording";
-import { useTranscription } from "../room/useRecording";
+import { useRecording, useTranscription } from "../room/useRecording";
+import { useTranslation } from "../i18n/useTranslation";
 import {
   CameraIcon,
   CameraOffIcon,
@@ -35,6 +35,7 @@ type SideTab = "profil" | "sohbet" | "transkript" | "ai";
 
 export default function Room() {
   const { id: routeId = "" } = useParams();
+  const { t, i18n } = useTranslation();
   const roomId = routeId;
 
   const { me, loading: authLoading, hasProfile } = useAuth();
@@ -179,7 +180,7 @@ export default function Room() {
     return (
       <div className="center-screen">
         <div className="spinner" />
-        <p className="muted">Oda hazırlanıyor…</p>
+        <p className="muted">{t("room.preparing")}</p>
       </div>
     );
   }
@@ -188,8 +189,8 @@ export default function Room() {
     return (
       <div className="center-screen">
         <LoginCard
-          title="Görüşmeye katılmak için giriş yapın"
-          note="Kimliğiniz LinkedIn ile doğrulanır; odaya kendi profilinizle katılırsınız."
+          title={t("room.joinLoginTitle")}
+          note={t("room.joinLoginNote")}
         />
       </div>
     );
@@ -199,10 +200,10 @@ export default function Room() {
     return (
       <div className="center-screen">
         <div className="card">
-          <h2>Oda bulunamadı</h2>
-          <p className="muted">{metaError ?? "Bağlantı geçersiz olabilir."}</p>
+          <h2>{t("room.notFoundTitle")}</h2>
+          <p className="muted">{metaError ?? t("room.invalidLink")}</p>
           <Link className="btn btn--primary" to="/dashboard">
-            Görüşmelere dön
+            {t("room.backToInterviews")}
           </Link>
         </div>
       </div>
@@ -222,15 +223,15 @@ export default function Room() {
         <div className="gate__preview">
           <VideoTile
             stream={stream}
-            name={name || "Siz"}
+            name={name || me.name}
             cam={room.media.cam}
             mic={room.media.mic}
             mirrored
             footer={
               !hasProfile && (
                 <div className="gate__profilehint">
-                  Profiliniz paylaşılmadı.{" "}
-                  <Link to="/profile">Profilinizi ekleyin →</Link>
+                  {t("room.profileNotShared")}{" "}
+                  <Link to="/profile">{t("room.profileLink")}</Link>
                 </div>
               )
             }
@@ -238,25 +239,25 @@ export default function Room() {
         </div>
 
         <div className="gate__side">
-          <p className="eyebrow">Görüşme odası</p>
+          <p className="eyebrow">{t("room.eyebrow")}</p>
           <h1>{meta.title}</h1>
           <p className="muted">
-            Oda sahibi: <strong>{meta.hostName}</strong> · {roomUrl}
+            {t("dashboard.host")}: <strong>{meta.hostName}</strong> · {roomUrl}
           </p>
 
           <label className="field">
-            <span>Görünen adınız</span>
+            <span>{t("room.displayName")}</span>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
               maxLength={60}
-              placeholder="Ad Soyad"
+              placeholder={t("room.namePlaceholder")}
             />
           </label>
 
           {mediaError && <p className="error">{mediaError}</p>}
           {failed && <p className="error">{room.error}</p>}
-          {left && <p className="hint">Görüşmeden ayrıldınız. Tekrar katılabilirsiniz.</p>}
+          {left && <p className="hint">{t("room.leftMeeting")}</p>}
 
           <div className="gate__toggles">
             <button
@@ -265,7 +266,7 @@ export default function Room() {
               disabled={!micReady}
             >
               {room.media.mic ? <MicIcon size={16} /> : <MicOffIcon size={16} />}
-              {room.media.mic ? " Mikrofon açık" : " Mikrofon kapalı"}
+              {room.media.mic ? t("room.micOn") : t("room.micOff")}
             </button>
             <button
               className={`btn ${room.media.cam ? "btn--secondary" : "btn--secondary btn--danger"}`}
@@ -273,7 +274,7 @@ export default function Room() {
               disabled={!camReady}
             >
               {room.media.cam ? <CameraIcon size={16} /> : <CameraOffIcon size={16} />}
-              {room.media.cam ? " Kamera açık" : " Kamera kapalı"}
+              {room.media.cam ? t("room.camOn") : t("room.camOff")}
             </button>
           </div>
 
@@ -283,15 +284,15 @@ export default function Room() {
             disabled={!canJoin || room.status === "connecting"}
           >
             {room.status === "connecting"
-              ? "Bağlanılıyor…"
+              ? t("room.connecting")
               : left || failed
-              ? "Yeniden katıl"
-              : "Görüşmeye katıl"}
+              ? t("room.rejoin")
+              : t("room.join")}
           </button>
 
           {!canJoin && room.status !== "connecting" && (
             <p className="hint">
-              {!meta ? "Oda yükleniyor…" : !ready ? "Kamera/mikrofon hazırlanıyor…" : "Adınızı girin."}
+              {!meta ? t("room.loadingMeta") : !ready ? t("room.preparingMedia") : t("room.enterName")}
             </p>
           )}
         </div>
@@ -312,19 +313,19 @@ export default function Room() {
   return (
     <div className="room">
       <header className="room__top">
-        <span className="room__dot" title="Bağlı" />
+        <span className="room__dot" title={t("room.connected")} />
         <strong className="room__title">{meta.title}</strong>
-        <span className="muted room__count">{participants} kişi</span>
+        <span className="muted room__count">{participants} {t("room.people")}</span>
         <button
           className={`btn btn--ghost btn--sm ${copied ? "btn--ok" : ""}`}
           onClick={() => void copyInvite()}
           title={roomUrl}
         >
-          {copied ? "Kopyalandı ✓" : "Davet bağlantısını kopyala"}
+          {copied ? t("room.copied") : t("room.copyInvite")}
         </button>
         <span className="room__spacer" />
         <Link className="btn btn--ghost btn--sm" to="/dashboard">
-          ← Görüşmeler
+          {t("room.backInterviews")}
         </Link>
       </header>
 
@@ -333,8 +334,8 @@ export default function Room() {
           <div className={`stage__grid stage__grid--count-${Math.min(room.peers.length + 1, 6)}`}>
             <VideoTile
               stream={room.localPreview}
-              name={name || "Siz"}
-              suffix="(siz)"
+              name={name || me.name}
+              suffix={t("room.selfSuffix")}
               isSelf
               mirrored={!room.screenActive}
               screen={room.screenActive}
@@ -368,7 +369,7 @@ export default function Room() {
             onScreen={() => void room.toggleScreen()}
             onLeave={room.leave}
             onToggleSide={() => setSideOpen((v) => !v)}
-            sideLabel={sideOpen ? "Paneli gizle" : "Paneli göster"}
+            sideLabel={sideOpen ? t("room.sideHide") : t("room.sideShow")}
             participants={participants}
             recordingState={recording.state}
             onRecordStart={recording.start}
@@ -391,6 +392,7 @@ export default function Room() {
             position={aiPosition}
             notes={aiNotes}
             onNotesChange={setAiNotes}
+            onPositionChange={setAiPosition}
             onClose={() => setShowAIPanel(false)}
           />
         )}
@@ -401,20 +403,20 @@ export default function Room() {
               className={tab === "profil" ? "tab tab--active" : "tab"}
               onClick={() => setTab("profil")}
             >
-              LinkedIn Profili
+              {t("room.sidePanel.tabs.profile")}
             </button>
             <button
               className={tab === "sohbet" ? "tab tab--active" : "tab"}
               onClick={() => setTab("sohbet")}
             >
-              Sohbet
+              {t("room.sidePanel.tabs.chat")}
               {room.chat.length > 0 && <span className="tab__badge">{room.chat.length}</span>}
             </button>
             <button
               className={tab === "transkript" ? "tab tab--active" : "tab"}
               onClick={() => setTab("transkript")}
             >
-              Transkript
+              {t("room.sidePanel.tabs.transcript")}
               {transcription.segments.length > 0 && <span className="tab__badge">{transcription.segments.length}</span>}
             </button>
             {meta.hostId === me?.id && (
@@ -426,7 +428,7 @@ export default function Room() {
                 }}
               >
                 <BotIcon size={16} style={{ marginRight: 4, verticalAlign: "middle" }} />
-                AI Değerlendir
+                {t("room.sidePanel.tabs.ai")}
               </button>
             )}
           </div>
@@ -491,23 +493,25 @@ function TranscriptPanel({
   onCopy: () => void;
   onLanguageChange: (lang: string) => void;
 }) {
+  const { t, i18n } = useTranslation();
   return (
     <div className="transcript-panel">
       <div className="transcript-panel__header">
         <div className="transcript-panel__status">
           <span className={`status-dot ${isListening ? "status-dot--live" : ""}`} />
-          <span>{isListening ? "Dinleniyor…" : "Beklemede"}</span>
+          <span>{isListening ? t("room.sidePanel.transcript.status.listening") : t("room.sidePanel.transcript.status.idle")}</span>
         </div>
         <select
           value={lang}
           onChange={(e) => onLanguageChange(e.target.value)}
           className="transcript-panel__lang"
           disabled={isListening}
+          aria-label={t("nav.language")}
         >
-          <option value="tr-TR">Türkçe</option>
-          <option value="en-US">English (US)</option>
-          <option value="de-DE">Deutsch</option>
-          <option value="fr-FR">Français</option>
+          <option value="tr-TR">{t("room.sidePanel.transcript.languages.tr-TR")}</option>
+          <option value="en-US">{t("room.sidePanel.transcript.languages.en-US")}</option>
+          <option value="de-DE">{t("room.sidePanel.transcript.languages.de-DE")}</option>
+          <option value="fr-FR">{t("room.sidePanel.transcript.languages.fr-FR")}</option>
         </select>
       </div>
 
@@ -515,22 +519,22 @@ function TranscriptPanel({
 
       <div className="transcript-panel__actions">
         <button className="btn btn--primary btn--sm" onClick={onToggle}>
-          {isListening ? "Durdur" : "Başlat"}
+          {isListening ? t("room.sidePanel.transcript.stop") : t("room.sidePanel.transcript.start")}
         </button>
         <button className="btn btn--ghost btn--sm" onClick={onCopy} disabled={!fullText}>
-          Kopyala
+          {t("room.sidePanel.transcript.actions.copy")}
         </button>
         <button className="btn btn--ghost btn--sm" onClick={onClear} disabled={segments.length === 0}>
-          Temizle
+          {t("room.sidePanel.transcript.actions.clear")}
         </button>
       </div>
 
-      <div className="transcript-panel__list" role="log" aria-live="polite" aria-label="Canlı transkript">
+      <div className="transcript-panel__list" role="log" aria-live="polite" aria-label={t("room.sidePanel.transcript.ariaLabel")}>
         {segments.length === 0 && (
           <p className="hint transcript-panel__empty">
             {isListening
-              ? "Konuşma algılanıyor…"
-              : "Transkripsiyon başlatıldığında buraya yazılacak."}
+              ? t("room.sidePanel.transcript.empty.listening")
+              : t("room.sidePanel.transcript.empty.idle")}
           </p>
         )}
         {segments.map((seg) => (
@@ -539,7 +543,7 @@ function TranscriptPanel({
             className={`transcript-seg ${seg.isFinal ? "transcript-seg--final" : "transcript-seg--interim"}`}
           >
             <span className="transcript-seg__time">
-              {new Date(seg.timestamp).toLocaleTimeString("tr-TR", {
+              {new Date(seg.timestamp).toLocaleTimeString(i18n.language, {
                 hour: "2-digit",
                 minute: "2-digit",
                 second: "2-digit",

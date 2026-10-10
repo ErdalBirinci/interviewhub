@@ -1,4 +1,5 @@
 import type { ApiError } from "@ih/shared";
+import { translate } from "../i18n";
 
 export class ApiFailure extends Error {
   status: number;
@@ -68,7 +69,7 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
       credentials: init.credentials ?? (token ? "omit" : "include"),
     });
   } catch {
-    throw new ApiFailure("Sunucuya ulaşılamıyor.", 0);
+    throw new ApiFailure(translate("errors.network"), 0);
   }
 
   const text = await res.text();
@@ -81,7 +82,7 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
 
   if (!res.ok) {
     const message =
-      (data as { error?: string } | null)?.error ?? `İstek başarısız (${res.status})`;
+      (data as { error?: string } | null)?.error ?? `translate("errors.requestFailed", { status: res.status })`;
     throw new ApiFailure(message, res.status);
   }
   return data as T;

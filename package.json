@@ -18,11 +18,12 @@
     "status": "node scripts/health.mjs",
     "cdp": "node scripts/cdp-start.mjs",
     "typecheck": "npm run typecheck -w @ih/server && npm run typecheck -w @ih/web && npm run typecheck -w @ih/extension",
-    "test": "npm run typecheck && npm run test:signal",
+    "test": "npm run typecheck && npm run test:i18n && npm run test:signal",
     "test:signal": "node scripts/signal-test.mjs",
     "test:e2e": "node scripts/e2e-browser.mjs",
     "test:ext": "node scripts/ext-e2e.mjs",
-    "test:all": "npm run typecheck && npm run test:signal && npm run test:e2e && npm run test:ext"
+    "test:i18n": "node scripts/i18n-check.mjs",
+    "test:all": "npm run typecheck && npm run test:i18n && npm run test:signal && npm run test:e2e && npm run test:ext"
   },
   "devDependencies": {
     "concurrently": "^9.1.0",

@@ -14,6 +14,7 @@ import {
   type SignalPayload,
 } from "@ih/shared";
 import { getToken } from "../lib/api";
+import { translate } from "../i18n";
 
 export type RoomStatus = "idle" | "connecting" | "joined" | "left" | "error";
 
@@ -419,11 +420,11 @@ export function useRoom(options: UseRoomOptions) {
         .timeout(8000)
         .emit(EV.JOIN, { roomId, name: nameRef.current }, (err: Error | null, ack?: JoinAck) => {
           if (err) {
-            fail("Sunucuya bağlanılamadı. Bağlantınızı kontrol edin.");
+            fail(translate("rtc.connectFailed"));
             return;
           }
           if (!ack?.ok) {
-            fail(ack?.error ?? "Odaya katılınamadı.");
+            fail(ack?.error ?? translate("rtc.joinFailed"));
             return;
           }
           selfIdRef.current = ack.selfId ?? null;
@@ -447,7 +448,7 @@ export function useRoom(options: UseRoomOptions) {
 
     socket.on("connect_error", (err) => {
       if (err.message === "unauthorized") {
-        fail("Odaya katılmak için giriş yapmalısınız.");
+        fail(translate("rtc.authRequired"));
       } else if (!socketRef.current?.connected) {
         setStatus((s) => (s === "error" ? s : "connecting"));
       }
@@ -455,7 +456,7 @@ export function useRoom(options: UseRoomOptions) {
 
     // Tum yeniden denemeler bitti: "connecting" ekraninda kilitlenmesin.
     socket.io.on("reconnect_failed", () => {
-      fail("Sunucuya bağlanılamadı. Bağlantınızı kontrol edip yeniden deneyin.");
+      fail(translate("rtc.reconnectFailed"));
     });
 
     socket.on(EV.PEER_JOINED, (payload: PeerJoinedPayload) => {
@@ -595,7 +596,7 @@ export function useRoom(options: UseRoomOptions) {
       return;
     }
     if (!navigator.mediaDevices?.getDisplayMedia) {
-      setError("Ekran paylaşımı bu tarayıcıda desteklenmiyor.");
+      setError(translate("rtc.screenUnsupported"));
       return;
     }
     try {
@@ -604,7 +605,7 @@ export function useRoom(options: UseRoomOptions) {
         audio: false,
       });
       const track = display.getVideoTracks()[0];
-      if (!track) throw new Error("Ekran seçilemedi.");
+      if (!track) throw new Error(translate("rtc.screenFailed"));
       screenRef.current = display;
       track.onended = () => {
         void stopScreenRef.current();

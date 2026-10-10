@@ -5,6 +5,7 @@ import LoginCard from "../components/LoginCard";
 import { VideoIcon, PlusIcon } from "../components/icons";
 import { api, del, post } from "../lib/api";
 import { useAuth } from "../lib/auth";
+import { useTranslation } from "../i18n/useTranslation";
 
 /** Oda listesi yüklenirken gösterilen iskelet kartı */
 function RoomSkeleton() {
@@ -25,6 +26,7 @@ function RoomSkeleton() {
 
 export default function Dashboard() {
   const { me, loading, refresh, hasProfile } = useAuth();
+  const { t, i18n } = useTranslation();
   const [rooms, setRooms] = useState<RoomView[]>([]);
   const [loadingRooms, setLoadingRooms] = useState(true);
   const [title, setTitle] = useState("");
@@ -78,12 +80,12 @@ export default function Dashboard() {
       setCopiedId(room.id);
       setTimeout(() => setCopiedId(null), 1800);
     } catch {
-      setError("Panoya kopyalanamadı. Bağlantı: " + url);
+      setError(t("dashboard.copyFailed") + url);
     }
   };
 
   const remove = async (room: RoomView) => {
-    if (!window.confirm(`"${room.title}" odası silinsin mi?`)) return;
+    if (!window.confirm(t("dashboard.confirmDelete", { title: room.title }))) return;
     try {
       await del(`/api/rooms/${room.id}`);
       await load();
@@ -104,8 +106,8 @@ export default function Dashboard() {
     return (
       <div className="center-screen">
         <LoginCard
-          title="Görüşme odalarınızı oluşturun"
-          note="LinkedIn kimliğinizle giriş yapın; odalarınıza ve profilinize erişin."
+          title={t("dashboard.createLoginTitle")}
+          note={t("dashboard.createLoginNote")}
         />
       </div>
     );
@@ -115,46 +117,43 @@ export default function Dashboard() {
     <main className="page">
       <header className="page__head">
         <div>
-          <p className="eyebrow">Panel</p>
-          <h1>Görüşmeler</h1>
+          <p className="eyebrow">{t("dashboard.eyebrow")}</p>
+          <h1>{t("dashboard.title")}</h1>
         </div>
         <Link className="btn btn--ghost" to="/profile">
-          {hasProfile ? "Profilimi düzenle" : "Profilimi oluştur →"}
+          {hasProfile ? t("dashboard.editProfile") : t("dashboard.createProfile")}
         </Link>
       </header>
 
       {!hasProfile && (
         <div className="banner">
-          <strong>Profiliniz henüz hazır değil.</strong>
+          <strong>{t("dashboard.bannerTitle")}</strong>
           <span>
-            Görüşmede görünecek LinkedIn bilgilerinizi girmek için{" "}
-            <Link to="/profile">profil sayfasını</Link> açın. Aday da kendi profiliyle katılır.
+            {t("dashboard.bannerText")}
           </span>
         </div>
       )}
 
       <section className="card create">
-        <h2>Yeni görüşme odası</h2>
+        <h2>{t("dashboard.newRoom")}</h2>
         <form onSubmit={create} className="create__form">
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Örn. Kıdemli Frontend Developer · Aday görüşmesi"
+            placeholder={t("dashboard.roomTitlePlaceholder")}
             maxLength={120}
+            aria-label={t("dashboard.roomTitle")}
           />
           <button className="btn btn--primary" type="submit" disabled={busy || !title.trim()}>
-            {busy ? "Oluşturuluyor…" : "Oda oluştur"}
+            {busy ? t("dashboard.creating") : t("dashboard.create")}
           </button>
         </form>
         {error && <p className="error">{error}</p>}
-        <p className="hint">
-          Oluşturulan bağlantıyı adaya LinkedIn üzerinden iletin. Aday, kabul edilmiş başvurusunun
-          olduğu konuşmadan linke tıklayıp kendi profiliyle katılır.
-        </p>
+        <p className="hint">{t("dashboard.hint")}</p>
       </section>
 
       <section className="rooms">
-        <h2>Odalarınız</h2>
+        <h2>{t("dashboard.roomsTitle")}</h2>
         {listError && <p className="error">{listError}</p>}
         {!listError && loadingRooms && (
           <ul className="room-list">
@@ -165,10 +164,8 @@ export default function Dashboard() {
         {!listError && !loadingRooms && rooms.length === 0 && (
           <div className="empty">
             <span className="empty__icon"><VideoIcon size={26} /></span>
-            <p className="empty__title">Henüz görüşme odası yok</p>
-            <p className="empty__hint">
-              Yukarıdan ilk odanızı oluşturun; bağlantıyı adaya LinkedIn üzerinden iletin.
-            </p>
+            <p className="empty__title">{t("dashboard.emptyTitle")}</p>
+            <p className="empty__hint">{t("dashboard.emptyHint")}</p>
           </div>
         )}
 
@@ -178,9 +175,9 @@ export default function Dashboard() {
               <div className="room-item__main">
                 <h3>{room.title}</h3>
                 <p className="muted">
-                  {new Date(room.createdAt).toLocaleString("tr-TR")} ·{" "}
+                  {new Date(room.createdAt).toLocaleString(i18n.language)} ·{" "}
                   <span className={room.active > 0 ? "live" : ""}>
-                    {room.active > 0 ? `● ${room.active} kişi çevrimiçi` : "boş"}
+                    {room.active > 0 ? t("dashboard.liveOnline", { count: room.active }) : t("dashboard.emptyRoom")}
                   </span>
                 </p>
                 <code className="room-item__url">
@@ -189,13 +186,13 @@ export default function Dashboard() {
               </div>
               <div className="room-item__actions">
                 <Link className="btn btn--primary btn--sm" to={`/room/${room.id}`}>
-                  Odaya gir
+                  {t("dashboard.join")}
                 </Link>
                 <button className="btn btn--secondary btn--sm" onClick={() => void copy(room)}>
-                  {copiedId === room.id ? "Kopyalandı ✓" : "Bağlantıyı kopyala"}
+                  {copiedId === room.id ? t("dashboard.copied") : t("dashboard.copyLink")}
                 </button>
                 <button className="btn btn--ghost btn--sm" onClick={() => void remove(room)}>
-                  Sil
+                  {t("dashboard.delete")}
                 </button>
               </div>
             </li>
@@ -205,13 +202,10 @@ export default function Dashboard() {
 
       <section className="card ext-card">
         <div>
-          <h2>Chrome eklentisi</h2>
-          <p className="muted">
-            LinkedIn'deyken tek tıkla oda açmak için <code>extension/dist</code> klasörünü
-            <code> chrome://extensions</code> üzerinden "Paketi olmayan eklenti" olarak yükleyin.
-          </p>
+          <h2>{t("dashboard.extensionTitle")}</h2>
+          <p className="muted">{t("dashboard.extensionHint")}</p>
         </div>
-        <span className="tag">Manifest V3</span>
+        <span className="tag">{t("dashboard.manifestV3")}</span>
       </section>
     </main>
   );

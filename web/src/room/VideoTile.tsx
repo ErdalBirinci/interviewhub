@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useTranslation } from "../i18n/useTranslation";
 
 export function initials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean).slice(0, 2);
@@ -117,6 +118,7 @@ export default function VideoTile({
   connectionState,
   footer,
 }: VideoTileProps) {
+  const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioLevel = useAudioLevel(stream);
 
@@ -156,14 +158,14 @@ export default function VideoTile({
 
       <div className="tile__overlay">
         <span className={`tile__name ${!mic ? "tile__name--muted" : ""}`}>
-          {!mic && <span className="tile__micoff" title="Mikrofon kapalı">🔇</span>}
+          {!mic && <span className="tile__micoff" title={t("room.tile.micOff")}>🔇</span>}
           {name}
           {suffix && <em className="tile__suffix">{suffix}</em>}
-          {role === "host" && <em className="tile__role">ev sahibi</em>}
-          {screen && <em className="tile__role tile__role--screen">ekran paylaşıyor</em>}
+          {role === "host" && <em className="tile__role">{t("room.tile.host")}</em>}
+          {screen && <em className="tile__role tile__role--screen">{t("room.tile.screenSharing")}</em>}
         </span>
         {connecting && (
-          <span className="tile__conn">{failed ? "bağlantı kesildi" : "bağlanıyor…"}</span>
+          <span className="tile__conn">{failed ? t("room.tile.failed") : t("room.tile.connecting")}</span>
         )}
       </div>
 

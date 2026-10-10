@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { normalizeProfile, type LinkedInProfile, type PeerInfo } from "@ih/shared";
 import { copyText } from "../lib/clipboard";
 import { initials } from "./VideoTile";
+import { useTranslation } from "../i18n/useTranslation";
 
 interface ProfilePanelProps {
   peers: PeerInfo[];
@@ -24,6 +25,7 @@ function safeLinkedInUrl(url: string): string | null {
 }
 
 function ProfileBody({ profile, peer }: { profile: LinkedInProfile; peer: PeerInfo }) {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const linkedIn = safeLinkedInUrl(profile.linkedinUrl);
 
@@ -43,7 +45,7 @@ function ProfileBody({ profile, peer }: { profile: LinkedInProfile; peer: PeerIn
       <div className="profile__actions">
         {linkedIn && (
           <a className="btn btn--linkedin btn--sm" href={linkedIn} target="_blank" rel="noreferrer noopener">
-            LinkedIn'de aç ↗
+            {t("room.sidePanel.profile.linkedInOpen")}
           </a>
         )}
         <button
@@ -58,20 +60,20 @@ function ProfileBody({ profile, peer }: { profile: LinkedInProfile; peer: PeerIn
           }}
           disabled={!linkedIn}
         >
-          {copied ? "Kopyalandı ✓" : "Bağlantıyı kopyala"}
+          {copied ? t("common.copied") : t("room.sidePanel.profile.copyLink")}
         </button>
       </div>
 
       {profile.summary && (
         <section className="profile__section">
-          <h4>Özet</h4>
+          <h4>{t("room.sidePanel.profile.summary")}</h4>
           <p className="prewrap">{profile.summary}</p>
         </section>
       )}
 
       {profile.experience.length > 0 && (
         <section className="profile__section">
-          <h4>Deneyim</h4>
+          <h4>{t("room.sidePanel.profile.experience")}</h4>
           <ul className="timeline">
             {profile.experience.map((exp, i) => (
               <li key={`${exp.company}-${i}`}>
@@ -88,7 +90,7 @@ function ProfileBody({ profile, peer }: { profile: LinkedInProfile; peer: PeerIn
 
       {profile.education.length > 0 && (
         <section className="profile__section">
-          <h4>Eğitim</h4>
+          <h4>{t("room.sidePanel.profile.education")}</h4>
           <ul className="timeline">
             {profile.education.map((edu, i) => (
               <li key={`${edu.school}-${i}`}>
@@ -104,7 +106,7 @@ function ProfileBody({ profile, peer }: { profile: LinkedInProfile; peer: PeerIn
 
       {profile.skills.length > 0 && (
         <section className="profile__section">
-          <h4>Yetenekler</h4>
+          <h4>{t("room.sidePanel.profile.skills")}</h4>
           <div className="tags">
             {profile.skills.map((skill) => (
               <span key={skill} className="tag">
@@ -116,18 +118,19 @@ function ProfileBody({ profile, peer }: { profile: LinkedInProfile; peer: PeerIn
       )}
 
       <p className="hint">
-        Bu bilgiler katılımcının kendi beyanıdır. LinkedIn API'sinden veri çekilmez.
+        {t("room.sidePanel.profile.note")}
       </p>
     </div>
   );
 }
 
 export default function ProfilePanel({ peers, selfId, selectedId, onSelect }: ProfilePanelProps) {
+  const { t } = useTranslation();
   const selected = peers.find((p) => p.id === selectedId) ?? peers[0] ?? null;
 
   return (
     <div className="panel">
-      <div className="panel__people" role="tablist" aria-label="Katılımcılar">
+      <div className="panel__people" role="tablist" aria-label={t("room.sidePanel.profile.peopleAriaLabel")}>
         {peers.map((peer) => (
           <button
             key={peer.id}
@@ -148,7 +151,7 @@ export default function ProfilePanel({ peers, selfId, selectedId, onSelect }: Pr
       </div>
 
       {!selected && (
-        <p className="hint panel__empty">Henüz başka katılımcı yok. Davet bağlantısını paylaşın.</p>
+        <p className="hint panel__empty">{t("room.sidePanel.profile.noParticipants")}</p>
       )}
 
       {selected &&
@@ -157,16 +160,15 @@ export default function ProfilePanel({ peers, selfId, selectedId, onSelect }: Pr
         ) : (
           <div className="panel__empty">
             <p>
-              <strong>{selected.name}</strong> profil bilgisini henüz paylaşmadı.
+              <strong>{selected.name}</strong> {t("room.sidePanel.profile.notShared")}
             </p>
             {selected.id === selfId ? (
               <Link className="btn btn--primary btn--sm" to="/profile">
-                Profilimi düzenle
+                {t("room.sidePanel.profile.editProfile")}
               </Link>
             ) : (
               <p className="hint">
-                Aday kendi LinkedIn hesabıyla odaya katıldığında ve profilini paylaştığında burada
-                görünecek.
+                {t("room.sidePanel.profile.candidateNote")}
               </p>
             )}
           </div>

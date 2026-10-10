@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Landing from "./pages/Landing";
 import ProfileEditor from "./pages/ProfileEditor";
 import Room from "./pages/Room";
+import { useTranslation } from "./i18n/useTranslation";
 
 /**
  * Farkli bir odaya geciste bileseni yeniden kurar. Ayni bilesen kaldiginda
@@ -16,13 +17,14 @@ function RoomRoute() {
 
 export default function App() {
   const { pathname } = useLocation();
+  const { t } = useTranslation();
   const inRoom = pathname.startsWith("/room/");
 
   return (
     <div className={`app ${inRoom ? "app--room" : ""}`}>
       {/* Klavye kullanicilari icin: menuyu atlayip icerige git */}
       <a href="#icerik" className="skip-link">
-        İçeriğe atla
+        {t("app.skipToContent")}
       </a>
       {!inRoom && <Nav />}
       <main id="icerik" tabIndex={-1}>

@@ -9,6 +9,7 @@ import {
 } from "react";
 import type { Me } from "@ih/shared";
 import { ApiFailure, api, getToken, post, setTabToken, setToken } from "./api";
+import { translate } from "../i18n";
 
 interface AuthValue {
   me: Me | null;
@@ -130,7 +131,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth(): AuthValue {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth, AuthProvider içinde kullanılmalı.");
+  if (!ctx) throw new Error(translate("auth.ctxError"));
   return ctx;
 }
 

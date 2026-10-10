@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { translate } from "../i18n";
 
 export type MediaRequestState = "idle" | "requesting" | "ready" | "partial" | "blocked";
 
@@ -7,16 +8,16 @@ export function humanMediaError(err: unknown): string {
   switch (name) {
     case "NotAllowedError":
     case "SecurityError":
-      return "Kamera/mikrofon izni verilmedi. Tarayıcı adres çubuğundaki kamera simgesinden izin verebilirsiniz.";
+      return translate("media.permissionDenied");
     case "NotFoundError":
     case "OverconstrainedError":
-      return "Kamera veya mikrofon bulunamadı. Yine de katılabilirsiniz.";
+      return translate("media.notFound");
     case "NotReadableError":
-      return "Cihaz başka bir uygulama tarafından kullanılıyor.";
+      return translate("media.inUse");
     case "AbortError":
-      return "Medya isteği iptal edildi.";
+      return translate("media.aborted");
     default:
-      return (err as Error)?.message ?? "Medya cihazlarına erişilemedi.";
+      return (err as Error)?.message ?? translate("media.accessFailed");
   }
 }
 
@@ -41,7 +42,7 @@ export function useMedia(): MediaResult {
 
     if (!navigator.mediaDevices?.getUserMedia) {
       setState("blocked");
-      setError("Tarayıcı medya cihazı erişimini desteklemiyor. HTTPS veya localhost gereklidir.");
+      setError(translate("media.unsupported"));
       return;
     }
 
@@ -52,7 +53,7 @@ export function useMedia(): MediaResult {
     const watchdog = setTimeout(() => {
       if (cancelled) return;
       setState((s) => (s === "requesting" ? "blocked" : s));
-      setError((prev) => prev ?? "Kamera/mikrofon hazırlanmadı. Medyasız da katılabilirsiniz.");
+      setError((prev) => prev ?? translate("media.notReady"));
     }, 8000);
 
     const attempts: MediaStreamConstraints[] = [
@@ -83,8 +84,8 @@ export function useMedia(): MediaResult {
             hasAudio && hasVideo
               ? null
               : hasAudio
-                ? "Kamera açılamadı - sadece sesle katılacaksınız."
-                : "Mikrofon açılamadı - sesiniz karşı tarafa gitmeyecek.",
+                ? translate("media.cameraOnly")
+                : translate("media.micOnly"),
           );
           return;
         } catch (err) {

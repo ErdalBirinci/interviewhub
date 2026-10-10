@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { translate } from "../i18n";
 
 /* ---------------------- Web Speech API tipleri (global d.clarations) ---------------------- */
 
@@ -84,7 +85,7 @@ export function useRecording(stream: MediaStream | null) {
 
   const start = useCallback(async () => {
     if (!stream) {
-      setError("Kayıt için medya akışı yok.");
+      setError(translate("recording.noStream"));
       return;
     }
     try {
@@ -111,7 +112,7 @@ export function useRecording(stream: MediaStream | null) {
       };
       recorder.onerror = (e) => {
         console.error("[recording]", e);
-        setError("Kayıt sırasında hata oluştu.");
+        setError(translate("recording.error"));
         setState("idle");
         stopTimer();
       };
@@ -215,7 +216,7 @@ export function useTranscription() {
   useEffect(() => {
     const SpeechRecognitionCtor = (window as unknown as { SpeechRecognition?: { new (): SpeechRecognition }; webkitSpeechRecognition?: { new (): SpeechRecognition } }).SpeechRecognition ?? (window as unknown as { webkitSpeechRecognition?: { new (): SpeechRecognition } }).webkitSpeechRecognition;
     if (!SpeechRecognitionCtor) {
-      setError("Bu tarayıcı Web Speech API'yi desteklemiyor.");
+      setError(translate("transcription.unsupported"));
       return;
     }
 
@@ -252,7 +253,7 @@ export function useTranscription() {
     rec.onerror = (e: SpeechRecognitionErrorEvent) => {
       if (e.error !== "no-speech" && e.error !== "aborted") {
         console.warn("[transcription]", e.error);
-        setError(`Transkripsiyon hatası: ${e.error}`);
+        setError(`translate("transcription.error", { error: e.error })`);
       }
     };
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { ChatMessage } from "@ih/shared";
+import { useTranslation } from "../i18n/useTranslation";
 
 interface ChatPanelProps {
   messages: ChatMessage[];
@@ -9,6 +10,7 @@ interface ChatPanelProps {
 }
 
 export default function ChatPanel({ messages, selfId, onSend, disabled }: ChatPanelProps) {
+  const { t } = useTranslation();
   const [text, setText] = useState("");
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -25,9 +27,9 @@ export default function ChatPanel({ messages, selfId, onSend, disabled }: ChatPa
 
   return (
     <div className="chat">
-      <div className="chat__list" role="log" aria-live="polite" aria-label="Sohbet mesajları">
+      <div className="chat__list" role="log" aria-live="polite" aria-label={t("room.sidePanel.chat.ariaLabel")}>
         {messages.length === 0 && (
-          <p className="hint">Henüz mesaj yok. Not almak veya bağlantı paylaşmak için kullanın.</p>
+          <p className="hint">{t("room.sidePanel.chat.empty")}</p>
         )}
         {messages.map((m) => (
           <div
@@ -50,12 +52,12 @@ export default function ChatPanel({ messages, selfId, onSend, disabled }: ChatPa
           id="chat-input"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={disabled ? "Bağlantı yok" : "Mesaj yazın…"}
+          placeholder={disabled ? t("room.sidePanel.chat.disconnected") : t("room.sidePanel.chat.placeholder")}
           disabled={disabled}
           maxLength={2000}
         />
         <button className="btn btn--primary" type="submit" disabled={disabled || !text.trim()}>
-          Gönder
+          {t("room.sidePanel.chat.send")}
         </button>
       </form>
     </div>
