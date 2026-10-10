@@ -58,6 +58,20 @@ i18n
   });
 
 /**
+ * <html lang> degerini her dil degisiminde guncelle.
+ *
+ * index.html varsayilan olarak lang="en" acilir; kullanici dil degistirince
+ * ekran okuyucu ile arama motorlari icin de o dil bildirilmeli. Eklenti
+ * (extension/src/i18n.ts) ayni seyi panel <html> etiketi icin yapiyor;
+ * web tarafinda yoktu: icerik Turkce gorunurken lang="en" kaliyordu.
+ */
+const syncDocumentLang = (lng?: string) => {
+  document.documentElement.lang = lng ?? i18n.resolvedLanguage ?? "en";
+};
+i18n.on("languageChanged", syncDocumentLang);
+syncDocumentLang();
+
+/**
  * Bilesen disinda (hook, util, servis) calisan cevirici.
  * React hook'i degildir; dogrudan i18n orneginden okur.
  * Ornek: translate('media.permissionDenied')

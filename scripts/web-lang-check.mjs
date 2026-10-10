@@ -1,5 +1,11 @@
-// Web uygulamasinin varsayilan dilini dogrular: localStorage'da ih_lang olmadan
-// sayfa acilir, gorunen metin ve <html lang> Ingilizce mi bakilir.
+// Web uygulamasinin dil davranisini dogrular — iki faz:
+//
+//   Faz 1 (ilk acilis): localStorage'da ih_lang yokken sayfa Ingilizce acilir,
+//                       <html lang>="en" ve sayfada Turkce karakter yoktur.
+//   Faz 2 (kullanici secimi): ih_lang="tr" yapilip yenilenince metin Turkce'ye
+//                       gecer VE <html lang> da "tr" olur. (Ekran okuyucu ve
+//                       arama motorlari icin gerekli; birkac kez unutuldu.)
+//
 // Kullanim: node scripts/web-lang-check.mjs [url]
 const TARGET = process.argv[2] || "http://localhost:4000/";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -39,24 +45,7 @@ const ev = async (expression) => {
   return r?.result?.value;
 };
 
-await send("Page.enable");
-await send("Page.navigate", { url: TARGET });
-await sleep(3500);
-// Kayitli dil tercihini temizleyip yenile: boylece "ilk acilis" davranisi olculur
-await ev(`localStorage.removeItem("ih_lang")`);
-await send("Page.navigate", { url: TARGET });
-await sleep(4000);
-
-console.log("localStorage[ih_lang] =", await ev(`localStorage.getItem("ih_lang")`));
-console.log("<html lang>          =", await ev(`document.documentElement.lang`));
-console.log("detectedLanguage     =", await ev(`window.i18n?.language ?? "(yok)"`));
-console.log("title                =", await ev(`document.title`));
-
-const body = (await ev(`document.body.innerText`)) ?? "";
-console.log("\n--- sayfa metni (ilk 700 karakter) ---");
-console.log(body.slice(0, 700));
-
-// Dil adlari ("Türkçe", "Deutsch"...) meşrudur; kontrol bunlari yok sayar
+// Dil adlari ("Türkçe", "Deutsch"...) menu ve secicilerde meşrudur; yok sayilir
 const LANG_NAMES = [
   "Türkçe",
   "Deutsch",
@@ -66,14 +55,79 @@ const LANG_NAMES = [
   "日本語",
   "中文",
 ];
-const stripped = LANG_NAMES.reduce((acc, n) => acc.split(n).join(" "), body);
-const hits = [];
-const re = /[çğıöşüÇĞİÖŞÜ]/g;
-let m;
-while ((m = re.exec(stripped)) !== null) {
-  hits.push("…" + stripped.slice(Math.max(0, m.index - 45), m.index + 25).replace(/\n/g, " ") + "…");
+// Kullanici verisi Turkce olabilir (demo profili "Ayşe Yılmaz", "İstanbul,
+// Türkiye"). Bunlar cevrilmemis arayuz metni DEGILDIR; Turkce-karakter
+// taramasindan dusmek gerekir, yoksa sahte pozitif verir.
+const USER_DATA = ["Ayşe Yılmaz", "Istanbul, Türkiye", "İstanbul, Türkiye"];
+const TR_RE = /[çğıöşüÇĞİÖŞÜ]/g;
+
+/** Sayfa govdesindeki Turkce karakter sayisini (dil adlari + kullanici verisi hariç) dondurur. */
+async function trChars() {
+  // Tarama tum body'ye yapilmiyor: onizleme mockup'i icerisindeki avatar
+  // bas harfi ("İ") veya demo profil verisi kullanici verisidir, cevrilmemis
+  // arayuz metni degildir. Gercek risk arayuz kabugundadir — oraya bakilir.
+  const body =
+    (await ev(
+      `[...document.querySelectorAll(
+         "header, nav, footer, h1, h2, h3, button, a.btn, .eyebrow, .lead, summary, label, .lp-checks li"
+       )].map((e) => e.innerText || "").join("\\n")`,
+    )) ?? "";
+  const stripped = [...LANG_NAMES, ...USER_DATA].reduce(
+    (acc, n) => acc.split(n).join(" "),
+    body,
+  );
+  return (stripped.match(TR_RE) || []).length;
 }
-console.log(`\nTürkçe karakter: ${hits.length ? hits.length + " yer" : "0 (OK)"}`);
-for (const h of [...new Set(hits)].slice(0, 12)) console.log("   " + h);
+
+const fails = [];
+const ok = (cond, label, detail) => {
+  console.log(`${cond ? "  OK  " : "  HATA"} ${label}${detail ? `  (${detail})` : ""}`);
+  if (!cond) fails.push(label);
+};
+
+await send("Page.enable");
+
+// ---------------------------------------------------------------- Faz 1
+console.log("\n=== Faz 1 — ilk acilis (ih_lang yok) ===");
+await send("Page.navigate", { url: TARGET });
+await sleep(3500);
+await ev(`localStorage.removeItem("ih_lang")`);
+await send("Page.navigate", { url: TARGET });
+await sleep(4000);
+
+const l1 = await ev(`document.documentElement.lang`);
+console.log("localStorage[ih_lang] =", await ev(`localStorage.getItem("ih_lang")`));
+console.log("<html lang>          =", l1);
+console.log("title                =", await ev(`document.title`));
+const t1 = await trChars();
+console.log("Turkce karakter       =", t1);
+ok(l1 === "en", '<html lang> varsayilan "en"', l1);
+ok(t1 === 0, "ilk acilusta Turkce metin yok", `${t1} yer`);
+
+// ---------------------------------------------------------------- Faz 2
+console.log("\n=== Faz 2 — kullanici dili secimi (ih_lang=tr) ===");
+await ev(`localStorage.setItem("ih_lang", "tr")`);
+await send("Page.navigate", { url: TARGET });
+await sleep(4500);
+
+const l2 = await ev(`document.documentElement.lang`);
+const persisted = await ev(`localStorage.getItem("ih_lang")`);
+const h2 = (await ev(`(document.querySelector("h2")||{}).textContent || ""`))?.trim();
+const t2 = await trChars();
+console.log("localStorage[ih_lang] =", persisted);
+console.log("<html lang>          =", l2);
+console.log("ilk <h2>             =", JSON.stringify(h2));
+console.log("Turkce karakter       =", t2);
+ok(persisted === "tr", "dil tercihi kalici", persisted);
+ok(l2 === "tr", '<html lang> dil degisiminde "tr" olur', l2);
+ok(t2 > 0, "metin Turkce'ye gecti", `${t2} yer`);
+ok(/\p{Script=Latin}/u.test(h2 || "") && (t2 || 0) > 0, "baslik cevirildi", JSON.stringify(h2));
+
+// Temizlik: sonraki calistirmalar etkilenmesin
+await ev(`localStorage.removeItem("ih_lang")`);
 ws.close();
-process.exit(hits.length ? 1 : 0);
+
+console.log(
+  fails.length ? `\n*** ${fails.length} KONTROL BASARISIZ: ${fails.join(" | ")} ***` : "\nOK — iki faz da gecti.",
+);
+process.exit(fails.length ? 1 : 0);

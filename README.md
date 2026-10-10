@@ -170,6 +170,7 @@ npm run test:all      # typecheck + sinyal + WebRTC e2e + eklenti e2e
 | `npm run test:signal` | Socket.IO sinyal katmanı: katılma, peer olayları, relay, sohbet. Argüman verilmezse test ortamını (demo kullanıcılar + oda + profil) **kendisi hazırlar** |
 | `npm run test:e2e` | **Gerçek Chrome'da** iki sekme açar, odaya girer, P2P + medya akışını doğrular (CDP gerekir). Test ortamı yoksa kendisi oluşturur |
 | `npm run test:ext` | **Eklenti E2E**: LinkedIn sayfasında FAB enjeksiyonu + trusted tıklama ile yan panelin açılması + panel arayüzü |
+| `node scripts/web-lang-check.mjs [url]` | **Web dil davranışı, iki faz**: (1) `ih_lang` yokken sayfa İngilizce açılır, `<html lang>="en"`, arayüz kabuğunda Türkçe karakter yok; (2) `ih_lang="tr"` yapıp yenileyince metin Türkçe'ye geçer **ve `<html lang>` da "tr" olur**. Tarama arayüz kabuğuyla sınırlıdır — demo profil verisi ve önizleme avatarı meşru sayılır |
 | `node scripts/ext-lang-check.mjs` | **Eklenti dil doğrulaması**: panelde dil seçicisini 8 dile çevirir, metnin gerçekten o dile geçtiğini ve `<html lang>` güncellendiğini kontrol eder (CDP gerekir) |
 | `node scripts/screenshot.mjs <url> [cikti.png]` | Tek sayfanın ekran görüntüsü |
 
