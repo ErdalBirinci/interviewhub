@@ -228,6 +228,20 @@
     "language": "Sprache",
     "login": "Anmelden",
     "logout": "Abmelden",
+    "notifications": {
+      "demoInterview": {
+        "text": "{{title}} Interview morgen um 10:00",
+        "title": "Interview geplant"
+      },
+      "demoMessage": {
+        "text": "{{name}} hat Ihnen eine Nachricht gesendet",
+        "title": "Neue Nachricht"
+      },
+      "demoRoom": {
+        "text": "Ihr Raum “{{title}}” ist bereit",
+        "title": "Raum erstellt"
+      }
+    },
     "profile": "Mein Profil",
     "theme": "Design"
   },
@@ -418,6 +432,7 @@
     "profileLink": "Profil hinzufügen →",
     "profileNotShared": "Ihr Profil wird nicht geteilt.",
     "rejoin": "Erneut beitreten",
+    "selfSuffix": "(Sie)",
     "sideHide": "Panel ausblenden",
     "sidePanel": {
       "ai": {
@@ -544,8 +559,7 @@
     "transcriptPanel": {
       "start": "Starten",
       "stop": "Beenden"
-    },
-    "selfSuffix": "(Sie)"
+    }
   },
   "rtc": {
     "authRequired": "Sie müssen angemeldet sein, um dem Raum beizutreten.",

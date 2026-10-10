@@ -70,9 +70,30 @@ export default function Nav() {
   }, [logout, navigate]);
 
   const notifications = [
-    { id: 1, title: "New message", text: "Ayse Yilmaz sent you a message", time: "2m ago", unread: true },
-    { id: 2, title: "Interview scheduled", text: "Frontend Developer interview tomorrow 10:00", time: "1h ago", unread: true },
-    { id: 3, title: "Room created", text: "Your room 'Senior React Interview' is ready", time: "3h ago", unread: false },
+    {
+      id: 1,
+      kind: "message" as const,
+      title: t("nav.notifications.demoMessage.title"),
+      text: t("nav.notifications.demoMessage.text", { name: "Ayşe Yılmaz" }),
+      time: "2m ago",
+      unread: true,
+    },
+    {
+      id: 2,
+      kind: "interview" as const,
+      title: t("nav.notifications.demoInterview.title"),
+      text: t("nav.notifications.demoInterview.text", { title: t("landing.features.items[0].title") }),
+      time: "1h ago",
+      unread: true,
+    },
+    {
+      id: 3,
+      kind: "room" as const,
+      title: t("nav.notifications.demoRoom.title"),
+      text: t("nav.notifications.demoRoom.text", { title: t("dashboard.newRoom") }),
+      time: "3h ago",
+      unread: false,
+    },
   ];
 
   const unreadCount = notifications.filter(n => n.unread).length;
@@ -85,7 +106,7 @@ export default function Nav() {
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         aria-expanded={mobileMenuOpen}
         aria-controls="nav-menu"
-        aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+        aria-label={mobileMenuOpen ? t("common.closeMenu") : t("common.openMenu")}
       >
         {mobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
       </button>
@@ -150,12 +171,12 @@ export default function Nav() {
             className="nav__icon-btn nav__bell"
             onClick={() => setNotificationsOpen(!notificationsOpen)}
             aria-expanded={notificationsOpen}
-            aria-label="Notifications"
+            aria-label={t("accessibility.notifications")}
             aria-haspopup="true"
           >
             <BellIcon size={22} />
             {unreadCount > 0 && (
-              <span className="nav__badge" aria-label={`${unreadCount} unread notifications`}>
+              <span className="nav__badge" aria-label={`${unreadCount} ${t("accessibility.notifications")}`}>
                 {unreadCount > 9 ? "9+" : unreadCount}
               </span>
             )}
@@ -179,9 +200,9 @@ export default function Nav() {
                     role="menuitem"
                   >
                     <div className="nav__notification-icon">
-                      {n.title === "New message" && <UserIcon size={18} />}
-                      {n.title === "Interview scheduled" && <SettingsIcon size={18} />}
-                      {n.title === "Room created" && <BellIcon size={18} />}
+                      {n.kind === "message" && <UserIcon size={18} />}
+                      {n.kind === "interview" && <SettingsIcon size={18} />}
+                      {n.kind === "room" && <BellIcon size={18} />}
                     </div>
                     <div className="nav__notification-content">
                       <strong>{n.title}</strong>
@@ -192,9 +213,9 @@ export default function Nav() {
                 ))}
               </div>
               <div className="nav__dropdown-footer">
-                <a href="/dashboard" className="nav__view-all">
+                <Link to="/dashboard" className="nav__view-all">
                   {t("common.viewAll")}
-                </a>
+                </Link>
               </div>
             </div>
           )}
@@ -207,8 +228,8 @@ export default function Nav() {
         <button
           className="nav__icon-btn nav__theme-toggle"
           onClick={toggleTheme}
-          aria-label={theme === "dark" ? t("accessibility.toggleTheme") + " (Light)" : t("accessibility.toggleTheme") + " (Dark)"}
-          title={theme === "dark" ? t("accessibility.toggleTheme") + " (Light)" : t("accessibility.toggleTheme") + " (Dark)"}
+          title={t("accessibility.toggleTheme")}
+          aria-label={t("accessibility.toggleTheme")}
         >
           {theme === "dark" ? <SunIcon size={22} /> : <MoonIcon size={22} />}
         </button>
@@ -254,7 +275,10 @@ export default function Nav() {
                     )}
                     <div className="nav__user-info">
                       <strong>{me.name}</strong>
-                      <span>{me.email || (me.provider === "demo" ? t("common.demo") : "LinkedIn")}</span>
+                      <span>
+                        {me.email ||
+                          (me.provider === "demo" ? t("common.demo") : t("common.linkedinAccount"))}
+                      </span>
                     </div>
                   </div>
                   <div className="nav__dropdown-divider" />
@@ -288,7 +312,54 @@ export default function Nav() {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="nav__mobile-overlay" onClick={() => setMobileMenuOpen(false)} aria-hidden="true" />
+        <>
+          <div className="nav__mobile-overlay" onClick={() => setMobileMenuOpen(false)} aria-hidden="true" />
+          <div className="nav__mobile-menu" id="nav-menu-mobile" role="dialog" aria-modal="true" aria-label={t("common.menu")}>
+            <nav className="nav__mobile-links" aria-label={t("accessibility.navigation")}>
+              {onLanding ? (
+                <>
+                  <a href="#ozellikler" onClick={() => setMobileMenuOpen(false)}>{t("landing.features.title")}</a>
+                  <a href="#nasil" onClick={() => setMobileMenuOpen(false)}>{t("landing.steps.title")}</a>
+                  <a href="#guvenlik" onClick={() => setMobileMenuOpen(false)}>{t("landing.faq.title")}</a>
+                  <a href="#sss" onClick={() => setMobileMenuOpen(false)}>{t("landing.faq.title")}</a>
+                </>
+              ) : (
+                <>
+                  <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)} className={pathname === "/dashboard" ? "nav__link--active" : ""}>
+                    {t("nav.dashboard")}
+                  </Link>
+                  <Link to="/profile" onClick={() => setMobileMenuOpen(false)} className={pathname === "/profile" ? "nav__link--active" : ""}>
+                    {t("nav.profile")}
+                  </Link>
+                </>
+              )}
+            </nav>
+            <div className="nav__mobile-actions">
+              <LanguageSelector />
+              <button
+                className="nav__icon-btn"
+                onClick={toggleTheme}
+                title={t("accessibility.toggleTheme")}
+                aria-label={t("accessibility.toggleTheme")}
+              >
+                {theme === "dark" ? <SunIcon size={22} /> : <MoonIcon size={22} />}
+              </button>
+              {me ? (
+                <button
+                  className="nav__dropdown-item nav__dropdown-item--danger"
+                  onClick={() => { setMobileMenuOpen(false); void handleLogout(); }}
+                >
+                  <LogOutIcon size={18} />
+                  {t("nav.logout")}
+                </button>
+              ) : (
+                <Link to="/dashboard" className="btn btn--primary nav__cta" onClick={() => setMobileMenuOpen(false)}>
+                  {t("nav.login")}
+                </Link>
+              )}
+            </div>
+          </div>
+        </>
       )}
     </header>
   );

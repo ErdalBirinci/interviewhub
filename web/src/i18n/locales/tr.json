@@ -228,6 +228,20 @@
     "language": "Dil",
     "login": "Giriş Yap",
     "logout": "Çıkış Yap",
+    "notifications": {
+      "demoInterview": {
+        "text": "{{title}} görüşmesi yarın saat 10:00",
+        "title": "Görüşme planlandı"
+      },
+      "demoMessage": {
+        "text": "{{name}} size bir mesaj gönderdi",
+        "title": "Yeni mesaj"
+      },
+      "demoRoom": {
+        "text": "“{{title}}” odanız hazır",
+        "title": "Oda oluşturuldu"
+      }
+    },
     "profile": "Profilim",
     "theme": "Tema"
   },
@@ -418,6 +432,7 @@
     "profileLink": "Profilinizi ekleyin →",
     "profileNotShared": "Profiliniz paylaşılmadı.",
     "rejoin": "Yeniden katıl",
+    "selfSuffix": "(siz)",
     "sideHide": "Paneli gizle",
     "sidePanel": {
       "ai": {
@@ -544,8 +559,7 @@
     "transcriptPanel": {
       "start": "Başlat",
       "stop": "Durdur"
-    },
-    "selfSuffix": "(siz)"
+    }
   },
   "rtc": {
     "authRequired": "Odaya katılmak için giriş yapmalısınız.",

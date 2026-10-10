@@ -15,10 +15,12 @@
   --accent-2: #7c5cff;
   --linkedin: #0a66c2;
   --danger: #ff5a6a;
+  --warn: #eab308;
   --ok: #2ecc71;
   --radius: 14px;
   --radius-sm: 10px;
   --shadow: 0 18px 44px rgba(0, 0, 0, 0.42);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.5);
   --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -34,6 +36,7 @@
   --text: #1a2233;
   --muted: #5d6b85;
   --shadow: 0 18px 44px rgba(30, 45, 90, 0.14);
+  --shadow-lg: 0 24px 60px rgba(30, 45, 90, 0.2);
 }
 
 [data-theme="light"] body {
@@ -335,15 +338,19 @@ code {
 .nav {
   display: flex;
   align-items: center;
-  gap: 1.4rem;
-  padding: 0.85rem clamp(1rem, 4vw, 2.4rem);
+  gap: clamp(0.6rem, 2vw, 1.5rem);
+  padding: 0.7rem clamp(0.85rem, 3vw, 2.2rem);
   border-bottom: 1px solid var(--line-soft);
-  background: rgba(10, 14, 21, 0.72);
-  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 40;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 8px 28px rgba(0, 0, 0, 0.28);
 }
+
+/* --- marka --- */
 
 .nav__brand {
   display: flex;
@@ -351,49 +358,592 @@ code {
   gap: 0.7rem;
   color: var(--text);
   font-weight: 700;
-  font-size: 1.02rem;
+  font-size: 1rem;
+  flex: none;
+  border-radius: var(--radius-sm);
 }
 .nav__brand:hover {
   text-decoration: none;
 }
-.nav__brand small {
-  display: block;
+.nav__logo {
+  flex: none;
+  border-radius: 10px;
+  overflow: hidden;
+  filter: drop-shadow(0 4px 12px rgba(79, 140, 255, 0.35));
+}
+.nav__brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+}
+.nav__brand-text strong {
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+.nav__tagline {
   font-size: 0.68rem;
   font-weight: 500;
   color: var(--muted);
-  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.nav__logo {
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #fff;
+
+/* --- mobil menu butonu --- */
+
+.nav__mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
 }
+.nav__mobile-toggle:hover {
+  background: var(--bg-2);
+  border-color: var(--line);
+}
+
+/* --- navigasyon bağlantıları --- */
 
 .nav__links {
   display: flex;
-  gap: 1.1rem;
-  font-size: 0.92rem;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+  min-width: 0;
 }
-.nav__links a {
+.nav__link {
+  position: relative;
   color: var(--muted);
   font-weight: 600;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
 }
-.nav__links a:hover {
+.nav__link:hover {
   color: var(--text);
   text-decoration: none;
+  background: var(--bg-2);
+}
+.nav__link--active {
+  color: var(--accent);
+  background: rgba(79, 140, 255, 0.12);
+}
+.nav__link--active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.75rem;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
 }
 
-.nav__user {
+/* --- sağ aksiyonlar --- */
+
+.nav__actions {
   margin-left: auto;
   display: flex;
   align-items: center;
+  gap: 0.4rem;
+  flex: none;
+}
+
+/* arama */
+.nav__search {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 36px;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-soft);
+  background: var(--bg-2);
+  color: var(--muted);
+  transition: border-color 0.15s, box-shadow 0.15s, width 0.2s;
+}
+.nav__search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.18);
+}
+.nav__search-input {
+  width: 150px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  outline: none;
+}
+.nav__search-input::placeholder {
+  color: var(--muted);
+}
+
+/* ikon butonları */
+.nav__icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.nav__icon-btn:hover {
+  background: var(--bg-2);
+  color: var(--text);
+  border-color: var(--line-soft);
+}
+
+/* okunmamış sayacı */
+.nav__badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 17px;
+  text-align: center;
+  box-shadow: 0 0 0 2px var(--bg);
+}
+
+/* --- açılır paneller --- */
+
+.nav__notifications,
+.nav__user-area {
+  position: relative;
+}
+
+.nav__dropdown {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  z-index: 60;
+  min-width: 260px;
+  max-width: min(340px, calc(100vw - 2rem));
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg), 0 18px 50px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  animation: nav-dropdown-in 0.14s ease;
+  transform-origin: top right;
+}
+@keyframes nav-dropdown-in {
+  from { opacity: 0; transform: scale(0.97) translateY(-4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.nav__dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg);
+}
+.nav__dropdown-header h3 {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text);
+}
+.nav__mark-all-read {
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+  border-radius: 6px;
+}
+.nav__mark-all-read:hover {
+  background: rgba(79, 140, 255, 0.12);
+}
+
+.nav__dropdown-footer {
+  padding: 0.55rem 0.9rem;
+  border-top: 1px solid var(--line-soft);
+  background: var(--bg);
+  text-align: center;
+}
+.nav__view-all {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* bildirim listesi */
+.nav__notification-list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 0.35rem;
+}
+.nav__notification {
+  display: flex;
+  align-items: flex-start;
   gap: 0.6rem;
+  width: 100%;
+  padding: 0.6rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.13s;
+}
+.nav__notification:hover {
+  background: var(--bg);
+}
+.nav__notification--unread .nav__notification-icon {
+  background: rgba(79, 140, 255, 0.18);
+  color: var(--accent);
+}
+.nav__notification-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--muted);
+}
+.nav__notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+.nav__notification-content strong {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+.nav__notification-content span {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.nav__notification-time {
+  font-size: 0.7rem;
+  color: var(--muted);
+  opacity: 0.8;
+}
+.nav__notification--unread .nav__notification-content strong::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 0.4rem;
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: middle;
+}
+
+/* kullanıcı menüsü */
+.nav__dropdown--user {
+  min-width: 240px;
+}
+.nav__user-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 0.9rem;
+  border-bottom: 1px solid var(--line-soft);
+  background: linear-gradient(180deg, rgba(79, 140, 255, 0.1), transparent);
+}
+.nav__user-avatar {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.nav__user-avatar--initials {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  font-weight: 700;
+}
+.nav__user-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.nav__user-info strong {
+  font-size: 0.9rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav__user-info span {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav__dropdown-divider {
+  height: 1px;
+  margin: 0.3rem 0;
+  background: var(--line-soft);
+}
+.nav__dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.13s;
+}
+.nav__dropdown-item:hover {
+  background: var(--bg);
+  text-decoration: none;
+}
+.nav__dropdown-item--danger {
+  color: var(--danger);
+}
+.nav__dropdown-item--danger:hover {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* --- kullanıcı tetikleyici --- */
+
+.nav__user-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 40px;
+  padding: 0 0.6rem 0 0.25rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: var(--bg-2);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.nav__user-trigger:hover {
+  border-color: var(--line);
+  background: var(--panel);
+}
+.nav__avatar {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.nav__avatar--initials {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.nav__user-name {
+  max-width: 130px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav__demo-badge {
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(234, 179, 8, 0.16);
+  color: #eab308;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* yükleniyor */
+.nav__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+}
+.nav__loading-dots {
+  color: var(--muted);
+  font-weight: 800;
+}
+.nav__loading-dots span {
+  animation: nav-dot-blink 1.2s infinite;
+}
+.nav__loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.nav__loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes nav-dot-blink {
+  0%, 60%, 100% { opacity: 0.25; }
+  30% { opacity: 1; }
+}
+
+.nav__cta {
+  flex: none;
+}
+
+/* --- mobil menü --- */
+
+.nav__mobile-overlay {
+  position: fixed;
+  inset: 0;
+  top: 60px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 40;
+  animation: nav-fade-in 0.15s ease;
+}
+@keyframes nav-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.nav__mobile-menu {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: nav-slide-down 0.16s ease;
+}
+@keyframes nav-slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.nav__mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.nav__mobile-links a {
+  display: block;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+.nav__mobile-links a:hover,
+.nav__mobile-links a.nav__link--active {
+  background: var(--bg);
+  color: var(--accent);
+  text-decoration: none;
+}
+.nav__mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line-soft);
+}
+.nav__mobile-actions .lang-selector {
+  flex: 1;
+}
+.nav__mobile-actions .lang-selector__trigger {
+  width: 100%;
+}
+
+/* --- duyarlı --- */
+
+@media (max-width: 1020px) {
+  .nav__search,
+  .nav__user-name {
+    display: none;
+  }
+  .nav__user-trigger {
+    padding: 0 0.3rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .nav__links {
+    display: none;
+  }
+  .nav__mobile-toggle {
+    display: inline-flex;
+  }
+  .nav__tagline {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav {
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem;
+  }
+  .nav__mobile-overlay,
+  .nav__mobile-menu {
+    top: 56px;
+  }
+  .nav__mobile-menu {
+    max-height: calc(100vh - 56px);
+  }
+  .nav__brand-text strong {
+    font-size: 0.92rem;
+  }
+  .nav__icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+  .nav__dropdown {
+    position: fixed;
+    top: 56px;
+    left: 0.5rem;
+    right: 0.5rem;
+    min-width: 0;
+    max-width: none;
+  }
 }
 
 /* -------------------------------- kartlar --------------------------------- */
@@ -3104,4 +3654,12 @@ input[type="url"],
 [dir="rtl"] .lang-selector__dropdown {
   right: auto;
   left: 0;
+}
+
+/* Mobil menü içinde: dropdown paneli akış içinde açılır (absolute yerine) */
+.nav__mobile-menu .lang-selector__dropdown {
+  position: static;
+  box-shadow: none;
+  border-radius: var(--radius-sm);
+  margin-top: 0.35rem;
 }

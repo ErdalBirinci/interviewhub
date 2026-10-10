@@ -228,6 +228,20 @@
     "language": "Idioma",
     "login": "Iniciar Sesión",
     "logout": "Cerrar Sesión",
+    "notifications": {
+      "demoInterview": {
+        "text": "Entrevista de {{title}} mañana a las 10:00",
+        "title": "Entrevista programada"
+      },
+      "demoMessage": {
+        "text": "{{name}} le envió un mensaje",
+        "title": "Nuevo mensaje"
+      },
+      "demoRoom": {
+        "text": "Su sala «{{title}}» está lista",
+        "title": "Sala creada"
+      }
+    },
     "profile": "Mi Perfil",
     "theme": "Tema"
   },
@@ -418,6 +432,7 @@
     "profileLink": "Añadir su perfil →",
     "profileNotShared": "Su perfil no está compartido.",
     "rejoin": "Reunirse",
+    "selfSuffix": "(usted)",
     "sideHide": "Ocultar panel",
     "sidePanel": {
       "ai": {
@@ -544,8 +559,7 @@
     "transcriptPanel": {
       "start": "Iniciar",
       "stop": "Detener"
-    },
-    "selfSuffix": "(usted)"
+    }
   },
   "rtc": {
     "authRequired": "Debe iniciar sesión para unirse a esta sala.",

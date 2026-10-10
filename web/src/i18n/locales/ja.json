@@ -228,6 +228,20 @@
     "language": "言語",
     "login": "ログイン",
     "logout": "ログアウト",
+    "notifications": {
+      "demoInterview": {
+        "text": "{{title}} の面接は明日 10:00 です",
+        "title": "面接を予定しました"
+      },
+      "demoMessage": {
+        "text": "{{name}} さんからメッセージが届きました",
+        "title": "新しいメッセージ"
+      },
+      "demoRoom": {
+        "text": "ルーム「{{title}}」の準備ができました",
+        "title": "ルームを作成しました"
+      }
+    },
     "profile": "マイプロフィール",
     "theme": "テーマ"
   },
@@ -418,6 +432,7 @@
     "profileLink": "プロフィールを追加 →",
     "profileNotShared": "プロフィールは共有されていません。",
     "rejoin": "再参加",
+    "selfSuffix": "(あなた)",
     "sideHide": "パネルを非表示",
     "sidePanel": {
       "ai": {
@@ -544,8 +559,7 @@
     "transcriptPanel": {
       "start": "開始",
       "stop": "停止"
-    },
-    "selfSuffix": "(あなた)"
+    }
   },
   "rtc": {
     "authRequired": "このルームに参加するにはログインが必要です。",

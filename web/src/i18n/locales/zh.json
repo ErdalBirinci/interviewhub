@@ -228,6 +228,20 @@
     "language": "语言",
     "login": "登录",
     "logout": "登出",
+    "notifications": {
+      "demoInterview": {
+        "text": "{{title}} 面试定于明天 10:00",
+        "title": "已安排面试"
+      },
+      "demoMessage": {
+        "text": "{{name}} 给您发了一条消息",
+        "title": "新消息"
+      },
+      "demoRoom": {
+        "text": "您的房间「{{title}}」已就绪",
+        "title": "房间已创建"
+      }
+    },
     "profile": "我的资料",
     "theme": "主题"
   },
@@ -418,6 +432,7 @@
     "profileLink": "添加您的资料 →",
     "profileNotShared": "您的资料未共享。",
     "rejoin": "重新加入",
+    "selfSuffix": "(您)",
     "sideHide": "隐藏面板",
     "sidePanel": {
       "ai": {
@@ -544,8 +559,7 @@
     "transcriptPanel": {
       "start": "开始",
       "stop": "停止"
-    },
-    "selfSuffix": "(您)"
+    }
   },
   "rtc": {
     "authRequired": "加入此房间需要登录。",

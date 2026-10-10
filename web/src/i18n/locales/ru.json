@@ -228,6 +228,20 @@
     "language": "Язык",
     "login": "Войти",
     "logout": "Выйти",
+    "notifications": {
+      "demoInterview": {
+        "text": "Собеседование {{title}} завтра в 10:00",
+        "title": "Собеседование назначено"
+      },
+      "demoMessage": {
+        "text": "{{name}} отправил(а) вам сообщение",
+        "title": "Новое сообщение"
+      },
+      "demoRoom": {
+        "text": "Ваша комната «{{title}}» готова",
+        "title": "Комната создана"
+      }
+    },
     "profile": "Мой профиль",
     "theme": "Тема"
   },
@@ -418,6 +432,7 @@
     "profileLink": "Добавить профиль →",
     "profileNotShared": "Ваш профиль не опубликован.",
     "rejoin": "Войти снова",
+    "selfSuffix": "(вы)",
     "sideHide": "Скрыть панель",
     "sidePanel": {
       "ai": {
@@ -544,8 +559,7 @@
     "transcriptPanel": {
       "start": "Начать",
       "stop": "Остановить"
-    },
-    "selfSuffix": "(вы)"
+    }
   },
   "rtc": {
     "authRequired": "Для входа в комнату нужно авторизоваться.",
