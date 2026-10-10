@@ -106,7 +106,25 @@ async function main() {
   await c.send("Page.enable");
 
   step("landing");
-  await evaluate(c, `localStorage.clear(); sessionStorage.clear();`).catch(() => null);
+  // Ekran goruntuleri tekrarlanabilir olsun diye SW ve onbellek temizlenir.
+  // sw.js /api ve socket.io isteklerini artik onbelleklemiyor, ancak eski
+  // surumde onbelleklenmis bayat /api/me yanitlari kullanici adini bozabiliyordu.
+  await evaluate(
+    c,
+    `(async () => {
+      if (navigator.serviceWorker) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map((r) => r.unregister()));
+      }
+      if (typeof caches !== "undefined") {
+        const names = await caches.keys();
+        await Promise.all(names.map((n) => caches.delete(n)));
+      }
+      localStorage.clear();
+      sessionStorage.clear();
+      return true;
+    })()`,
+  ).catch(() => null);
   await goto(c, `${APP}/`);
   await shot(c, "01-landing");
 
@@ -164,7 +182,17 @@ async function main() {
   }
   step(joined ? "oda hazir (P2P bagli)" : "oda: P2P tam kurulamadi, yine de aliniyor");
 
-  await sleep(2500); // uzak video ilk kareyi gosterir
+  // Kameralari kapat: kadrajda avatar daireleri gorunsun (tanitim gorselinin
+  // eskiden boyleydi) ve ekran goruntulerine dis bir kameranin karesi hic
+  // karismasin. Oda "c" tusunu cam toggle olarak dinler (Room.tsx onKey).
+  for (const c of [ca, cb]) {
+    await evaluate(
+      c,
+      `window.dispatchEvent(new KeyboardEvent("keydown", { key: "c", bubbles: true })); true;`,
+    ).catch(() => null);
+  }
+  await sleep(2000); // kamera kapanir, tile duzene gecer
+
   await shot(ca, "06-room");
   ca.close();
   cb.close();

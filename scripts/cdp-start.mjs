@@ -131,6 +131,13 @@ const main = async () => {
     "--no-first-run",
     "--no-default-browser-check",
     "--use-fake-ui-for-media-stream",
+    // Sahte mikrofon + kamera. Ekranshottlar ve e2e testleri gercek bir
+    // webcam/video akisi gorecek sekilde calisiyordu; bu hem tanitim
+    // goruntusune gercek bir oda karesi karistiriyordu hem de testleri
+    // makineye bagli yapiyordu. Sahte cihaz deterministik bir test
+    // paterni verir ve yine "canli" track uretir (e2e medya dogrulamasi
+    // hala gecer).
+    "--use-fake-device-for-media-stream",
   ];
   if (exists(EXT)) {
     args.push(`--load-extension=${EXT}`);

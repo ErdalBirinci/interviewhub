@@ -72,30 +72,68 @@ export async function checkServer() {
 /**
  * iki demo kullanic + bir oda + paylasilan profiller olusturur.
  * signal-test profil alanlarini dogrular; o yuzden profil de yazilir.
+ *
+ * Veri bilerek zengin ve Ingilizce tutulur: bu profil ayni zamanda urunun
+ * tanitim ekran goruntusesinde (showcase-room.png) gorunur ornek veridir.
+ * Turkce/eksik ornek veri, Ingilizce tanitim sayfasinda tutarsiz gorunuyordu.
  */
-export async function provision(names = ["Ayse Yilmaz", "Mehmet Kaya"]) {
+export async function provision(names = ["Sarah Chen", "Daniel Okafor"]) {
   const a = await post("/auth/demo", { name: names[0] });
   const b = await post("/auth/demo", { name: names[1] });
 
-  for (const [token, fullName, headline] of [
-    [a.token, names[0], "Test katilimci"],
-    [b.token, names[1], "Test aday"],
-  ]) {
-    await put(
-      "/api/me/profile",
-      {
-        fullName,
-        headline,
-        linkedinUrl: "https://www.linkedin.com/in/test",
-        summary: "Otomatik olusturulan test profili.",
-        shareProfile: true,
-        skills: ["WebRTC"],
-      },
-      token,
-    );
-  }
+  // A: gorusmeci (oda kurar). B: aday — panelde gorunen zengin profildir.
+  await put(
+    "/api/me/profile",
+    {
+      fullName: names[0],
+      headline: "Senior Technical Recruiter",
+      location: "Berlin, Germany",
+      summary: "Hiring engineers for product and platform teams.",
+      shareProfile: true,
+      skills: ["Hiring", "WebRTC"],
+    },
+    a.token,
+  );
 
-  const room = await post("/api/rooms", { title: "Test odasi (otomatik)" }, a.token);
+  await put(
+    "/api/me/profile",
+    {
+      fullName: names[1],
+      headline: "Full Stack Developer",
+      location: "Lisbon, Portugal",
+      summary: "Four years building web apps with Node.js and React.",
+      shareProfile: true,
+      experience: [
+        {
+          title: "Full Stack Developer",
+          company: "Northwind Labs",
+          period: "2022 - Present",
+          description: "Payments infrastructure and internal tooling.",
+        },
+        {
+          title: "Frontend Developer",
+          company: "Brightline",
+          period: "2020 - 2022",
+          description: "Design system and dashboard work.",
+        },
+      ],
+      education: [
+        {
+          school: "University of Lisbon",
+          degree: "BSc Software Engineering",
+          period: "2016 - 2020",
+        },
+      ],
+      skills: ["Node.js", "React", "Docker"],
+    },
+    b.token,
+  );
+
+  const room = await post(
+    "/api/rooms",
+    { title: "Senior Frontend Developer - Candidate interview" },
+    a.token,
+  );
   const env = { a: a.token, b: b.token, roomId: room.room.id };
   return env;
 }
@@ -150,7 +188,7 @@ export async function ensureProfiles(env) {
       if (data?.profile?.fullName) continue;
       await put(
         "/api/me/profile",
-        { fullName: session.name, headline: "Test katilimci", shareProfile: true },
+        { fullName: session.name, headline: "Interview participant", shareProfile: true },
         token,
       );
     } catch {

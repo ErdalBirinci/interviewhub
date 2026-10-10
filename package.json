@@ -17,6 +17,8 @@
     "start:watch": "node scripts/start-watch.mjs",
     "status": "node scripts/health.mjs",
     "cdp": "node scripts/cdp-start.mjs",
+    "shots": "node scripts/shots.mjs",
+    "showcase": "node scripts/showcase-shot.mjs",
     "typecheck": "npm run typecheck -w @ih/server && npm run typecheck -w @ih/web && npm run typecheck -w @ih/extension",
     "test": "npm run typecheck && npm run test:i18n && npm run test:asset && npm run test:signal",
     "test:signal": "node scripts/signal-test.mjs",
