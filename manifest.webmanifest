@@ -1,0 +1,34 @@
+{
+  "name": "InterviewHub — LinkedIn Görüşme Odaları",
+  "short_name": "InterviewHub",
+  "description": "LinkedIn üzerinden kabul edilen başvurular için video görüşme odaları",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b0f1a",
+  "theme_color": "#4f8cff",
+  "lang": "tr",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "/ih-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/ih-icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Görüşmeler",
+      "url": "/dashboard",
+      "description": "Görüşme odalarınız"
+    }
+  ]
+}
