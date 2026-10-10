@@ -82,7 +82,7 @@ export default function Nav() {
       id: 2,
       kind: "interview" as const,
       title: t("nav.notifications.demoInterview.title"),
-      text: t("nav.notifications.demoInterview.text", { title: t("landing.features.items[0].title") }),
+      text: t("nav.notifications.demoInterview.text", { title: t("landing.features.items.0.title") }),
       time: "1h ago",
       unread: true,
     },

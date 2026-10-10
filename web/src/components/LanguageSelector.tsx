@@ -28,7 +28,10 @@ export default function LanguageSelector() {
               onClick={() => changeLanguage(lang.code)}
             >
               <span className="lang-selector__name">{lang.nativeName}</span>
-              <span className="lang-selector__english">{lang.name}</span>
+              {/* Ingilizce kendisi icin iki kez ayni adi gosterme */}
+              {lang.name !== lang.nativeName && (
+                <span className="lang-selector__english">{lang.name}</span>
+              )}
             </button>
           </li>
         ))}

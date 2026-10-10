@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,78 +12,110 @@
         <span class="logo">IH</span>
         <strong>InterviewHub</strong>
       </div>
-      <button id="refresh" class="icon-btn" title="Yenile" type="button">⟳</button>
+      <div class="hd-actions">
+        <select id="lang" class="lang-select" aria-label="Language"></select>
+        <button
+          id="refresh"
+          class="icon-btn"
+          type="button"
+          data-i18n-title="panel.refresh"
+          aria-label="Refresh"
+          data-i18n-label="panel.refresh"
+        >
+          ⟳
+        </button>
+      </div>
     </header>
 
     <main class="bd">
-      <!-- ------------------------------ giris ------------------------------ -->
+      <!-- -------------------------------- auth ------------------------------ -->
       <section id="view-auth" class="view">
-        <p class="lead">
-          Görüşme odaları LinkedIn kimliğinizle açılır. Görüşme sırasında profiliniz karşı tarafa
-          yalnızca paylaşıma açıkken gösterilir.
+        <p class="lead" data-i18n="panel.lead">
+          Rooms open with your LinkedIn identity. During a call your profile is shown to the other
+          side only while you are sharing it.
         </p>
-        <button id="btn-auth" class="btn primary block" type="button">LinkedIn ile giriş</button>
+        <button id="btn-auth" class="btn primary block" type="button" data-i18n="panel.linkedinBtn">
+          Continue with LinkedIn
+        </button>
 
-        <div class="or"><span>veya</span></div>
+        <div class="or"><span data-i18n="panel.or">or</span></div>
 
-        <label class="lbl" for="demo-name">Demo girişi</label>
+        <label class="lbl" for="demo-name" data-i18n="panel.demoLabel">Demo sign-in</label>
         <div class="row">
-          <input id="demo-name" type="text" placeholder="Adınız" maxlength="40" />
-          <button id="btn-demo" class="btn" type="button">Devam</button>
+          <input
+            id="demo-name"
+            type="text"
+            maxlength="40"
+            placeholder="Your name"
+            data-i18n-ph="panel.namePlaceholder"
+          />
+          <button id="btn-demo" class="btn" type="button" data-i18n="panel.demoBtn">Continue</button>
         </div>
         <p id="auth-error" class="err hidden"></p>
       </section>
 
-      <!-- ------------------------------ uygulama -------------------------- -->
+      <!-- -------------------------------- main ------------------------------ -->
       <section id="view-main" class="view hidden">
         <div class="user">
           <span id="user-name">—</span>
-          <button id="btn-logout" class="link" type="button">Çıkış</button>
+          <button id="btn-logout" class="link" type="button" data-i18n="panel.logout">Sign out</button>
         </div>
 
         <div id="embed-wrap" class="card hidden">
           <div class="embed-head">
-            <strong id="embed-title">Görüşme</strong>
-            <button id="btn-close-embed" class="link" type="button">Kapat</button>
+            <strong id="embed-title" data-i18n="panel.embedTitle">Interview</strong>
+            <button id="btn-close-embed" class="link" type="button" data-i18n="panel.close">
+              Close
+            </button>
           </div>
           <iframe
             id="embed"
-            title="Görüşme odası"
+            title="Interview room"
+            data-i18n-title="panel.iframeTitle"
             allow="camera; microphone; display-capture; autoplay; fullscreen"
           ></iframe>
           <div class="row">
-            <button id="btn-open-tab" class="btn ghost" type="button">Yeni sekmede aç</button>
-            <button id="btn-copy-invite" class="btn" type="button">Davet bağlantısı</button>
+            <button id="btn-open-tab" class="btn ghost" type="button" data-i18n="panel.openTab">
+              Open in new tab
+            </button>
+            <button id="btn-copy-invite" class="btn" type="button" data-i18n="panel.invite">
+              Invite link
+            </button>
           </div>
         </div>
 
         <div id="create-wrap">
-          <label class="lbl" for="room-title">Yeni görüşme odası</label>
+          <label class="lbl" for="room-title" data-i18n="panel.newRoom">New interview room</label>
           <input
             id="room-title"
             type="text"
-            placeholder="Örn. Kıdemli Frontend Developer · Aday görüşmesi"
             maxlength="120"
+            placeholder="e.g. Senior Frontend Developer · Candidate interview"
+            data-i18n-ph="panel.roomPlaceholder"
           />
-          <button id="btn-create" class="btn primary block" type="button">Oda oluştur</button>
+          <button id="btn-create" class="btn primary block" type="button" data-i18n="panel.create">
+            Create room
+          </button>
         </div>
 
-        <div class="lbl section-lbl">Odalarım</div>
+        <div class="lbl section-lbl" data-i18n="panel.myRooms">My rooms</div>
         <ul id="room-list" class="rooms"></ul>
-        <p id="empty" class="muted hidden">Henüz oda yok. Yukarıdan ilk görüşmenizi oluşturun.</p>
+        <p id="empty" class="muted hidden" data-i18n="panel.empty">
+          No rooms yet. Create your first interview above.
+        </p>
         <p id="main-error" class="err hidden"></p>
       </section>
     </main>
 
     <footer class="ft">
-      <p id="profile-hint" class="hint hidden">
-        Profilinizi web arayüzünde <strong>Profilim</strong> sayfasından düzenleyin.
+      <p id="profile-hint" class="hint hidden" data-i18n-html="panel.profileHint">
+        Edit your profile on the <strong>My Profile</strong> page of the web app.
       </p>
       <details>
-        <summary>Sunucu adresi</summary>
+        <summary data-i18n="panel.serverAddress">Server address</summary>
         <div class="row">
           <input id="api-base" type="text" placeholder="http://localhost:4000" />
-          <button id="btn-api" class="btn" type="button">Kaydet</button>
+          <button id="btn-api" class="btn" type="button" data-i18n="panel.save">Save</button>
         </div>
         <p id="api-hint" class="muted"></p>
       </details>

@@ -4,6 +4,8 @@
  * LinkedIn hizmet sartlarina aykiri oldugu icin yapilmaz.
  */
 
+import { loadLang, t } from "./i18n";
+
 const HOST_ID = "interviewhub-host";
 
 const STYLES = `
@@ -66,8 +68,7 @@ function ensureHost(): ShadowRoot | null {
   const button = document.createElement("button");
   button.className = "fab";
   button.type = "button";
-  button.title = "InterviewHub - gorusme odasi ac";
-  button.innerHTML = `<span class="fab__dot"></span> Görüşme Odası`;
+  applyFabLabel(button);
   shadow.appendChild(button);
 
   const toast = document.createElement("div");
@@ -89,16 +90,16 @@ function ensureHost(): ShadowRoot | null {
       // lastError'i okumazsak "Unchecked runtime.lastError" uyarisi verilir
       const lastError = chrome.runtime.lastError;
       if (lastError) {
-        showToast("Panel açılamadı. Eklentiyi yeniden yükleyin.");
+        showToast(t("toast.panelFailed"));
         return;
       }
       if (!response) {
-        showToast("Panel açılamadı. Ekranı yenileyin.");
+        showToast(t("toast.refresh"));
         return;
       }
       const result = response as { ok?: boolean; error?: string };
       if (result.ok === false || result.error) {
-        showToast(result.error ?? "Panel açılamadı. Ekranı yenileyin.");
+        showToast(result.error ?? t("toast.refresh"));
       }
     });
   });
@@ -107,4 +108,18 @@ function ensureHost(): ShadowRoot | null {
   return shadow;
 }
 
+/** Dugmenin etiketini mevcut dile gore yazar. */
+function applyFabLabel(button: HTMLButtonElement): void {
+  const label = t("fab.button");
+  button.title = `InterviewHub — ${label}`;
+  button.innerHTML = `<span class="fab__dot"></span> ${label}`;
+}
+
 ensureHost();
+
+// Dil once varsayilan (EN) ile gorunur; kayitli tercih okunduktan sonra guncellenir.
+void loadLang().then(() => {
+  const host = document.getElementById(HOST_ID);
+  const button = host?.shadowRoot?.querySelector<HTMLButtonElement>("button.fab");
+  if (button) applyFabLabel(button);
+});

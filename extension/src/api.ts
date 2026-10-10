@@ -1,5 +1,7 @@
 /** Eklentinin konusacagi InterviewHub sunucusu. */
 
+import { t } from "./i18n";
+
 export const DEFAULT_API_BASE = "http://localhost:4000";
 
 const API_KEY = "apiBase";
@@ -45,7 +47,7 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
   try {
     res = await fetch(`${base}${path}`, { ...init, headers });
   } catch {
-    throw new ApiFailure(`Sunucuya ulaşılamıyor (${base}).`, 0);
+    throw new ApiFailure(t("api.network", { base }), 0);
   }
 
   const text = await res.text();
@@ -57,7 +59,7 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
   }
 
   if (!res.ok) {
-    const message = (data as { error?: string } | null)?.error ?? `İstek başarısız (${res.status})`;
+    const message = (data as { error?: string } | null)?.error ?? t("api.requestFailed", { status: res.status });
     throw new ApiFailure(message, res.status);
   }
   return data as T;

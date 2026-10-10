@@ -1,4 +1,5 @@
 import { apiFetch, getApiBase, getToken, setApiBase, setToken } from "./api";
+import { loadLang, t } from "./i18n";
 import type { Me } from "@ih/shared";
 
 interface StateResponse {
@@ -8,6 +9,11 @@ interface StateResponse {
   webUrl?: string;
   user: Me | null;
   error?: string;
+}
+
+/** Mesaj isleyicileri dil yuklendikten sonra calisir; boylece hata metinleri dogru dilde olur. */
+function withLang<T>(fn: () => Promise<T>): Promise<T> {
+  return loadLang().then(fn);
 }
 
 /** Sunucunun bildirdigi arayuz adresi (gelistirme/uretim farkini kapatir). */
@@ -29,10 +35,10 @@ async function startAuth(): Promise<string> {
   const url = `${apiBase}/auth/extension?redirect_uri=${encodeURIComponent(redirectUri)}`;
 
   const finalUrl = await chrome.identity.launchWebAuthFlow({ url, interactive: true });
-  if (!finalUrl) throw new Error("Giriş iptal edildi.");
+  if (!finalUrl) throw new Error(t("auth.cancelled"));
 
   const token = new URL(finalUrl).searchParams.get("token");
-  if (!token) throw new Error("Erişim anahtarı alınamadı. LinkedIn uygulamasındaki Authorized redirect URL alanına şunu ekleyin: " + redirectUri);
+  if (!token) throw new Error(`${t("auth.noToken", { uri: redirectUri })}`);
 
   await setToken(token);
   return token;
@@ -73,7 +79,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (type === "auth") {
-    startAuth()
+    withLang(() => startAuth())
       .then(async () => sendResponse(await readState()))
       .catch((err: Error) => sendResponse({ error: err.message }));
     return true;
@@ -102,19 +108,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (type === "demo-auth") {
-    const name = (message as { name?: string }).name ?? "Demo Kullanıcı";
-    void (async () => {
+    const requested = (message as { name?: string }).name;
+    void withLang(async () => {
+      const name = requested?.trim() || t("auth.demoFallback");
       const base = await getApiBase();
       const res = await fetch(`${base}/auth/demo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name }),
       });
-      if (!res.ok) throw new Error("Demo girişi başarısız.");
+      if (!res.ok) throw new Error(t("auth.failed"));
       const data = (await res.json()) as { token?: string };
       if (data.token) await setToken(data.token);
       return readState();
-    })()
+    })
       .then(sendResponse)
       .catch((err: Error) => sendResponse({ error: err.message }));
     return true;

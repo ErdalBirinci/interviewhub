@@ -29,6 +29,51 @@ interviewhub/
 
 ---
 
+## Çoklu dil (i18n)
+
+Arayüz varsayılan olarak **İngilizcedir** ve **8 dil** desteklenir:
+`EN` · `DE` · `FR` · `ES` · `TR` · `RU` · `JA` · `ZH`.
+
+Web uygulaması `i18next` + `react-i18next`, Chrome eklentisi ise kendi hafif `t()` modülünü
+kullanır — **ikisi de aynı anahtar adlarını ve aynı dil listesini paylaşır**.
+
+| | Web (`web/src/i18n/`) | Eklenti (`extension/src/i18n.ts`) |
+|---|---|---|
+| Motor | `i18next` + `react-i18next` | vanilla `t(key, params)` |
+| Bileşenler | `useTranslation()` hook'u | `data-i18n*` nitelikleri + `t()` |
+| Kaynak | `locales/*.json` (iç içe anahtar) | `locales/*.json` (düz anahtar) |
+| Dil tercihi | `localStorage["ih_lang"]` | `chrome.storage.local["ih_lang"]` |
+| Varsayılan | `en` | `en` |
+
+> Tarayıcı dili **bilerek dinlenmiyor**: site her zaman İngilizce açılır, kullanıcı dil
+> seçtiğinde tercihi kalıcı olarak saklanır (`detection.order: ["localStorage"]`).
+
+### Yeni metin eklerken
+
+1. **Önce `en.json`'a** anahtarı ekleyin (master kaynak budur).
+2. Diğer 7 dil dosyasına **aynı anahtarı** ekleyin — eksik dil, testi kırar.
+3. Bileşende `t("anahtar")` kullanın; parametreler `{ad}` biçimindedir.
+
+Eldeki anahtarları başka bir dile taşımak/eklemek için:
+
+```bash
+node scripts/i18n-merge.mjs web/src/i18n/locales/ hedef-dil.json yeni-anahtarlar.json
+# JSON'da null = mevcut değeri koru, dolu = ekle/geçersiz kıl
+```
+
+### Kalıcı doğrulama
+
+`npm run test:i18n` (ve `test:all`) şunları **her çalıştırmada** denetler:
+
+- 8 dil × anahtar paritesi (eksik/fazla anahtar)
+- Kaynak kodda kullanılan `t("anahtar")` / `translate("anahtar")` ve HTML'deki
+  `data-i18n*` niteliklerindeki anahtarların tanımlı olması
+- Boş çeviri içeren anahtar
+
+Yani yeni bir özellik unutulmuş bir çeviriyi sessizce üretime taşıyamaz — test kırılır.
+
+---
+
 ## Kurulum
 
 ```bash
@@ -92,10 +137,14 @@ npm run test:all      # typecheck + sinyal + WebRTC e2e + eklenti e2e
 
 | Betik | Ne yapar |
 |---|---|
+| `npm run test:i18n` | **i18n tutarlılığı**: web + eklenti için 8 dil paritesi, tanımsız anahtar, boş çeviri |
 | `npm run test:signal` | Socket.IO sinyal katmanı: katılma, peer olayları, relay, sohbet. Argüman verilmezse test ortamını (demo kullanıcılar + oda + profil) **kendisi hazırlar** |
 | `npm run test:e2e` | **Gerçek Chrome'da** iki sekme açar, odaya girer, P2P + medya akışını doğrular (CDP gerekir). Test ortamı yoksa kendisi oluşturur |
 | `npm run test:ext` | **Eklenti E2E**: LinkedIn sayfasında FAB enjeksiyonu + trusted tıklama ile yan panelin açılması + panel arayüzü |
+| `node scripts/ext-lang-check.mjs` | **Eklenti dil doğrulaması**: panelde dil seçicisini 8 dile çevirir, metnin gerçekten o dile geçtiğini ve `<html lang>` güncellendiğini kontrol eder (CDP gerekir) |
 | `node scripts/screenshot.mjs <url> [cikti.png]` | Tek sayfanın ekran görüntüsü |
+
+`npm run test:all` yukarıdakilerin tamamını sırayla çalıştırır (i18n ilk sırada — en hızlısıdır).
 
 Test ortamı (`%TEMP%\ih-test-env.json`) `scripts/testenv.mjs` tarafından yönetilir:
 token süresi dolarsa, oda silinirse veya dosya yoksa otomatik yeniden üretilir.
@@ -163,6 +212,8 @@ LinkedIn yapılandırılmamışsa uygulama **demo girişiyle** çalışır (`dem
    yan panelde oda oluşturup davet bağlantısını kopyalayabilirsiniz.
 
 Eklenti girişi: `chrome.identity.launchWebAuthFlow` → sunucudaki `/auth/extension` → LinkedIn (veya demo) → imzalı token `?token=` ile geri döner ve `chrome.storage.local`'a yazılır.
+
+Panelin üst barında bir **dil seçici** vardır (8 dil). Tercih `chrome.storage.local["ih_lang"]`'a yazılır; seçili değilse arayüz İngilizce açılır. LinkedIn sayfasındaki FAB butonu da aynı dilde etiketlenir. Tüm metinler `extension/src/locales/*.json` içindedir (bkz. [Çoklu dil](#çoklu-dil-i18n)).
 
 ---
 

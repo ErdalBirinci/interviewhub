@@ -176,7 +176,7 @@ export default function Landing() {
   const { t } = useTranslation();
 
   const ROLES = [
-    t("landing.features.items[0].title"), // We'll use a simpler approach for roles
+    t("landing.features.items.0.title"), // We'll use a simpler approach for roles
   ];
 
   // For the marquee, we need static roles - use translation keys
@@ -194,33 +194,33 @@ export default function Landing() {
   const FEATURES = [
     {
       icon: <IconProfile />,
-      title: t("landing.features.items[0].title"),
-      text: t("landing.features.items[0].desc"),
+      title: t("landing.features.items.0.title"),
+      text: t("landing.features.items.0.desc"),
     },
     {
       icon: <IconVideo />,
-      title: t("landing.features.items[1].title"),
-      text: t("landing.features.items[1].desc"),
+      title: t("landing.features.items.1.title"),
+      text: t("landing.features.items.1.desc"),
     },
     {
       icon: <IconScreen />,
-      title: t("landing.features.items[2].title"),
-      text: t("landing.features.items[2].desc"),
+      title: t("landing.features.items.2.title"),
+      text: t("landing.features.items.2.desc"),
     },
     {
       icon: <IconChat />,
-      title: t("landing.features.items[3].title"),
-      text: t("landing.features.items[3].desc"),
+      title: t("landing.features.items.3.title"),
+      text: t("landing.features.items.3.desc"),
     },
     {
       icon: <IconBlocks />,
-      title: t("landing.features.items[4].title"),
-      text: t("landing.features.items[4].desc"),
+      title: t("landing.features.items.4.title"),
+      text: t("landing.features.items.4.desc"),
     },
     {
       icon: <IconShield />,
-      title: t("landing.features.items[5].title"),
-      text: t("landing.features.items[5].desc"),
+      title: t("landing.features.items.5.title"),
+      text: t("landing.features.items.5.desc"),
     },
   ];
 
@@ -228,45 +228,45 @@ export default function Landing() {
     {
       n: "01",
       icon: <IconLink />,
-      title: t("landing.steps.steps[0]").split(",")[0], // "Connect with LinkedIn"
-      text: t("landing.steps.steps[0]"),
+      title: t("landing.steps.steps.0").split(",")[0], // "Connect with LinkedIn"
+      text: t("landing.steps.steps.0"),
     },
     {
       n: "02",
       icon: <IconUsers />,
-      title: t("landing.steps.steps[1]").split(",")[0], // "Open room, share link"
-      text: t("landing.steps.steps[1]"),
+      title: t("landing.steps.steps.1").split(",")[0], // "Open room, share link"
+      text: t("landing.steps.steps.1"),
     },
     {
       n: "03",
       icon: <IconVideo />,
-      title: t("landing.steps.steps[2]").split(",")[0], // "Interview, read profile"
-      text: t("landing.steps.steps[2]"),
+      title: t("landing.steps.steps.2").split(",")[0], // "Interview, read profile"
+      text: t("landing.steps.steps.2"),
     },
   ];
 
   const PRIVACY = [
-    t("landing.faq.items[0].a").split(". ")[0], // First sentence
-    t("landing.faq.items[1].a").split(". ")[0],
-    t("landing.faq.items[3].a"),
+    t("landing.faq.items.0.a").split(". ")[0], // First sentence
+    t("landing.faq.items.1.a").split(". ")[0],
+    t("landing.faq.items.3.a"),
   ];
 
   const FAQ = [
     {
-      q: t("landing.faq.items[0].q"),
-      a: t("landing.faq.items[0].a"),
+      q: t("landing.faq.items.0.q"),
+      a: t("landing.faq.items.0.a"),
     },
     {
-      q: t("landing.faq.items[1].q"),
-      a: t("landing.faq.items[1].a"),
+      q: t("landing.faq.items.1.q"),
+      a: t("landing.faq.items.1.a"),
     },
     {
-      q: t("landing.faq.items[2].q"),
-      a: t("landing.faq.items[2].a"),
+      q: t("landing.faq.items.2.q"),
+      a: t("landing.faq.items.2.a"),
     },
     {
-      q: t("landing.faq.items[3].q"),
-      a: t("landing.faq.items[3].a"),
+      q: t("landing.faq.items.3.q"),
+      a: t("landing.faq.items.3.a"),
     },
   ];
 
@@ -330,7 +330,7 @@ export default function Landing() {
           <p className="eyebrow">{t("landing.features.title")}</p>
           <h2>{t("landing.features.title")}</h2>
           <p className="lead">
-            {t("landing.features.items[0].desc").split(".")[0]}. {t("landing.features.items[1].desc").split(".")[0]}.
+            {t("landing.features.items.0.desc").split(".")[0]}. {t("landing.features.items.1.desc").split(".")[0]}.
           </p>
         </header>
 
@@ -370,20 +370,20 @@ export default function Landing() {
       <section className="lp-section">
         <div className="lp-split">
           <div className="lp-split__text">
-            <p className="eyebrow">{t("landing.features.items[0].title")}</p>
-            <h2>{t("landing.features.items[0].desc").split(".")[0]}</h2>
+            <p className="eyebrow">{t("landing.features.items.0.title")}</p>
+            <h2>{t("landing.features.items.0.desc").split(".")[0]}</h2>
             <p className="lead">
-              {t("landing.features.items[0].desc")} {t("landing.features.items[1].desc").split(".")[0]}.
+              {t("landing.features.items.0.desc")} {t("landing.features.items.1.desc").split(".")[0]}.
             </p>
             <ul className="lp-checks">
               <li>
-                <IconCheck /> {t("landing.features.items[0].desc").split(";")[0]}
+                <IconCheck /> {t("landing.features.items.0.desc").split(";")[0]}
               </li>
               <li>
-                <IconCheck /> {t("landing.features.items[3].desc").split(";")[0]}
+                <IconCheck /> {t("landing.features.items.3.desc").split(";")[0]}
               </li>
               <li>
-                <IconCheck /> {t("landing.features.items[1].desc").split(".")[0]} {t("landing.features.items[2].desc").split(".")[0]}
+                <IconCheck /> {t("landing.features.items.1.desc").split(".")[0]} {t("landing.features.items.2.desc").split(".")[0]}
               </li>
             </ul>
             {me ? (
@@ -405,14 +405,14 @@ export default function Landing() {
               </span>
               <img
                 src="/showcase-room.png"
-                alt={t("landing.features.items[0].desc")}
+                alt={t("landing.features.items.0.desc")}
                 loading="lazy"
                 width={2000}
                 height={1125}
               />
             </div>
             <figcaption>
-              {t("landing.features.items[0].desc")}
+              {t("landing.features.items.0.desc")}
             </figcaption>
           </figure>
         </div>
@@ -423,9 +423,9 @@ export default function Landing() {
         <div className="lp-split lp-split--rev">
           <div className="lp-split__text">
             <p className="eyebrow">{t("landing.faq.title")}</p>
-            <h2>{t("landing.faq.items[1].q")}</h2>
+            <h2>{t("landing.faq.items.1.q")}</h2>
             <p className="lead">
-              {t("landing.faq.items[1].a").split(".")[0]}. {t("landing.faq.items[1].a").split(".")[1]}.
+              {t("landing.faq.items.1.a").split(".")[0]}. {t("landing.faq.items.1.a").split(".")[1]}.
             </p>
             <ul className="lp-checks">
               {PRIVACY.map((p) => (
@@ -438,24 +438,24 @@ export default function Landing() {
 
           <div className="lp-dia" aria-hidden="true">
             <div className="lp-dia__server">
-              <b>{t("landing.features.items[1].desc").split(".")[1]}</b>
-              <em>{t("landing.faq.items[1].a").split(".")[2]}</em>
+              <b>{t("landing.features.items.1.desc").split(".")[1]}</b>
+              <em>{t("landing.faq.items.1.a").split(".")[2]}</em>
             </div>
             <div className="lp-dia__drop" />
             <div className="lp-dia__row">
               <div className="lp-dia__node">
                 <span className="lp-dia__ava">A</span>
-                <b>{t("landing.features.items[0].title")}</b>
-                <em>{t("landing.features.items[1].desc").split(".")[1]}</em>
+                <b>{t("landing.features.items.0.title")}</b>
+                <em>{t("landing.features.items.1.desc").split(".")[1]}</em>
               </div>
               <div className="lp-dia__pipe">
                 <b>↔</b>
-                <em>{t("landing.faq.items[1].a").split(".")[3]}</em>
+                <em>{t("landing.faq.items.1.a").split(".")[3]}</em>
               </div>
               <div className="lp-dia__node">
                 <span className="lp-dia__ava lp-dia__ava--b">İ</span>
-                <b>{t("landing.features.items[0].title")}</b>
-                <em>{t("landing.features.items[0].desc").split(";")[0]}</em>
+                <b>{t("landing.features.items.0.title")}</b>
+                <em>{t("landing.features.items.0.desc").split(";")[0]}</em>
               </div>
             </div>
           </div>
@@ -466,20 +466,20 @@ export default function Landing() {
       <section className="lp-section">
         <div className="lp-split">
           <div className="lp-split__text">
-            <p className="eyebrow">{t("landing.features.items[4].title")}</p>
-            <h2>{t("landing.features.items[4].desc").split(".")[0]}</h2>
+            <p className="eyebrow">{t("landing.features.items.4.title")}</p>
+            <h2>{t("landing.features.items.4.desc").split(".")[0]}</h2>
             <p className="lead">
-              {t("landing.features.items[4].desc")}
+              {t("landing.features.items.4.desc")}
             </p>
             <ul className="lp-checks">
               <li>
-                <IconCheck /> {t("landing.faq.items[3].a").split(".")[0]}
+                <IconCheck /> {t("landing.faq.items.3.a").split(".")[0]}
               </li>
               <li>
-                <IconCheck /> {t("landing.faq.items[3].a").split(".")[1]}
+                <IconCheck /> {t("landing.faq.items.3.a").split(".")[1]}
               </li>
               <li>
-                <IconCheck /> {t("landing.faq.items[3].a").split(".")[2]}
+                <IconCheck /> {t("landing.faq.items.3.a").split(".")[2]}
               </li>
             </ul>
           </div>
@@ -539,7 +539,7 @@ function HeroVisual() {
           <span className="hv__dots">
             <i /> <i /> <i />
           </span>
-          <em>{t("landing.hero.title")} · {t("landing.features.items[0].title")}</em>
+          <em>{t("landing.hero.title")} · {t("landing.features.items.0.title")}</em>
           <b className="hv__live">
             <i /> {t("room.states.micReady")}
           </b>
@@ -555,7 +555,7 @@ function HeroVisual() {
               </span>
               <span className="hv__name">
                 <b>Ayşe Yılmaz</b>
-                <em>{t("landing.features.items[0].title")}</em>
+                <em>{t("landing.features.items.0.title")}</em>
               </span>
             </div>
 
@@ -564,7 +564,7 @@ function HeroVisual() {
               <span className="hv__avatar hv__avatar--me">MK</span>
               <span className="hv__name">
                 <b>Mehmet Kaya</b>
-                <em>{t("landing.features.items[1].title")}</em>
+                <em>{t("landing.features.items.1.title")}</em>
               </span>
             </div>
 
@@ -594,7 +594,7 @@ function HeroVisual() {
               <span className="hv__pic">AY</span>
               <div>
                 <strong>Ayşe Yılmaz</strong>
-                <em>{t("landing.features.items[0].title")}</em>
+                <em>{t("landing.features.items.0.title")}</em>
                 <i>İstanbul, Türkiye</i>
               </div>
             </div>
@@ -620,10 +620,10 @@ function HeroVisual() {
         <IconShield size={16} /> {t("landing.footer.webrtc")}
       </span>
       <span className="hv__float hv__float--2">
-        <IconScreen size={16} /> {t("landing.features.items[2].title")}
+        <IconScreen size={16} /> {t("landing.features.items.2.title")}
       </span>
       <span className="hv__float hv__float--3">
-        <IconBlocks size={16} /> {t("landing.features.items[4].title")}
+        <IconBlocks size={16} /> {t("landing.features.items.4.title")}
       </span>
     </div>
   );
@@ -657,7 +657,7 @@ function ExtensionMock() {
           <div className="ext__room">
             <span className="ext__dot" />
             <div>
-              <strong>{t("landing.features.items[0].title")}</strong>
+              <strong>{t("landing.features.items.0.title")}</strong>
               <em>{t("room.stage.participants")}</em>
             </div>
           </div>

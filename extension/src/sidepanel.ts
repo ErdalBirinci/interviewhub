@@ -1,5 +1,15 @@
 import type { Me, RoomView } from "@ih/shared";
 import { apiFetch } from "./api";
+import {
+  applyI18n,
+  getLang,
+  LANG_CODES,
+  LANG_NAMES,
+  loadLang,
+  saveLang,
+  t,
+  type Lang,
+} from "./i18n";
 
 interface StateResponse {
   token: string | null;
@@ -12,6 +22,21 @@ interface StateResponse {
 
 const el = <T extends HTMLElement = HTMLElement>(id: string) =>
   document.getElementById(id) as T;
+
+/** Oda listesindeki tarih bicimi; mevcut dile gore yerel ayar. */
+const LOCALE_BY_LANG: Record<Lang, string> = {
+  en: "en-US",
+  de: "de-DE",
+  fr: "fr-FR",
+  es: "es-ES",
+  tr: "tr-TR",
+  ru: "ru-RU",
+  ja: "ja-JP",
+  zh: "zh-CN",
+};
+
+/** Eklenti service worker'la konusulamiyorsa kullanilacak mesaj */
+const commError = () => t("panel.commError");
 
 /**
  * Service worker'a mesaj gonderir. Cevap gelmezse (SW uyumadi/guncellendi)
@@ -48,9 +73,6 @@ const state: StateResponse = { token: null, apiBase: "", user: null };
 let rooms: RoomView[] = [];
 let embedRoom: RoomView | null = null;
 let busy = false;
-
-/** Eklenti service worker'la konusulamiyorsa kullanilacak mesaj */
-const COMM_ERROR = "Eklentiyle iletişim kurulamadı. Paneli kapatıp yeniden açın.";
 
 function setError(where: "auth" | "main", message?: string) {
   const node = el(where === "auth" ? "auth-error" : "main-error");
@@ -94,7 +116,7 @@ function renderRooms() {
 
     const meta = document.createElement("div");
     meta.className = "room__meta";
-    const date = new Date(room.createdAt).toLocaleString("tr-TR", {
+    const date = new Date(room.createdAt).toLocaleString(LOCALE_BY_LANG[getLang()], {
       day: "2-digit",
       month: "short",
       hour: "2-digit",
@@ -103,15 +125,16 @@ function renderRooms() {
     meta.textContent = `${date} · `;
     const live = document.createElement("span");
     live.className = room.active > 0 ? "live" : "";
-    live.textContent = room.active > 0 ? `● ${room.active} kişi çevrimiçi` : "boş";
+    live.textContent =
+      room.active > 0 ? t("panel.liveOnline", { count: room.active }) : t("panel.liveEmpty");
     meta.appendChild(live);
 
     const actions = document.createElement("div");
     actions.className = "room__actions";
 
-    const openBtn = button("Görüşmeye gir", "open", "btn primary");
-    const copyBtn = button("Bağlantı", "copy", "btn");
-    const delBtn = button("Sil", "delete", "btn ghost danger");
+    const openBtn = button(t("panel.join"), "open", "btn primary");
+    const copyBtn = button(t("panel.copyLink"), "copy", "btn");
+    const delBtn = button(t("panel.delete"), "delete", "btn ghost danger");
     actions.append(openBtn, copyBtn, delBtn);
 
     li.append(title, meta, actions);
@@ -184,7 +207,7 @@ async function createRoom() {
   const btn = el<HTMLButtonElement>("btn-create");
   busy = true;
   btn.disabled = true;
-  btn.textContent = "Oluşturuluyor…";
+  btn.textContent = t("panel.creating");
 
   try {
     const data = await apiFetch<{ room: RoomView }>("/api/rooms", {
@@ -201,7 +224,7 @@ async function createRoom() {
   } finally {
     busy = false;
     btn.disabled = false;
-    btn.textContent = "Oda oluştur";
+    btn.textContent = t("panel.create");
   }
 }
 
@@ -214,7 +237,7 @@ async function copyText(text: string, btn: HTMLButtonElement, done: string) {
       btn.textContent = original;
     }, 1600);
   } catch {
-    setError("main", "Panoya kopyalanamadı: " + text);
+    setError("main", t("panel.copyFailed", { text }));
   }
 }
 
@@ -224,11 +247,11 @@ function wire() {
   el("btn-auth").addEventListener("click", async () => {
     const btn = el<HTMLButtonElement>("btn-auth");
     btn.disabled = true;
-    btn.textContent = "LinkedIn sayfası açılıyor…";
+    btn.textContent = t("panel.openingLinkedIn");
     try {
       const res = await send<StateResponse>({ type: "auth" });
       if (!res) {
-        setError("auth", COMM_ERROR);
+        setError("auth", commError());
       } else if (res.error) {
         setError("auth", res.error);
       } else {
@@ -239,15 +262,15 @@ function wire() {
       }
     } finally {
       btn.disabled = false;
-      btn.textContent = "LinkedIn ile giriş";
+      btn.textContent = t("panel.linkedinBtn");
     }
   });
 
   el("btn-demo").addEventListener("click", async () => {
-    const name = el<HTMLInputElement>("demo-name").value.trim() || "Demo Kullanıcı";
+    const name = el<HTMLInputElement>("demo-name").value.trim() || t("auth.demoFallback");
     const res = await send<StateResponse>({ type: "demo-auth", name });
     if (!res) {
-      setError("auth", COMM_ERROR);
+      setError("auth", commError());
       return;
     }
     if (res.error) {
@@ -263,7 +286,7 @@ function wire() {
   el("btn-logout").addEventListener("click", async () => {
     const res = await send<StateResponse>({ type: "logout" });
     if (res) Object.assign(state, res);
-    else setError("main", COMM_ERROR);
+    else setError("main", commError());
     embedRoom = null;
     rooms = [];
     render();
@@ -291,9 +314,9 @@ function wire() {
       embedRoom = room;
       render();
     } else if (action === "copy") {
-      void copyText(roomUrl(room.id, false), target as HTMLButtonElement, "Kopyalandı ✓");
+      void copyText(roomUrl(room.id, false), target as HTMLButtonElement, t("panel.copied"));
     } else if (action === "delete") {
-      if (!window.confirm(`"${room.title}" silinsin mi?`)) return;
+      if (!window.confirm(t("panel.deleteConfirm", { title: room.title }))) return;
       void apiFetch(`/api/rooms/${room.id}`, { method: "DELETE" })
         .then(() => {
           rooms = rooms.filter((r) => r.id !== room.id);
@@ -318,7 +341,7 @@ function wire() {
     void copyText(
       roomUrl(embedRoom.id, false),
       event.currentTarget as HTMLButtonElement,
-      "Kopyalandı ✓",
+      t("panel.copied"),
     );
   });
 
@@ -326,18 +349,50 @@ function wire() {
     const value = el<HTMLInputElement>("api-base").value.trim();
     const res = await send<StateResponse>({ type: "set-api-base", value });
     if (!res) {
-      el("api-hint").textContent = COMM_ERROR;
+      el("api-hint").textContent = commError();
       return;
     }
     Object.assign(state, res);
-    el("api-hint").textContent = "Kaydedildi.";
+    el("api-hint").textContent = t("panel.saved");
     render();
     await loadRooms();
   });
 }
 
+/* -------------------------------- dil secimi ------------------------------- */
+
+function wireLang() {
+  const select = el<HTMLSelectElement>("lang");
+  select.replaceChildren();
+  for (const code of LANG_CODES) {
+    const option = document.createElement("option");
+    option.value = code;
+    option.textContent = LANG_NAMES[code];
+    select.appendChild(option);
+  }
+  select.value = getLang();
+  select.addEventListener("change", () => {
+    const next = select.value as Lang;
+    void saveLang(next).then(() => retranslate());
+  });
+}
+
+/** Statik metinleri ve dinamik oda listesini yeni dile cevirir. */
+function retranslate() {
+  applyI18n(document);
+  renderRooms();
+  // Butonlar durum metni tasiyabilir; gorunen gorunume geri al
+  const createBtn = el<HTMLButtonElement>("btn-create");
+  if (!busy) createBtn.textContent = t("panel.create");
+  const authBtn = el<HTMLButtonElement>("btn-auth");
+  if (!authBtn.disabled) authBtn.textContent = t("panel.linkedinBtn");
+}
+
 async function init() {
+  await loadLang();
   wire();
+  wireLang();
+  applyI18n(document);
   await loadState();
   await loadRooms();
 }
