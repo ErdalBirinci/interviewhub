@@ -71,8 +71,10 @@ node scripts/i18n-merge.mjs web/src/i18n/locales/ hedef-dil.json yeni-anahtarlar
 - **Her anahtarın gerçek i18next ile çözülmesi** — "JSON'da anahtar var" ile
   "i18next onu buluyor" aynı şey değildir (ör. `items[0].x` çözülmez, `items.0.x` çözülür)
 - Bileşenin `split()` ile ayırdığı değerlerde ayraç zorunluluğu (bkz. `STRUCTURE_CONTRACTS`)
+- **`split(sep)[indeks]` kullanımlarının her dilde üretilebilirliği** — istenen
+  indekste gerçekten parça var mı, parça boş mu? (bkz. `checkSplitIndices`)
 
-Yani yeni bir özellik unutulmuş bir çeviriyi sessizce üretime taşıyamaz — test kırılır.
+Yeni bir özellik unutulmuş bir çeviriyi sessizce üretime taşıyamaz — test kırılır.
 
 ### Çeviriden UI metni türetme (yapmayın)
 
@@ -85,20 +87,33 @@ Ekran görüntüsü testleriyle yakalanan gerçek bir hata sınıfı: çeviriyi
 <p className="lead">{t("landing.features.items.0.desc")}</p>
 ```
 
-Bunun üç sonucu var ve hepsi production'da göründü:
+Bunun **dört** sonucu var ve hepsi production'da göründü:
 
 1. **Açıklama tek cümleyse** başlık ile gövde birebir aynı metin olur
    (ekranda üst üste iki kez).
 2. **Ayracı içermeyen dillerde** `split()` hiç bölemez, alınan parça tüm
-   cümledir — `ja`, `zh`, `ru`, `de` nokta yerine `。` kullandığı için
-   nokta ayıracı işlemez.
+   cümledir — `ja`, `zh` nokta yerine `。` kullandığı için nokta ayıracı işlemez.
 3. **Parçaları birleştirmek** nokta koymadan iki cümleyi yanyana yapıştırır
    ("…browser to browser Share your screen…").
+4. **İndeks 0'dan büyük istemek** (`split(".")[3]`) o dilde yeterince parça
+   yoksa `undefined` döner. React `undefined`'ı **boş** render ettiği için
+   ekranda "undefined" yazısı bile görünmez — sadece sessizce eksik etiket
+   kalır. Bir kez 8 dil × 33 bölgede yaşandı: WebRTC diyagramının etiketleri
+   Japonca ve Çince'de tamamen kayıp, İngilizce'de anlamsız parçalar
+   ("No"; tek kelimelik kutuya sıkışmış uzun paragraflar) çıktı.
 
 Kural: **Her görünen metin kendi anahtarına sahip olsun.** Türetilmiş metin
 gerekliyse ayraç, tüm dillerde *zorunlu* olmalı ve bunu `STRUCTURE_CONTRACTS`
 korumalıdır. Bkz. `web/src/pages/Landing.tsx` içindeki
-`landing.features.eyebrow` / `landing.showcase.heading` örnekleri.
+`landing.privacy.*`, `landing.extension.*` ve `landing.showcase.check*`
+örnekleri.
+
+`test:i18n` ayrıca kaynak koddaki her `t("anahtar").split("ayrac")[indeks]`
+kullanımını **indeks bazlı** doğrular: her dilde istenen indekste gerçekten
+parça var mı, parça boş mu? Yukarıdaki 4. hata sınıfı bu yüzden artık testte
+kırılır (bkz. `checkSplitIndices`). Negatif testi: `Landing.tsx`'e geçici
+olarak `split(".")[3]` ekleyip `npm run test:i18n`'in `ja.json` ve `zh.json`
+için exit 1 ile kırıldığını doğrulayın.
 
 ---
 
@@ -166,13 +181,20 @@ npm run test:all      # typecheck + sinyal + WebRTC e2e + eklenti e2e
 | Betik | Ne yapar |
 |---|---|
 | `npm run test:i18n` | **i18n tutarlılığı**: web + eklenti için 8 dil paritesi, tanımsız anahtar, boş çeviri, gerçek i18next çözme testi |
-| `npm run test:asset` | **Asset yolları**: `web/src` + `web/index.html` içinde base'siz mutlak varlık referansı (`/showcase.png` gibi) var mı. Pages `/interviewhub/` altında yayında, bu yüzden yollar `BASE_URL` ile kurulmalı |
+| `npm run test:asset` | **Asset yolları**: `web/src` + `web/index.html` içinde base'siz mutlak varlık referansı (`/showcase.png` gibi) var mı. Pages `/interviewhub/` altında yayında, bu yüzden yollar `BASE_URL` ile kurulmalı. Ayrıca `<img>` `width`/`height` beyanı ile dosyanın gerçek boyutunu (PNG IHDR / JPEG SOF) karşılaştırır — uyuşmazlık sayfa kaymasına (CLS) yol açar |
 | `npm run test:signal` | Socket.IO sinyal katmanı: katılma, peer olayları, relay, sohbet. Argüman verilmezse test ortamını (demo kullanıcılar + oda + profil) **kendisi hazırlar** |
 | `npm run test:e2e` | **Gerçek Chrome'da** iki sekme açar, odaya girer, P2P + medya akışını doğrular (CDP gerekir). Test ortamı yoksa kendisi oluşturur |
 | `npm run test:ext` | **Eklenti E2E**: LinkedIn sayfasında FAB enjeksiyonu + trusted tıklama ile yan panelin açılması + panel arayüzü |
 | `node scripts/web-lang-check.mjs [url]` | **Web dil davranışı, iki faz**: (1) `ih_lang` yokken sayfa İngilizce açılır, `<html lang>="en"`, arayüz kabuğunda Türkçe karakter yok; (2) `ih_lang="tr"` yapıp yenileyince metin Türkçe'ye geçer **ve `<html lang>` da "tr" olur**. Tarama arayüz kabuğuyla sınırlıdır — demo profil verisi ve önizleme avatarı meşru sayılır |
 | `node scripts/ext-lang-check.mjs` | **Eklenti dil doğrulaması**: panelde dil seçicisini 8 dile çevirir, metnin gerçekten o dile geçtiğini ve `<html lang>` güncellendiğini kontrol eder (CDP gerekir) |
 | `node scripts/screenshot.mjs <url> [cikti.png]` | Tek sayfanın ekran görüntüsü |
+| `npm run shots [klasor]` | Ürünün dokümantasyon ekran görüntülerini toplar (01 landing … 08 mobil). Oda çekiminden önce servis worker + tüm önbellekler temizlenir ve kameralar kapatılır — böylece sonuç **tekrarlanabilir** |
+| `npm run showcase` | Tanıtım görselini (`web/public/showcase-room.png`) **2× retina** olarak yeniden üretir. Dili zorla İngilizceye sabitler, iki katılımcılı oda kurar, kameraları kapatır, oda sekmelerini kapatır. Ürün arayüzü değişince tek komut |
+
+> **Tanıtım görseli bir VARLIKTIR.** `showcase-room.png` herkese açık tanıtım
+> sayfasında görünür. `npm run showcase` yeni boyutları verir; bunları
+> `Landing.tsx`'teki `width`/`height` değerlerine de yazın — `test:asset`
+> aksi halde kırılır.
 
 `npm run test:all` yukarıdakilerin tamamını sırayla çalıştırır (i18n ilk sırada — en hızlısıdır).
 
@@ -188,8 +210,14 @@ node scripts/cdp-start.mjs        # port 9333, eklenti yüklü, sahte medya ciha
 # veya ayrı ayrı açmak isterseniz:
 chrome.exe --remote-debugging-port=9333 --remote-allow-origins=* \
   --user-data-dir="%TEMP%\ih-chrome-profile" \
-  --use-fake-ui-for-media-stream about:blank
+  --use-fake-ui-for-media-stream --use-fake-device-for-media-stream about:blank
 ```
+
+> `--use-fake-device-for-media-stream` gereklidir: yalnızca `--use-fake-ui`
+> izni otomatik verir ama **gerçek** kamerayı açar. Bu, ekran görüntülerine
+> gerçek bir odayı karıştırır ve testleri makineye bağlar. Sahte cihaz
+> deterministik bir test paterni verir ve yine "canlı" track üretir
+> (`test:e2e` medya doğrulaması bundan etkilenmez).
 
 > **Not:** Gömülü/ Electron tabanlı test tarayıcıları bu makinede ICE aday üretmiyor
 > (toplama hemen "complete" oluyor, aday olayı hiç tetiklenmiyor) — WebRTC doğrulaması
@@ -263,6 +291,14 @@ Panelin üst barında bir **dil seçici** vardır (8 dil). Tercih `chrome.storag
 - **LinkedIn API kullanılmaz.** Profil verisi kullanıcı beyanıyla kaydedilir; LinkedIn yalnızca derin bağlantı hedefidir.
 - **LinkedIn markası / ToS:** Bu ürün LinkedIn tarafından desteklenmez, onaylanmamıştır. LinkedIn'in ürün işaretlerini ve verisini izinsiz kazımak (scraping), oturum paylaşımı vb. hükümlere aykırıdır. Üretimde marka kullanımı için LinkedIn'den izin alın.
 - **Video akışı sunucudan geçmez:** medya P2P'dir; sunucu yalnızca sinyal (SDP/ICE) ve sohbeti yönlendirir.
+- **Service worker kimlik doğrulamalı yanıtları önbelleklemez.** `web/public/sw.js`
+  yalnızca statik varlıkları (`isStaticAsset`) önbelleğe alır; `/api/*` ve
+  `/socket.io/*` istekleri doğrudan ağa gider. Bu ayrım bilerek konulmuştur:
+  önceden sw her aynı-kök GET isteğini cache-first sunduğu için `/api/me`
+  bayatlıyordu — kullanıcı çıkıp başka bir hesapla girdiğinde tarayıcı **eski
+  kullanıcının kimliğini** gösteriyordu; ayrıca bayat `socket.io` polling
+  yanıtları eski oturum kimliklerini (sid) yeniden oynatabiliyordu. Sürüm
+  `ih-v2`'ye çıkarıldı, böylece `ih-v1` cache'i ilk aktivasyonda silinir.
 - Kayıtlı veriler: kullanıcı kimliği, profil beyanı, oda listesi, davet bağlantıları — `server/.data/db.json`.
 - LinkedIn OAuth yalnızca temel profil kapsamıyla (`openid profile email`) istenir.
 
