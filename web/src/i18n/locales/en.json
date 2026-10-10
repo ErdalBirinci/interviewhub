@@ -220,7 +220,8 @@
       "check0": "The candidate's summary, experience and skills stay visible",
       "check1": "Open their LinkedIn profile in one click",
       "check2": "Switch to chat without leaving the call",
-      "check3": "Share your screen for technical reviews"
+      "check3": "Share your screen for technical reviews",
+      "caption": "The interview room, with the candidate's LinkedIn profile open in the side panel"
     },
     "privacy": {
       "eyebrow": "Privacy & WebRTC",

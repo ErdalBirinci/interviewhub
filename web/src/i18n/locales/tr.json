@@ -220,7 +220,8 @@
       "check0": "Adayın özeti, deneyimi ve becerileri görünür kalır",
       "check1": "LinkedIn profilini tek tıkla açın",
       "check2": "Görüşmeden çıkmadan sohbete geçin",
-      "check3": "Teknik incelemeler için ekranınızı paylaşın"
+      "check3": "Teknik incelemeler için ekranınızı paylaşın",
+      "caption": "Görüşme odası — adayın LinkedIn profili yan panelde açıkken"
     },
     "privacy": {
       "eyebrow": "Gizlilik ve WebRTC",

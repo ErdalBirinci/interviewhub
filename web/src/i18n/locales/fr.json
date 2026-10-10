@@ -220,7 +220,8 @@
       "check0": "Le résumé, l'expérience et les compétences du candidat restent visibles",
       "check1": "Ouvrir son profil LinkedIn en un clic",
       "check2": "Passer au chat sans quitter l'appel",
-      "check3": "Partager votre écran pour les revues techniques"
+      "check3": "Partager votre écran pour les revues techniques",
+      "caption": "La salle d'entretien, avec le profil LinkedIn du candidat ouvert dans le panneau latéral"
     },
     "privacy": {
       "eyebrow": "Confidentialité & WebRTC",

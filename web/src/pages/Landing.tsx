@@ -425,7 +425,9 @@ export default function Landing() {
                 // Mutlak yol kullanma: site /interviewhub/ altinda yayinda,
                 // BASE_URL build sirasinda VITE_BASE ile belirlenir (bkz. main.tsx).
                 src={`${import.meta.env.BASE_URL}showcase-room.png`}
-                alt={t("landing.features.items.0.desc")}
+                // alt gorseli tarif eder; bolumun lead'i DEGIL (o metin sayfada
+                // zaten ustte gorunuyor, alt ile tekrarlamak gereksiz).
+                alt={t("landing.showcase.caption")}
                 loading="lazy"
                 // width/height yalnizca "yer ayirma" icindir (CLS onlemi); CSS
                 // height:100%/auto ile gercek orani dosyadan alir. Bu degerler
@@ -436,7 +438,9 @@ export default function Landing() {
               />
             </div>
             <figcaption>
-              {t("landing.features.items.0.desc")}
+              {/* Ayri anahtar: bu metin bolumun LEAD'INI tekrarliyordu —
+                  ayni cumle sayfada iki kez gorunuyordu. Artik gorseli tarif eder. */}
+              {t("landing.showcase.caption")}
             </figcaption>
           </figure>
         </div>
@@ -569,7 +573,7 @@ function HeroVisual() {
           <div className="hv__stage">
             <div className="hv__tile">
               <span className="hv__role">{t("room.sidePanel.tabs.profile")}</span>
-              <span className="hv__avatar">AY</span>
+              <span className="hv__avatar">SC</span>
               <span className="hv__wave">
                 <i /> <i /> <i /> <i /> <i />
               </span>
@@ -581,7 +585,7 @@ function HeroVisual() {
 
             <div className="hv__tile hv__tile--me">
               <span className="hv__role hv__role--me">{t("auth.demoName")}</span>
-              <span className="hv__avatar hv__avatar--me">MK</span>
+              <span className="hv__avatar hv__avatar--me">DO</span>
               <span className="hv__name">
                 <b>Mehmet Kaya</b>
                 <em>{t("landing.features.items.1.title")}</em>
@@ -611,7 +615,7 @@ function HeroVisual() {
               <span>{t("room.sidePanel.tabs.chat")}</span>
             </div>
             <div className="hv__person">
-              <span className="hv__pic">AY</span>
+              <span className="hv__pic">SC</span>
               <div>
                 <strong>Ayşe Yılmaz</strong>
                 <em>{t("landing.features.items.0.title")}</em>
@@ -662,7 +666,7 @@ function ExtensionMock() {
       <div className="ext__body">
         <div className="ext__page">
           <span className="ext__cover" />
-          <span className="ext__ava">AY</span>
+          <span className="ext__ava">SC</span>
           <span className="hv__line" style={{ width: "52%" }} />
           <span className="hv__line" style={{ width: "78%" }} />
           <span className="hv__line" style={{ width: "66%" }} />
@@ -683,8 +687,8 @@ function ExtensionMock() {
           </div>
           <span className="ext__join">{t("room.joinScreen.join")}</span>
           <div className="ext__tiles">
-            <span>AY</span>
-            <span>MK</span>
+            <span>SC</span>
+            <span>DO</span>
           </div>
           <span className="ext__mini">{t("room.sidePanel.tabs.profile")} · {t("room.sidePanel.tabs.chat")}</span>
         </aside>

@@ -220,7 +220,8 @@
       "check0": "候选人的简介、经验和技能始终可见",
       "check1": "一键打开其 LinkedIn 资料",
       "check2": "无需离开通话即可切换到聊天",
-      "check3": "为技术评审共享你的屏幕"
+      "check3": "为技术评审共享你的屏幕",
+      "caption": "面试房间，侧边栏中打开候选人的 LinkedIn 资料"
     },
     "privacy": {
       "eyebrow": "隐私与 WebRTC",

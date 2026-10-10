@@ -220,7 +220,8 @@
       "check0": "Zusammenfassung, Erfahrung und Kenntnisse des Kandidaten bleiben sichtbar",
       "check1": "Sein LinkedIn-Profil mit einem Klick öffnen",
       "check2": "Ohne das Gespräch zu verlassen zum Chat wechseln",
-      "check3": "Bildschirm für technische Reviews teilen"
+      "check3": "Bildschirm für technische Reviews teilen",
+      "caption": "Der Interviewraum — das LinkedIn-Profil des Kandidaten im Seitenpanel geöffnet"
     },
     "privacy": {
       "eyebrow": "Datenschutz & WebRTC",
